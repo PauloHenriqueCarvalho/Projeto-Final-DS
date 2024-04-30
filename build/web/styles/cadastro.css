@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30/04/2024, 14:26:53
+    Author     : Senai
+*/
+
+.gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #ff7eb3;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(255, 126, 179, 0.5), rgba(255, 255, 255, 0.5));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(255, 126, 179, 0.5), rgba(255, 255, 255, 0.5));
+}
+
+.gradient-custom-4 {
+    /* fallback for old browsers */
+    background: #ff7eb3;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(255, 126, 179, 1), rgba(255, 255, 255, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(255, 126, 179, 1), rgba(255, 255, 255, 1));
+}
+
+
+btn btn-success btn-block btn-lg gradient-custom-4 text-body{
+    background-color: pink;
+}
