@@ -15,7 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.bean.Categoria;
 import model.bean.Produto;
+import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -38,11 +40,14 @@ public class CadastroProdutoController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {      
+            throws ServletException, IOException {
+        CategoriaDAO dao = new CategoriaDAO();
+        List<Categoria> listaCategorias = dao.listarTodos();
+        request.setAttribute("categorias", listaCategorias);
         String nextPage = "/WEB-INF/jsp/cadastroProduto.jsp";
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);        
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,12 +65,22 @@ public class CadastroProdutoController extends HttpServlet {
         processRequest(request, response);
     }
 
+    private void redirectToSuccessPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Redireciona para a página de produtos
+        response.sendRedirect(request.getContextPath() + "/inicioAdministrador");
+    }
+
+    private void redirectToErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Redireciona para a página de erro
+        response.sendRedirect(request.getContextPath() + "/cadastrar-produtos");
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Verifica se a requisição é do tipo multipart (upload de arquivo)
         String url = request.getServletPath();
-        if (url.equals("/cadastroProduto")) {
+        if (url.equals("/cadastro-produto")) {
+            System.out.println("Entra no id");
             try {
                 // Parseia a requisição para obter os itens do formulário
                 List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -83,25 +98,18 @@ public class CadastroProdutoController extends HttpServlet {
                             case "descricao":
                                 produto.setDescricao(item.getString());
                                 break;
-                            case "unidade":
-                                produto.setUnidadeMedida(item.getString());
-                                break;
                             case "preco":
                                 produto.setValor(Float.parseFloat(item.getString()));
                                 break;
-                            case "desconto":
-                                produto.setDesconto(Float.parseFloat(item.getString()));
-                                break;
+
                             case "categoria":
                                 produto.setCategoria(Integer.parseInt(item.getString()));
-                                break;
-                            case "subcategoria":
-                                produto.setSubcategoria(Integer.parseInt(item.getString()));
                                 break;
                         }
                     } else {
                         // Se não, o item é um arquivo de imagem
                         // Converte o InputStream do arquivo em um array de bytes
+                        System.out.println("Enrta no das imagens");
                         InputStream inputStream = item.getInputStream();
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         byte[] buffer = new byte[4096];
@@ -131,26 +139,15 @@ public class CadastroProdutoController extends HttpServlet {
                 throw new ServletException("Cannot parse multipart request.", e);
             }
         } else {
-            // Se a requisição não for multipart, redireciona para a página inicial
+            System.out.println("Else");
             redirectToIndexPage(request, response);
         }
     }
 
-    private void redirectToSuccessPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Redireciona para a página de produtos
-        response.sendRedirect(request.getContextPath() + "/Produtos?idUsuario=0");
-    }
-
-    private void redirectToErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Redireciona para a página de erro
-        response.sendRedirect(request.getContextPath() + "/cadastrar-produtos");
-    }
-
     private void redirectToIndexPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Redireciona para a página inicial
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/inicio");
     }
-
 
     /**
      * Returns a short description of the servlet.

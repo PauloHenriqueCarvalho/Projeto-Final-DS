@@ -36,8 +36,8 @@ public class UsuarioDAO {
         }
     }
     
-    public Usuario validaUser(Usuario user) {
-        Usuario usuarioValido = new Usuario();
+    public int validaUser(Usuario user) {
+        int login = 0;
         try {
             Connection con = Conexao.getConn();
             PreparedStatement stmt = null;
@@ -50,13 +50,15 @@ public class UsuarioDAO {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                usuarioValido.setIdUsuario(rs.getInt("id_usuario"));
-                usuarioValido.setNome(rs.getString("nome"));
-                usuarioValido.setEmail(rs.getString("email"));
-                usuarioValido.setTelefone(rs.getString("telefone"));
-                usuarioValido.setCpf(rs.getString("cpf"));
-                Usuario.setIdUsuarioStatic(rs.getInt("id_usuario"));
-
+                if(rs.getString("acesso").equals("cliente")){
+                    login = 3;
+                } else if(rs.getString("acesso").equals("funcionario")){
+                    login = 2;
+                } else if(rs.getString("acesso").equals("administrador")){
+                    login = 1;
+                } else{
+                    login = 0;
+                }
             }
 
             rs.close();
@@ -64,11 +66,8 @@ public class UsuarioDAO {
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            usuarioValido.setIdUsuario(0);
-            usuarioValido.setNome("");
-            usuarioValido.setEmail("");
         }
-        return usuarioValido;
+        return login;
     }
 
     public int getId(String user) {
@@ -84,8 +83,7 @@ public class UsuarioDAO {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                
-                id = rs.getInt("idUsuario");
+                id = rs.getInt("id_usuario");
 
             }
             rs.close();

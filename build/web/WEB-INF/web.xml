@@ -28,6 +28,18 @@
         <servlet-name>CadastroProdutoController</servlet-name>
         <servlet-class>controller.CadastroProdutoController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InicioAdministradorController</servlet-name>
+        <servlet-class>controller.InicioAdministradorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InicioFuncionarioController</servlet-name>
+        <servlet-class>controller.InicioFuncionarioController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EstoqueProdutosController</servlet-name>
+        <servlet-class>controller.EstoqueProdutosController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -59,6 +71,22 @@
     <servlet-mapping>
         <servlet-name>CadastroProdutoController</servlet-name>
         <url-pattern>/cadastroProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastroProdutoController</servlet-name>
+        <url-pattern>/cadastro-produto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InicioAdministradorController</servlet-name>
+        <url-pattern>/inicioAdministrador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InicioFuncionarioController</servlet-name>
+        <url-pattern>/inicioFuncionario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstoqueProdutosController</servlet-name>
+        <url-pattern>/estoqueProduto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

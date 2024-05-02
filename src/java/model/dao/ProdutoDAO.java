@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import javax.resource.cci.ConnectionFactory;
 import model.bean.Categoria;
+import model.bean.Estoque;
 import model.bean.Produto;
 
 /**
@@ -22,6 +24,7 @@ import model.bean.Produto;
  * @author Senai
  */
 public class ProdutoDAO {
+
     public static String convertBlobToBase64(Blob blob) {
         try {
             byte[] bytes = blob.getBytes(1, (int) blob.length());
@@ -34,30 +37,21 @@ public class ProdutoDAO {
 
     public boolean inserirProduto(Produto produto) {
         try (Connection conexao = Conexao.getConn();
-                PreparedStatement ps = conexao.prepareStatement("INSERT INTO produto (nome, valor, desconto, valorFinal, categoria, subcategoria, imagem, descricao, unidade_medida) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)")) {
+                PreparedStatement ps = conexao.prepareStatement("INSERT INTO produto (nome, valor, id_categoria, imagem, descricao) VALUES (?, ?, ?, ?, ?)")) {
 
-            // Calcular o valor final com base no valor e desconto
-            float valorFinal = produto.getValor() - produto.getDesconto();
-
-            // Defina os parâmetros do PreparedStatement com os valores do produto
             ps.setString(1, produto.getNome());
             ps.setFloat(2, produto.getValor());
-            ps.setFloat(3, produto.getDesconto());
-            ps.setFloat(4, valorFinal); // Defina o valor final calculado
-            ps.setInt(5, produto.getCategoria());
-            ps.setInt(6, produto.getSubcategoria());
-            ps.setBytes(7, produto.getImagemBytes()); // Defina a imagem como array de bytes
-            ps.setString(8, produto.getDescricao());
-            ps.setString(9, produto.getUnidadeMedida());
-            // Execute o PreparedStatement
+            ps.setInt(3, produto.getCategoria());
+            ps.setBytes(4, produto.getImagemBytes());
+            ps.setString(5, produto.getDescricao());
+
             int linhasAfetadas = ps.executeUpdate();
             ps.close();
             conexao.close();
-            // Verifique se a inserção foi bem-sucedida (verifique se uma linha foi afetada)
+
             return linhasAfetadas > 0;
 
         } catch (SQLException e) {
-            // Você pode lidar com a exceção aqui, talvez registrando-a ou lançando-a novamente
             e.printStackTrace();
             return false;
         }
@@ -81,8 +75,6 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(rs.getInt("categoria"));
                 p.setValor(rs.getFloat("valor"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setValorFinal(rs.getFloat("valorFinal"));
                 produtos.add(p);
             }
 
@@ -110,12 +102,11 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto p = new Produto();
-                p.setIdProduto(rs.getInt("idProduto"));
+                p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
-                p.setCategoria(rs.getInt("categoria"));
+                p.setCategoria(rs.getInt("id_categoria"));
                 p.setValor(rs.getFloat("valor"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setValorFinal(rs.getFloat("valorFinal"));
+                p.setDescricao(rs.getString("descricao"));
 
                 // Recuperar a imagem como um array de bytes
                 Blob imagemBlob = rs.getBlob("imagem");
@@ -157,8 +148,6 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(rs.getInt("categoria"));
                 p.setValor(rs.getFloat("valor"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setValorFinal(rs.getFloat("valorFinal"));
 
                 // Recuperar a imagem como um array de bytes
                 Blob imagemBlob = rs.getBlob("imagem");
@@ -196,8 +185,6 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(rs.getInt("categoria"));
                 p.setValor(rs.getFloat("valor"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setValorFinal(rs.getFloat("valorFinal"));
 
                 // Recuperar a imagem como um array de bytes
                 Blob imagemBlob = rs.getBlob("imagem");
@@ -235,8 +222,7 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(rs.getInt("categoria"));
                 p.setValor(rs.getFloat("valor"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setValorFinal(rs.getFloat("valorFinal"));
+
                 produtos.add(p);
             }
 
@@ -265,8 +251,6 @@ public class ProdutoDAO {
                     p.setNome(rs.getString("nome"));
                     p.setCategoria(rs.getInt("categoria"));
                     p.setValor(rs.getFloat("valor"));
-                    p.setDesconto(rs.getFloat("desconto"));
-                    p.setValorFinal(rs.getFloat("valorFinal"));
 
                     // Recuperar a imagem como um array de bytes
                     Blob imagemBlob = rs.getBlob("imagem");
@@ -276,10 +260,58 @@ public class ProdutoDAO {
                     }
                 }
             }
+
+            stmt.close();
+            conexao.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return p;
+    }
+
+    public List<Produto> listarTodosComEstoque() {
+        List<Produto> produtos = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Conexao.getConn();
+            String sql = "SELECT p.*, e.quantidade, e.preco_custo FROM produto p INNER JOIN estoque e ON p.id_Produto = e.id_produto;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("id_Produto"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getFloat("valor"));
+                // Defina outros atributos do produto...
+
+                // Cria um estoque para o produto
+                Estoque estoque = new Estoque();
+                estoque.setQuantidade(rs.getInt("quantidade"));
+                estoque.setCusto(rs.getFloat("preco_custo"));
+                Blob imagemBlob = rs.getBlob("imagem");
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    produto.setImagemBytes(imagemBytes);
+                }
+                // Associa o estoque ao produto
+                produto.setEstoque(estoque);
+
+                // Adiciona o produto à lista
+                produtos.add(produto);
+
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return produtos;
     }
 
     // Método para criar um novo produto

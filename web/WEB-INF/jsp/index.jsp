@@ -18,5 +18,8 @@
         <a href="./cadastroProduto">
             <h1>Cadastro Produto</h1>
         </a>
+         <a href="./estoqueProduto">
+            <h1>Estoque Produto</h1>
+        </a>
     </body>
 </html>

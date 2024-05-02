@@ -13,38 +13,25 @@ public class Produto {
     private int idProduto;
     private static int idProdutoStatic;
     private int categoria;
-    private int subcategoria;
     private String nome;
     private String descricao;
-    private String tamanhoCamisa;
-    private String unidadeMedida;
-    private float peso; 
     private Float valor;
-    private Float desconto;
-    private Float valorFinal;
-    private int clube;
     private byte[] imagemBytes;
     private String imagemBase64;
+    private Estoque estoque;
 
     public Produto() {
     }
-    
-    
-    public Produto(int idProduto, int categoria, int subcategoria, String nome, String descricao, String tamanhoCamisa, String unidadeMedida, float peso, Float valor, Float desconto, Float valorFinal, int clube, byte[] imagemBytes, String imagemBase64) {
+
+    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque) {
         this.idProduto = idProduto;
         this.categoria = categoria;
-        this.subcategoria = subcategoria;
         this.nome = nome;
         this.descricao = descricao;
-        this.tamanhoCamisa = tamanhoCamisa;
-        this.unidadeMedida = unidadeMedida;
-        this.peso = peso;
         this.valor = valor;
-        this.desconto = desconto;
-        this.valorFinal = valorFinal;
-        this.clube = clube;
         this.imagemBytes = imagemBytes;
         this.imagemBase64 = imagemBase64;
+        this.estoque = estoque;
     }
 
     public int getIdProduto() {
@@ -71,14 +58,6 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public int getSubcategoria() {
-        return subcategoria;
-    }
-
-    public void setSubcategoria(int subcategoria) {
-        this.subcategoria = subcategoria;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -95,60 +74,12 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getTamanhoCamisa() {
-        return tamanhoCamisa;
-    }
-
-    public void setTamanhoCamisa(String tamanhoCamisa) {
-        this.tamanhoCamisa = tamanhoCamisa;
-    }
-
-    public String getUnidadeMedida() {
-        return unidadeMedida;
-    }
-
-    public void setUnidadeMedida(String unidadeMedida) {
-        this.unidadeMedida = unidadeMedida;
-    }
-
-    public float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(float peso) {
-        this.peso = peso;
-    }
-
     public Float getValor() {
         return valor;
     }
 
     public void setValor(Float valor) {
         this.valor = valor;
-    }
-
-    public Float getDesconto() {
-        return desconto;
-    }
-
-    public void setDesconto(Float desconto) {
-        this.desconto = desconto;
-    }
-
-    public Float getValorFinal() {
-        return valorFinal;
-    }
-
-    public void setValorFinal(Float valorFinal) {
-        this.valorFinal = valorFinal;
-    }
-
-    public int getClube() {
-        return clube;
-    }
-
-    public void setClube(int clube) {
-        this.clube = clube;
     }
 
     public byte[] getImagemBytes() {
@@ -166,5 +97,17 @@ public class Produto {
     public void setImagemBase64(String imagemBase64) {
         this.imagemBase64 = imagemBase64;
     }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+    
+    
+    
+    
     
 }

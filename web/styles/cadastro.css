@@ -34,3 +34,27 @@ and open the template in the editor.
 btn btn-success btn-block btn-lg gradient-custom-4 text-body{
     background-color: pink;
 }
+.btn-success {
+    --mdb-btn-bg: #ff69b4; /* rosa */
+    --mdb-btn-color: #fff;
+    --mdb-btn-box-shadow: 0 4px 9px -4px #ff69b4;
+    --mdb-btn-hover-bg: #ff3e9b; /* rosa mais escuro no hover */
+    --mdb-btn-hover-color: #fff;
+    --mdb-btn-focus-bg: #ff3e9b; /* rosa mais escuro quando focado */
+    --mdb-btn-focus-color: #fff;
+    --mdb-btn-active-bg: #ff1f85; /* rosa mais escuro quando clicado */
+    --mdb-btn-active-color: #fff;
+    --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(255, 105, 180, 0.3), 0 4px 18px 0 rgba(255, 105, 180, 0.2);
+}
+
+
+#botoes{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    
+}
+#botoes button{
+    background-color: black;
+    color: white;
+}
