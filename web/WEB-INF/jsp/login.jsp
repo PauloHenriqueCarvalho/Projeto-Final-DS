@@ -39,7 +39,7 @@
                                 <div class="card-body p-5">
                                     <h2 class="text-uppercase text-center mb-5">Login</h2>
 
-                                    <form method="get" action="logar" class="card-body p-5 text-center">
+                                    <form method="post" action="logar" class="card-body p-5 text-center">
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="email" id="email"  name="email" class="form-control form-control-lg" />

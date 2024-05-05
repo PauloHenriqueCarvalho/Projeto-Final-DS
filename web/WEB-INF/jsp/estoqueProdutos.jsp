@@ -20,12 +20,13 @@
         <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
         <!-- Google Fonts -->
         <link href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-        <!-- Vendor CSS Files -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">        <!-- Vendor CSS Files -->
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
         <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -36,6 +37,7 @@
 
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="./styles/estoqueProdutos.css">
 
         <!-- =======================================================
         * Template Name: NiceAdmin
@@ -506,11 +508,63 @@
                                             <tbody>
                                                 <c:forEach items="${produtos}" var="produto">
                                                     <tr>
+
                                                         <th scope="row"><a href="#"><img src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}"></a></th>
                                                         <td><a href="#" class="text-primary fw-bold">${produto.nome}</a></td>
                                                         <td>$${produto.valor}</td>
                                                         <td class="fw-bold">${produto.estoque.quantidade}</td> <!-- Exibe a quantidade do estoque -->
                                                         <td>$${produto.estoque.custo}</td> <!-- Exibe o custo do estoque -->
+                                                        <td><!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter${produto.idProduto}">
+
+                                                                Editar Produto
+                                                            </button>
+
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModalCenter${produto.idProduto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLongTitle${produto.idProduto}">${produto.nome}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="text-center">
+                                                                                <img src="data:image/jpeg;base64,${produto.imagemBase64}" class="rounded" alt="${produto.nome}">
+                                                                            </div>
+                                                                            <!-- Adicione outros campos do produto aqui -->
+                                                                            <div class="produtos-container">
+                                                                                <p>Custo em estoque: $${produto.estoque.custo}</p>
+                                                                                <p>Valor: $${produto.valor}</p>
+                                                                                <p>Quantidade em estoque: </p>
+                                                                            </div>
+
+                                                                            <div class="produtosCard">
+                                                                                <form id="formAdicionarQuantidade" class="produtoForm" data-action="adicionarQuantidade">
+                                                                                    <input type="hidden" name="produtoId" value="${produto.idProduto}">
+                                                                                    <button type="submit" class="btn btn-success">Adicionar</button>
+                                                                                </form>
+                                                                                    
+                                                                                <span class="qtd">${produto.estoque.quantidade}</span>
+                                                                                
+                                                                                <form id="formRemoverQuantidade" action="" class="produtoForm" data-action="removerQuantidade">
+                                                                                    <input type="hidden" name="produtoId" value="${produto.idProduto}">
+                                                                                    <button type="submit" class="btn btn-danger">Remover</button>
+                                                                                </form>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                                                            <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                 
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -674,10 +728,12 @@
         <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
         <script src="assets/vendor/tinymce/tinymce.min.js"></script>
         <script src="assets/vendor/php-email-form/validate.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <!-- Template Main JS File -->
         <script src="assets/js/main.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 
 </html>

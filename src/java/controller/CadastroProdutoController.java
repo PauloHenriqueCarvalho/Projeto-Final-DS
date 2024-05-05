@@ -129,7 +129,7 @@ public class CadastroProdutoController extends HttpServlet {
                 ProdutoDAO dao = new ProdutoDAO();
                 boolean sucesso = dao.inserirProduto(produto);
                 if (sucesso) {
-                    // Se a inserção for bem-sucedida, redireciona para a página de produtos
+                    // Se a inserção for bem-sucedida, redireciona para .a página de produtos
                     redirectToSuccessPage(request, response);
                 } else {
                     // Se ocorrer algum erro, redireciona para a página de erro

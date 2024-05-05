@@ -88,6 +88,14 @@
         <servlet-name>EstoqueProdutosController</servlet-name>
         <url-pattern>/estoqueProduto</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstoqueProdutosController</servlet-name>
+        <url-pattern>/alterarQuantidade</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstoqueProdutosController</servlet-name>
+        <url-pattern>/removerQuantidade</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -494,11 +494,38 @@
                                         <input type="number" id="preco" name="preco" step="0.01" class="form-control form-control-lg" required />
                                     </div>
 
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="confirmarSenha">Imagem</label>
-                                        <input type="file" id="imagem" name="imagem" required accept="image/*" class="form-control form-control-lg" />
-
+                                    <div>
+                                        <div class="mb-4 d-flex justify-content-center">
+                                            <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                                 alt="example placeholder" style="width: 300px;" />
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div>
+                                                <label class="form-label" for="confirmarSenha">Imagem</label>
+                                                <input type="file" id="imagem" name="imagem" required accept="image/*" class="form-control form-control-lg" onchange="displaySelectedImage(event, 'selectedImage')"/>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <script>
+                                        function displaySelectedImage(event, imageId) {
+                                            const selectedImage = document.getElementById(imageId);
+                                            const file = event.target.files[0];
+                                            const reader = new FileReader();
+
+                                            reader.onload = function () {
+                                                selectedImage.src = reader.result;
+                                            }
+
+                                            if (file) {
+                                                reader.readAsDataURL(file);
+                                            }
+                                        }
+                                    </script>
+
+
+
+
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="categoria">Categoria</label>
@@ -524,6 +551,7 @@
                 </div>
 
             </section>
+
 
         </main>
 

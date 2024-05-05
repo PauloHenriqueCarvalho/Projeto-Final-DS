@@ -18,6 +18,7 @@ import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.Usuario;
 import model.dao.CategoriaDAO;
+import model.dao.EstoqueDAO;
 import model.dao.ProdutoDAO;
 
 /**
@@ -38,14 +39,13 @@ public class EstoqueProdutosController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/estoqueProdutos.jsp";
-        
+
         ProdutoDAO dao = new ProdutoDAO();
 
-        
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
-        
+
         List<Produto> produto = dao.listarTodosComEstoque();
         for (int i = 0; i < produto.size(); i++) {
             if (produto.get(i).getImagemBytes() != null) {
@@ -54,7 +54,7 @@ public class EstoqueProdutosController extends HttpServlet {
             }
 
         }
-       request.setAttribute("produtos", produto);
+        request.setAttribute("produtos", produto);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
@@ -87,6 +87,18 @@ public class EstoqueProdutosController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+//        String url = request.getServletPath();
+//        if (url.equals("/adicionarQuantidade")) {
+//            int produtoId = Integer.parseInt(request.getParameter("produtoId"));
+//            EstoqueDAO dao = new EstoqueDAO();
+//            dao.aumentarQuantidade(produtoId);
+//            // Redirecionar para a página de produtos ou fazer alguma outra coisa após a operação
+//        } else if (url.equals("/removerQuantidade")) {
+//            int produtoId = Integer.parseInt(request.getParameter("produtoId"));
+//            EstoqueDAO dao = new EstoqueDAO();
+//            dao.diminuirQuantidade(produtoId);
+//            // Redirecionar para a página de produtos ou fazer alguma outra coisa após a operação
+//        }
     }
 
     /**
