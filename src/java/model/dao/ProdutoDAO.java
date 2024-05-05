@@ -108,7 +108,6 @@ public class ProdutoDAO {
                 p.setValor(rs.getFloat("valor"));
                 p.setDescricao(rs.getString("descricao"));
 
-                // Recuperar a imagem como um array de bytes
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
@@ -331,6 +330,44 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Produto> busca(String busca) {
+        List<Produto> produtos = new ArrayList<>();
+        try {
+            Connection conexao = Conexao.getConn();
+            PreparedStatement ps = conexao.prepareStatement("SELECT * FROM produto WHERE nome LIKE ?");
+            ps.setString(1, "%" + busca + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("id_Produto"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getFloat("valor"));
+                // Defina outros atributos do produto...
+
+                // Cria um estoque para o produto
+                Blob imagemBlob = rs.getBlob("imagem");
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    produto.setImagemBytes(imagemBytes);
+                }
+                // Associa o estoque ao produto
+
+                // Adiciona o produto à lista
+                produtos.add(produto);
+            }
+
+            // Feche os recursos
+            rs.close();
+            ps.close();
+            conexao.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produtos;
     }
 
 }

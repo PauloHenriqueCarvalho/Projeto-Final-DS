@@ -40,6 +40,10 @@
         <servlet-name>EstoqueProdutosController</servlet-name>
         <servlet-class>controller.EstoqueProdutosController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeClienteController</servlet-name>
+        <servlet-class>controller.HomeClienteController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/inicio</url-pattern>
+    </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/buscar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CadastroProdutoController</servlet-name>
@@ -96,6 +104,11 @@
         <servlet-name>EstoqueProdutosController</servlet-name>
         <url-pattern>/removerQuantidade</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeClienteController</servlet-name>
+        <url-pattern>/homeCliente</url-pattern>
+    </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30
