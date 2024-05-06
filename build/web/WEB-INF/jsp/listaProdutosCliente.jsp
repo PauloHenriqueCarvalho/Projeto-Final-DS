@@ -432,6 +432,7 @@
                     <div class="row">
                         <!-- product -->
                         <c:forEach items="${produtos}" var="produto">
+                            
                             <div class="col-md-4 col-xs-6">
                                 <div class="product">
                                     <div class="product-img">

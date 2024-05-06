@@ -25,7 +25,8 @@ public class ProdutoUnicoCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
-        int idProduto = Integer.parseInt(request.getParameter("idPro"));
+        int idProduto = Integer.parseInt(request.getParameter(""
+                + ""));
         ProdutoDAO dao = new ProdutoDAO();
         Produto produtos = dao.readById(idProduto);
         if (produtos.getImagemBytes() != null) {
