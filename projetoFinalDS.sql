@@ -48,9 +48,7 @@ CREATE TABLE categoria (
     nome VARCHAR(100) NOT NULL
 );
 
--- Tabela de subcategorias
-INSERT INTO categoria (nome) VALUES ('Bolos'), ('Salgados'), ('Doces'), ('Camisetas');
-INSERT INTO produto (nome, valor, id_categoria, descricao) VALUES ('batata', '12', '1','asdada');
+
 
 
 -- Tabela de produtos
@@ -64,6 +62,10 @@ CREATE TABLE produto (
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 );
+
+-- Tabela de subcategorias
+INSERT INTO categoria (nome) VALUES ('Bolos'), ('Salgados'), ('Doces'), ('Camisetas');
+INSERT INTO produto (nome, valor, id_categoria, descricao) VALUES ('batata', '12', '1','asdada');
 
 -- Tabela de estoque
 CREATE TABLE estoque (

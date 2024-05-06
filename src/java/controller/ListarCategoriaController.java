@@ -23,7 +23,7 @@ import model.dao.ProdutoDAO;
  *
  * @author Senai
  */
-public class IndexController extends HttpServlet {
+public class ListarCategoriaController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,26 +36,26 @@ public class IndexController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String url = "/WEB-INF/jsp/index.jsp";
+        String nextPage = "/WEB-INF/jsp/listaProdutosCliente.jsp";
+        int idCat = Integer.parseInt(request.getParameter("cat"));
+        
+        CategoriaDAO cat = new CategoriaDAO();
+        List<Categoria> categoria = cat.listarTodos();
+        request.setAttribute("categorias", categoria);
 
         ProdutoDAO dao = new ProdutoDAO();
-        List<Produto> produtos = dao.listarTodos();
+        List<Produto> produtos = dao.listarPorCategoria(idCat);
+    
         for (int i = 0; i < produtos.size(); i++) {
             if (produtos.get(i).getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(produtos.get(i).getImagemBytes());
                 produtos.get(i).setImagemBase64(imagemBase64);
             }
-
         }
         request.setAttribute("produtos", produtos);
-        
-        CategoriaDAO cat = new CategoriaDAO();
-        List<Categoria> categoria = cat.listarTodos();
-        request.setAttribute("categorias", categoria);
-        
-        RequestDispatcher d = getServletContext().getRequestDispatcher(url);
-        d.forward(request, response);
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,33 +70,7 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = request.getServletPath();
-        System.out.println("URL>: " + url);
-        if (url.equals("/buscar")) {
-            System.out.println("Entra");
-            String termo = request.getParameter("termo");
-            termo = "%" + termo + "%";  
-
-            ProdutoDAO dao = new ProdutoDAO();
-            List<Produto> produtos = dao.busca(termo);
-            for (int i = 0; i < produtos.size(); i++) {
-                if (produtos.get(i).getImagemBytes() != null) {
-                    String imagemBase64 = Base64.getEncoder().encodeToString(produtos.get(i).getImagemBytes());
-                    produtos.get(i).setImagemBase64(imagemBase64);
-                }
-
-            }
-
-            // Defina os resultados da pesquisa como um atributo de solicitação
-            request.setAttribute("produtos", produtos);
-
-            // Redirecione de volta para a página principal
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            processRequest(request, response);
-            System.out.println("Else");
-        }
+        processRequest(request, response);
     }
 
     /**

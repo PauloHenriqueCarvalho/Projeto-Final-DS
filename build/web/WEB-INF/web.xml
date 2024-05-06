@@ -44,6 +44,14 @@
         <servlet-name>HomeClienteController</servlet-name>
         <servlet-class>controller.HomeClienteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <servlet-class>controller.ListarCategoriaController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProdutoUnicoCliente</servlet-name>
+        <servlet-class>controller.ProdutoUnicoCliente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -68,7 +76,7 @@
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/inicio</url-pattern>
     </servlet-mapping>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/buscar</url-pattern>
     </servlet-mapping>
@@ -108,7 +116,14 @@
         <servlet-name>HomeClienteController</servlet-name>
         <url-pattern>/homeCliente</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <url-pattern>/lista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProdutoUnicoCliente</servlet-name>
+        <url-pattern>/produto-unico</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

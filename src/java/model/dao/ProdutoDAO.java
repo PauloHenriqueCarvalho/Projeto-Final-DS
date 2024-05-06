@@ -61,7 +61,7 @@ public class ProdutoDAO {
         List<Produto> produtos = new ArrayList<>();
 
         try {
-            Connection conexao = Conexao.getConn(); // Obtenção da conexão com o banco de dados
+            Connection conexao = Conexao.getConn();
             PreparedStatement stmt = null;
             ResultSet rs = null;
             String query = "SELECT * FROM produto AS p INNER JOIN estoque AS e ON p.idProduto = e.produto WHERE e.quantidade > 0";
@@ -128,27 +128,26 @@ public class ProdutoDAO {
     }
 
     // Método para listar produtos por categoria
-    public List<Produto> listarPorCategoria(Categoria c) {
+    public List<Produto> listarPorCategoria(int c) {
         List<Produto> produtos = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConn();
             PreparedStatement stmt = null;
             ResultSet rs = null;
-            String query = "SELECT * FROM produto AS p INNER JOIN categoria AS c ON p.categoria = c.idCategoria WHERE c.nome = ?";
+            String query = "SELECT * FROM produto WHERE id_categoria = ?";
 
             stmt = conexao.prepareStatement(query);
-            stmt.setString(1, c.getNome());
+            stmt.setInt(1, c);
 
             rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Produto p = new Produto();
-                p.setIdProduto(rs.getInt("idProduto"));
+                p.setIdProduto(rs.getInt("id_Produto"));
                 p.setNome(rs.getString("nome"));
-                p.setCategoria(rs.getInt("categoria"));
+                p.setCategoria(rs.getInt("id_categoria"));
                 p.setValor(rs.getFloat("valor"));
 
-                // Recuperar a imagem como um array de bytes
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
@@ -246,11 +245,11 @@ public class ProdutoDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     p = new Produto();
-                    p.setIdProduto(rs.getInt("idProduto"));
+                    p.setIdProduto(rs.getInt("id_Produto"));
                     p.setNome(rs.getString("nome"));
-                    p.setCategoria(rs.getInt("categoria"));
+                    p.setCategoria(rs.getInt("id_categoria"));
                     p.setValor(rs.getFloat("valor"));
-
+                    p.setDescricao(rs.getString("descricao"));
                     // Recuperar a imagem como um array de bytes
                     Blob imagemBlob = rs.getBlob("imagem");
                     if (imagemBlob != null) {

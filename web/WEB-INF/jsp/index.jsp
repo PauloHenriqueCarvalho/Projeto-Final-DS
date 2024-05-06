@@ -55,7 +55,7 @@
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                    <li><a href="./logar"><i class="fa fa-user-o"></i> Minha Conta</a></li>
                 </ul>
             </div>
         </div>
@@ -180,12 +180,10 @@
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Hot Deals</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Laptops</a></li>
-                    <li><a href="#">Smartphones</a></li>
-                    <li><a href="#">Cameras</a></li>
-                    <li><a href="#">Accessories</a></li>
+                        <c:forEach items="${categorias}" var="categoria">
+                        <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
+                        </c:forEach>
+
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -282,35 +280,37 @@
                                     <div class="products-slick" data-nav="#slick-nav-1">
                                         <!-- product -->
                                         <c:forEach items="${produtos}" var="produto">
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img class="img-card" src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}">
-                                                    <div class="product-label">
-                                                        <span class="sale">-30%</span>
-                                                        <span class="new">NEW</span>
+                                            <a href="./produto-unico?idPro=${produto.idProduto}">
+                                                <div class="product">
+                                                    <div class="product-img">
+                                                        <img class="img-card" src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}">
+                                                        <div class="product-label">
+                                                            <span class="sale">-30%</span>
+                                                            <span class="new">NEW</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-body">
+                                                        <p class="product-category">Category</p>
+                                                        <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
+                                                        <h4 class="product-price">${produto.valor}<del class="product-old-price">$990.00</del></h4>
+                                                        <div class="product-rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                        <div class="product-btns">
+                                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="add-to-cart">
+                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao carrinho</button>
                                                     </div>
                                                 </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">Category</p>
-                                                    <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
-                                                    <h4 class="product-price">${produto.valor}<del class="product-old-price">$990.00</del></h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao carrinho</button>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </c:forEach>
                                         <!-- /product -->
                                     </div>
