@@ -239,7 +239,7 @@ public class ProdutoDAO {
     public Produto readById(int id) {
         Produto p = null;
         try (Connection conexao = Conexao.getConn();
-                PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM produto WHERE idProduto = ?")) {
+                PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM produto WHERE id_Produto = ?")) {
 
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {

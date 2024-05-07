@@ -76,20 +76,20 @@ public class LoginController extends HttpServlet {
             user.setSenha(request.getParameter("senha"));
 
             try {
-                int userAutenticado = valida.validaUser(user);
+                valida.validaUser(user);
 
-                if (userAutenticado != 0) {
-                    if(userAutenticado == 1){
+                if (Usuario.getAcessoStatic() != 0) {
+                    if(Usuario.getAcessoStatic() == 1){
                         int idUsuario = valida.getId(request.getParameter("email"));                   
-                        response.sendRedirect(request.getContextPath() + "/inicioAdministrador?idUsuario=" + idUsuario);
+                        response.sendRedirect(request.getContextPath() + "/inicioAdministrador");
                         return;
-                    } else if(userAutenticado == 2){
+                    } else if(Usuario.getAcessoStatic() == 2){
                         int idUsuario = valida.getId(request.getParameter("funcionario"));                   
-                        response.sendRedirect(request.getContextPath() + "/inicioFuncionario?idUsuario=" + idUsuario);
+                        response.sendRedirect(request.getContextPath() + "/inicioFuncionario");
                         return;
-                    } else if(userAutenticado == 3){
+                    } else if(Usuario.getAcessoStatic() == 3){
                         int idUsuario = valida.getId(request.getParameter("email"));                   
-                        response.sendRedirect(request.getContextPath() + "/inicio?idUsuario=" + idUsuario);
+                        response.sendRedirect(request.getContextPath() + "/inicio");
                         return;
                     } else{
                         System.out.println("Nenhum usuario logado");

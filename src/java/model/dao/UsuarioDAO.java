@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.bean.Usuario;
 
 /**
@@ -36,8 +38,8 @@ public class UsuarioDAO {
         }
     }
     
-    public int validaUser(Usuario user) {
-        int login = 0;
+    public void validaUser(Usuario user) {
+  
         try {
             Connection con = Conexao.getConn();
             PreparedStatement stmt = null;
@@ -51,23 +53,72 @@ public class UsuarioDAO {
 
             if (rs.next()) {
                 if(rs.getString("acesso").equals("cliente")){
-                    login = 3;
+                    Usuario.setAcessoStatic(3);
                 } else if(rs.getString("acesso").equals("funcionario")){
-                    login = 2;
+                    Usuario.setAcessoStatic(2);
                 } else if(rs.getString("acesso").equals("administrador")){
-                    login = 1;
+                    Usuario.setAcessoStatic(1);
                 } else{
-                    login = 0;
                 }
-            }
-
+                Usuario.setIdUsuarioStatic(rs.getInt("id_usuario"));
+            }        
             rs.close();
             stmt.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return login;
+    }
+    
+    
+     public List<Usuario> getUsuarioById(int idUsuario) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Usuario usuario = null;
+        List<Usuario> usuarios = new ArrayList<>();
+        try {
+            // Obtém uma conexão com o banco de dados (substitua este código pelo método de obtenção de conexão adequado)
+            conn = Conexao.getConn(); // Substitua MeuConectorBancoDados pelo seu conector
+
+            // Prepara a consulta SQL
+            String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+            stmt = conn.prepareStatement(sql);
+
+            // Define o ID do usuário na consulta preparada
+            stmt.setInt(1, idUsuario);
+
+            // Executa a consulta
+            rs = stmt.executeQuery();
+
+            // Verifica se a consulta retornou algum resultado
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuarios.add(usuario);
+                // Adicione outros atributos do usuário conforme necessário
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Trate adequadamente esta exceção em sua aplicação
+        } finally {
+            // Fecha os recursos (ResultSet, PreparedStatement e Connection)
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Trate adequadamente esta exceção em sua aplicação
+            }
+        }
+
+        return usuarios;
     }
 
     public int getId(String user) {

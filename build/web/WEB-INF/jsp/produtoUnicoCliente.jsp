@@ -43,19 +43,28 @@
 
     </head>
     <body>
-        <!-- HEADER -->
         <header>
             <!-- TOP HEADER -->
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99195-0011 </a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> 919 Augusto Gomes Jd das Palmeiras</a></li>
                     </ul>
+
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+
+                        <c:choose>
+                            <c:when test="${empty usuarios}">
+                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                           
+                            </c:when>
+                            <c:otherwise>                          
+                                <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                            </c:otherwise>
+                        </c:choose>
+
                     </ul>
                 </div>
             </div>
@@ -80,15 +89,17 @@
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
-                                <form>
+                                <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
                                     <select class="input-select">
                                         <option value="0">All Categories</option>
                                         <option value="1">Category 01</option>
                                         <option value="1">Category 02</option>
                                     </select>
-                                    <input class="input" placeholder="Search here">
-                                    <button class="search-btn">Search</button>
+
+                                    <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
+                                    <button  class="search-btn" type="submit">Search</button>
                                 </form>
+                                <div id="searchResults"></div>
                             </div>
                         </div>
                         <!-- /SEARCH BAR -->
@@ -178,12 +189,10 @@
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Hot Deals</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Laptops</a></li>
-                        <li><a href="#">Smartphones</a></li>
-                        <li><a href="#">Cameras</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        <c:forEach items="${categorias}" var="categoria">
+                            <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
+                        </c:forEach>
+
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -193,27 +202,6 @@
         </nav>
         <!-- /NAVIGATION -->
 
-        <!-- BREADCRUMB -->
-        <div id="breadcrumb" class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="breadcrumb-tree">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">All Categories</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Headphones</a></li>
-                            <li class="active">Product name goes here</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /BREADCRUMB -->
 
         <!-- SECTION -->
         <div class="section">

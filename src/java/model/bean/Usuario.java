@@ -21,6 +21,7 @@ public class Usuario {
     private String cpf;
     private Timestamp dataRegistro;
     private String acesso;
+    private static int acessoStatic;
 
     public Usuario() {
     }
@@ -107,6 +108,16 @@ public class Usuario {
     public void setAcesso(String acesso) {
         this.acesso = acesso;
     }
+
+    public static int getAcessoStatic() {
+        return acessoStatic;
+    }
+
+    public static void setAcessoStatic(int acessoStatic) {
+        Usuario.acessoStatic = acessoStatic;
+    }
+
+   
 
     
     

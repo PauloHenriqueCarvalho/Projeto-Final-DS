@@ -1,11 +1,14 @@
+<%@ page import="model.dao.UsuarioDAO" %>
+<%@ page import="model.bean.Usuario" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <!DOCTYPE html>
-<html lang="pr-br">
+<html lang="pt-br"> <%-- Corrigido de pr-br para pt-br --%>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,9 +56,19 @@
                     <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@email.com</a></li>
                     <li><a href="#"><i class="fa fa-map-marker"></i> 919 Augusto Gomes Jd das Palmeiras</a></li>
                 </ul>
+
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <li><a href="./logar"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                    
+                    <c:choose>
+                        <c:when test="${empty usuarios}">
+                            <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                           
+                        </c:when>
+                        <c:otherwise>                          
+                          <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                        </c:otherwise>
+                    </c:choose>
+
                 </ul>
             </div>
         </div>

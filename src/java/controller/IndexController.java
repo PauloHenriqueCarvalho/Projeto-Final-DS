@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -16,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.Usuario;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.UsuarioDAO;
 
 /**
  *
@@ -38,7 +41,7 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
 
         String url = "/WEB-INF/jsp/index.jsp";
-
+        System.out.println("ID : " + Usuario.getIdUsuarioStatic());
         ProdutoDAO dao = new ProdutoDAO();
         List<Produto> produtos = dao.listarTodos();
         for (int i = 0; i < produtos.size(); i++) {
@@ -50,10 +53,16 @@ public class IndexController extends HttpServlet {
         }
         request.setAttribute("produtos", produtos);
         
+        
+
+        UsuarioDAO usu = new UsuarioDAO();
+        List<Usuario> usuarios = usu.getUsuarioById(Usuario.getIdUsuarioStatic());
+        request.setAttribute("usuarios", usuarios);
+
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
-        
+
         RequestDispatcher d = getServletContext().getRequestDispatcher(url);
         d.forward(request, response);
     }
@@ -75,7 +84,7 @@ public class IndexController extends HttpServlet {
         if (url.equals("/buscar")) {
             System.out.println("Entra");
             String termo = request.getParameter("termo");
-            termo = "%" + termo + "%";  
+            termo = "%" + termo + "%";
 
             ProdutoDAO dao = new ProdutoDAO();
             List<Produto> produtos = dao.busca(termo);
