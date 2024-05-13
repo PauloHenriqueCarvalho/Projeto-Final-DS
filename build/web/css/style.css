@@ -446,13 +446,17 @@ textarea.input {
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #15161D;
+  background-color: #F2E8DA;
 }
 
 .header-logo {
   float: left;
 }
 
+.img-logo {
+    height: 100px;
+    border: 0;
+}
 .header-logo .logo img {
   display: block;
 }
@@ -482,7 +486,7 @@ textarea.input {
 .header-search form .search-btn {
   height: 40px;
   width: 100px;
-  background: #D10024;
+  background: #614031;
   color: #FFF;
   font-weight: 700;
   border: none;
@@ -557,6 +561,12 @@ textarea.input {
 .dropdown.open>.cart-dropdown {
   opacity: 1;
   visibility: visible;
+}
+
+.icons{
+    font-size: 20px;
+    font-weight: 600;
+    color:black;
 }
 
 .cart-dropdown .cart-list {
@@ -725,7 +735,7 @@ textarea.input {
   bottom: 0;
   left: 0px;
   width: 60%;
-  background: #D10024;
+  background: #614031;
   opacity: 0.9;
   -webkit-transform: skewX(-45deg);
   -ms-transform: skewX(-45deg);
@@ -739,7 +749,7 @@ textarea.input {
   bottom: 0;
   left: 1px;
   width: 100%;
-  background: #D10024;
+  background: #614031;
   opacity: 0.9;
   -webkit-transform: skewX(-45deg) translateX(-100%);
   -ms-transform: skewX(-45deg) translateX(-100%);
@@ -788,8 +798,9 @@ textarea.input {
 #hot-deal.section {
   padding: 60px 0px;
   margin: 30px 0px;
-  background-color: #E4E7ED;
-  background-image: url('../img/hotdeal.png');
+  height: 450px;
+  background-color: #F2E8DA;
+  background-image: url('../img/faixa.png');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -1192,7 +1203,7 @@ textarea.input {
   -webkit-transform: none;
   -ms-transform: none;
   transform: none;
-  width: 20px;
+    width: 20px;
   height: 20px;
   display: inline-block !important;
   margin: 0px 2px;
@@ -2152,6 +2163,10 @@ textarea.input {
   .header-logo .logo {
     display: inline-block;
   }
+  img {
+    height: 100px;
+    border: 0;
+}
   #product-imgs {
     margin-bottom: 60px;
     margin-top: 15px;
