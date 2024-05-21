@@ -14,32 +14,40 @@ import java.util.ArrayList;
 import java.util.List;
 import model.bean.Usuario;
 
+
+
 /**
  *
  * @author Senai
  */
 public class UsuarioDAO {
+
+
+
     public void insertCliente(Usuario usuario) {
-        try{
-            String sql = "INSERT INTO usuario (nome, senha, email, telefone, cpf) VALUES (?, ?, ?, ?, ?)";           
+        String senha = usuario.getSenha();
+//        String hashedSenha = encoder.encode(senha);
+
+        try {
+            String sql = "INSERT INTO usuario (nome, senha, email, telefone, cpf) VALUES (?, ?, ?, ?, ?)";
             Connection c = Conexao.getConn();
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
-            stmt.setString(2, usuario.getSenha());
+            stmt.setString(2, senha);
             stmt.setString(3, usuario.getEmail());
-            
+
             stmt.setString(4, usuario.getTelefone());
             stmt.setString(5, usuario.getCpf());
-            
+
             stmt.executeUpdate();
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void validaUser(Usuario user) {
-  
+
         try {
             Connection con = Conexao.getConn();
             PreparedStatement stmt = null;
@@ -48,20 +56,20 @@ public class UsuarioDAO {
             stmt = con.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = ?");
             stmt.setString(1, user.getEmail());
             stmt.setString(2, user.getSenha());
-            
+
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                if(rs.getString("acesso").equals("cliente")){
+                if (rs.getString("acesso").equals("cliente")) {
                     Usuario.setAcessoStatic(3);
-                } else if(rs.getString("acesso").equals("funcionario")){
+                } else if (rs.getString("acesso").equals("funcionario")) {
                     Usuario.setAcessoStatic(2);
-                } else if(rs.getString("acesso").equals("administrador")){
+                } else if (rs.getString("acesso").equals("administrador")) {
                     Usuario.setAcessoStatic(1);
-                } else{
+                } else {
                 }
                 Usuario.setIdUsuarioStatic(rs.getInt("id_usuario"));
-            }        
+            }
             rs.close();
             stmt.close();
             con.close();
@@ -69,9 +77,8 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
     }
-    
-    
-     public List<Usuario> getUsuarioById(int idUsuario) {
+
+    public List<Usuario> getUsuarioById(int idUsuario) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;

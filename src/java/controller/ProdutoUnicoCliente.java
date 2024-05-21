@@ -33,7 +33,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
         
         int idProduto = Integer.parseInt(request.getParameter("idPro"));
         ProdutoDAO dao = new ProdutoDAO();
-        Produto produtos = dao.readById(idProduto);
+        Produto produtos = dao.buscarPorId(idProduto);
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
             produtos.setImagemBase64(imagemBase64);

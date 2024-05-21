@@ -5,36 +5,53 @@
  */
 package model.bean;
 
-/**
- *
- * @author Senai
- */
+import java.util.List;
+
+
 public class Carrinho {
-    private int idCarrinho;
-    private Usuario usuario;    
+    private List<ProdutoCarrinho> produtos;
 
     public Carrinho() {
     }
 
-    public Carrinho(int idCarrinho, Usuario usuario) {
-        this.idCarrinho = idCarrinho;
-        this.usuario = usuario;
+    public Carrinho(List<ProdutoCarrinho> produtos) {
+        this.produtos = produtos;
     }
 
-    public int getIdCarrinho() {
-        return idCarrinho;
+    public List<ProdutoCarrinho> getProdutos() {
+        return produtos;
     }
 
-    public void setIdCarrinho(int idCarrinho) {
-        this.idCarrinho = idCarrinho;
+    public void setProdutos(List<ProdutoCarrinho> produtos) {
+        this.produtos = produtos;
     }
-
-    public Usuario getUsuario() {
-        return usuario;
+    
+    public void addItem(Produto produto, int qtd){
+        for(ProdutoCarrinho item : produtos) {
+            if(item.getProduto().getIdProduto() == produto.getIdProduto()){
+                item.setQuantidade(item.getQuantidade() + qtd);
+                return;
+            }
+        }
+        produtos.add(new ProdutoCarrinho(produto, qtd));
     }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    
+    public void removerItem(int produtoId){
+        produtos.removeIf(item -> item.getProduto().getIdProduto() == produtoId);
     }
+    
+    public List<ProdutoCarrinho> getItens(){
+        return produtos;
+    }
+    
+    public double getTotal(){
+        double total = 0.0;
+        for(ProdutoCarrinho item : produtos){
+            total+= item.getQuantidade() * item.getProduto().getValor();
+        }
+        return total;
+    }
+    
+    
     
 }

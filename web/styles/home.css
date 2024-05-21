@@ -14,3 +14,9 @@ and open the template in the editor.
     height: 200px;
     border-style: none;
 };
+
+.section-listar{
+    width: 400px;
+    height: 200px;
+    border: 1px solid black;
+}

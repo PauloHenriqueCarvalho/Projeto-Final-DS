@@ -22,6 +22,7 @@ import model.dao.UsuarioDAO;
  */
 public class CadastroUsuarioController extends HttpServlet {
 
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

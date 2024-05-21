@@ -236,7 +236,7 @@ public class ProdutoDAO {
     }
 
     // Método para obter um produto pelo seu ID
-    public Produto readById(int id) {
+    public Produto buscarPorId(int id) {
         Produto p = null;
         try (Connection conexao = Conexao.getConn();
                 PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM produto WHERE id_Produto = ?")) {

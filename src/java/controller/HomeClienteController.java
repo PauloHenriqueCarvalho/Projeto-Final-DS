@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.bean.Carrinho;
 import model.bean.Produto;
 import model.dao.ProdutoDAO;
 
@@ -52,15 +53,7 @@ public class HomeClienteController extends HttpServlet {
         d.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getServletPath();
 
@@ -78,7 +71,6 @@ public class HomeClienteController extends HttpServlet {
 
             }
 
-            // Defina os resultados da pesquisa como um atributo de solicitação
             request.setAttribute("produtos", produtos);
 
             // Redirecione de volta para a página principal
@@ -95,6 +87,8 @@ public class HomeClienteController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    
 
     /**
      * Returns a short description of the servlet.
