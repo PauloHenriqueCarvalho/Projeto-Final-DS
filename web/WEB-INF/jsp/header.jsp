@@ -61,11 +61,7 @@
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
-                                    <select class="input-select">
-                                        <option value="0">All Categories</option>
-                                        <option value="1">Category 01</option>
-                                        <option value="1">Category 02</option>
-                                    </select>
+                               
 
                                     <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
                                     <button  class="search-btn" type="submit">Search</button>
@@ -82,9 +78,6 @@
                                 <div>
                                     <a href="#">
                                         <p class="icons"><i class="fa fa-heart-o"></i></p>
-                                        
-                                        <span>Your Wishlist</span>
-                                        <div class="qty">2</div>
                                     </a>
                                 </div>
                                 <!-- /Wishlist -->
@@ -93,22 +86,9 @@
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <p class="icons"><i class="fa fa-shopping-cart"></i></p>
-                                        <span>Your Cart</span>
-                                        <div class="qty">3</div>
                                     </a>
                                     <div class="cart-dropdown">
                                         <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-
                                             <div class="product-widget">
                                                 <div class="product-img">
                                                     <img src="./img/product02.png" alt="">
@@ -137,7 +117,9 @@
                                     <a href="#">
                                         <i class="fa fa-bars"></i>
                                         <span>Menu</span>
+                                        
                                     </a>
+                                   
                                 </div>
                                 <!-- /Menu Toogle -->
                             </div>

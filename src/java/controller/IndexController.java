@@ -11,14 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.bean.Carrinho;
+import model.bean.Categoria;
 import model.bean.Produto;
+import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
 
 public class IndexController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = "/WEB-INF/jsp/index.jsp";
+        String url = "/WEB-INF/jsp/index2.jsp";
+        
+        CategoriaDAO cat = new CategoriaDAO();
+        List<Categoria> categoria = cat.listarTodos();
+        request.setAttribute("categorias", categoria);
 
         ProdutoDAO dao = new ProdutoDAO();
         List<Produto> produtos = dao.listarTodos();
