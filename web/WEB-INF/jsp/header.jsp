@@ -30,11 +30,11 @@
                         <c:choose>
                             <c:when test="${empty usuarios}">
                                 <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                           
-                            </c:when>
-                            <c:otherwise>                          
+                                </c:when>
+                                <c:otherwise>                          
                                 <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
 
                     </ul>
                 </div>
@@ -61,7 +61,7 @@
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
-                               
+
 
                                     <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
                                     <button  class="search-btn" type="submit">Search</button>
@@ -89,73 +89,81 @@
                                     </a>
                                     <div class="cart-dropdown">
                                         <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product02.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
+                                            <c:choose>
+                                                <c:when test="${empty carrinhos}">
+                                                    <li>
+                                                        <p>O seu carrinho está vazio.</p>
+                                                    </li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:forEach items="${carrinhos}" var="carrinho">
+                                                        <div class="product-widget">
+                                                            <div class="product-img">
+                                                                <img class="img-card-cart" src="data:image/jpeg;base64,${carrinho.imagemBase64}" alt="${carrinho.nome}">
+                                                            </div>
+                                                            <div class="product-body">
+                                                                <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
+                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valor}</h4>
+                                                            </div>
+                                                            <button class="delete"><i class="fa fa-close"></i></button>
+                                                        </div>
+                                                    </c:forEach>
+                                                </c:otherwise>
+                                             </c:choose>       
+                                            </div>
+                                            <div class="cart-summary">
+                                                <small>3 Item(s) selected</small>
+                                                <h5>SUBTOTAL: $2940.00</h5>
+                                            </div>
+                                            <div class="cart-btns">
+                                                <a href="#">View Cart</a>
+                                                <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: $2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="#">View Cart</a>
-                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
                                     </div>
-                                </div>
-                                <!-- /Cart -->
+                                    <!-- /Cart -->
 
-                                <!-- Menu Toogle -->
-                                <div class="menu-toggle">
-                                    <a href="#">
-                                        <i class="fa fa-bars"></i>
-                                        <span>Menu</span>
-                                        
-                                    </a>
-                                   
+                                    <!-- Menu Toogle -->
+                                    <div class="menu-toggle">
+                                        <a href="#">
+                                            <i class="fa fa-bars"></i>
+                                            <span>Menu</span>
+
+                                        </a>
+
+                                    </div>
+                                    <!-- /Menu Toogle -->
                                 </div>
-                                <!-- /Menu Toogle -->
                             </div>
+                            <!-- /ACCOUNT -->
                         </div>
-                        <!-- /ACCOUNT -->
+                        <!-- row -->
                     </div>
-                    <!-- row -->
+                    <!-- container -->
                 </div>
+                <!-- /MAIN HEADER -->
+            </header>
+            <!-- /HEADER -->
+
+            <!-- NAVIGATION -->
+            <nav id="navigation">
                 <!-- container -->
-            </div>
-            <!-- /MAIN HEADER -->
-        </header>
-        <!-- /HEADER -->
-
-        <!-- NAVIGATION -->
-        <nav id="navigation">
-            <!-- container -->
-            <div class="container">
-                <!-- responsive-nav -->
-                <div id="responsive-nav">
-                    <!-- NAV -->
-                    <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <c:forEach items="${categorias}" var="categoria">
-                            <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
-                        </c:forEach>
-
-                    </ul>
-                    <!-- /NAV -->
+                <div class="container">
+                    <!-- responsive-nav -->
+                    <div id="responsive-nav">
+                        <!-- NAV -->
+                        <ul class="main-nav nav navbar-nav">
+                            <li class="active"><a href="./inicio">Home</a></li>
+                                <c:forEach items="${categorias}" var="categoria">
+                                <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
+                                </c:forEach>
+                        </ul>
+                        <!-- /NAV -->
+                    </div>
+                    <!-- /responsive-nav -->
                 </div>
-                <!-- /responsive-nav -->
-            </div>
-            <!-- /container -->
-        </nav>
-        <!-- /NAVIGATION -->
-
-
-    </body>
-</html>
+                <!-- /container -->
+            </nav>
+            <!-- /NAVIGATION -->
+        </body>
+    </html>

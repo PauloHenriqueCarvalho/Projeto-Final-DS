@@ -15,6 +15,13 @@ and open the template in the editor.
     border-style: none;
 };
 
+.product-img .img-card-cart {
+    vertical-align: middle;
+    height: 50px;
+    width: 50px;
+    border-style: none;
+};
+
 .section-listar{
     width: 400px;
     height: 200px;

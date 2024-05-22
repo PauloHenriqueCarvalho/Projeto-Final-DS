@@ -20,10 +20,11 @@ public class Produto {
     private String imagemBase64;
     private Estoque estoque;
 
+    private int quantidade;
     public Produto() {
     }
 
-    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque) {
+    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque, int quantidade) {
         this.idProduto = idProduto;
         this.categoria = categoria;
         this.nome = nome;
@@ -32,6 +33,7 @@ public class Produto {
         this.imagemBytes = imagemBytes;
         this.imagemBase64 = imagemBase64;
         this.estoque = estoque;
+        this.quantidade = quantidade;
     }
 
     public int getIdProduto() {
@@ -105,8 +107,16 @@ public class Produto {
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
     }
-    
-    
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+   
     
     
     

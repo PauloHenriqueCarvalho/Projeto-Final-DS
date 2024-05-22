@@ -14,9 +14,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.bean.Carrinho;
+import model.bean.CarrinhoProduto;
 import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.Usuario;
+import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
 import model.dao.UsuarioDAO;
@@ -30,8 +33,9 @@ public class ProdutoUnicoCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
-        
+
         int idProduto = Integer.parseInt(request.getParameter("idPro"));
+        Produto.setIdProdutoStatic(idProduto);
         ProdutoDAO dao = new ProdutoDAO();
         Produto produtos = dao.buscarPorId(idProduto);
         if (produtos.getImagemBytes() != null) {
@@ -44,7 +48,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
         List<Categoria> categoria = cat.listarTodos();
         System.out.println("Lista cateogira: " + categoria);
         request.setAttribute("categorias", categoria);
-        
+
         UsuarioDAO usu = new UsuarioDAO();
         List<Usuario> usuarios = usu.getUsuarioById(Usuario.getIdUsuarioStatic());
         request.setAttribute("usuarios", usuarios);
@@ -53,40 +57,55 @@ public class ProdutoUnicoCliente extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = request.getServletPath();
+        if (url.equals("/adicionarProduto")) {
+            System.out.println("Add Produto");
+            adicionarProduto(request, response);
+
+        } else {
+            processRequest(request, response);
+        }
+
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    private void adicionarProduto(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
+        CarrinhoProduto c = new CarrinhoProduto();
+        Carrinho carrinho = new Carrinho();
+        Produto p = new Produto();
+
+        String idProdutoStr = "" + Produto.getIdProdutoStatic();
+        String quantidadeStr = "3";
+        System.out.println("IdProduto : " + idProdutoStr);
+        if (idProdutoStr != null && quantidadeStr != null) {
+            p.setIdProduto(Integer.parseInt(idProdutoStr));
+            int quantidade = Integer.parseInt(quantidadeStr);
+
+            carrinho.setId_carrinho(Usuario.getIdUsuarioStatic());
+            carrinho.setId_usuario(Usuario.getIdUsuarioStatic());
+
+            c.setProduto(p);
+            c.setCarrinho(carrinho);
+            c.setQuantidade(quantidade);
+
+            car.adicionarProdutoAoCarrinho(c);
+            System.out.println("Adicionou");
+        } else {
+            System.out.println("NULL");
+        }
+
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";

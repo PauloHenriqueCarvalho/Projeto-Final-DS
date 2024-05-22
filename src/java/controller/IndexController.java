@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.bean.Carrinho;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
 
@@ -21,7 +22,7 @@ public class IndexController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "/WEB-INF/jsp/index2.jsp";
-        
+
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
@@ -35,6 +36,20 @@ public class IndexController extends HttpServlet {
             }
         }
         request.setAttribute("produtos", produtos);
+        
+        
+        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();   
+        List<Produto> carrinho = car.listarProdutosDoCarrinho();
+         for (Produto c : carrinho) {
+            if (c.getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                c.setImagemBase64(imagemBase64);
+                c.setQuantidade(3);
+            }
+        }
+        
+        System.out.println("Carrinho: " + carrinho);
+        request.setAttribute("carrinhos", carrinho);
 
         RequestDispatcher d = getServletContext().getRequestDispatcher(url);
         d.forward(request, response);
@@ -51,13 +66,13 @@ public class IndexController extends HttpServlet {
         } else if (url.equals("/carrinho")) {
             exibirCarrinho(request, response);
         } else if (url.equals("/addCarrinho")) {
-             System.out.println("add");
+            System.out.println("add");
             adicionarItem(request, response);
         } else if (url.equals("/removerCarrinho")) {
-             System.out.println("rem");
+            System.out.println("rem");
             removerItem(request, response);
         } else if (url.equals("/finalizarPedido")) {
-             System.out.println("final");
+            System.out.println("final");
             finalizarPedido(request, response);
         } else {
             processRequest(request, response);
@@ -85,19 +100,6 @@ public class IndexController extends HttpServlet {
 
     private void adicionarItem(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        if (carrinho == null) {
-            carrinho = new Carrinho(new ArrayList<>());
-            session.setAttribute("carrinho", carrinho);
-        }
-
-        int produtoId = Integer.parseInt(request.getParameter("id"));
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        Produto produto = produtoDAO.buscarPorId(produtoId);
-        int quantidade = Integer.parseInt(request.getParameter("quantidade"));
-
-        carrinho.addItem(produto, quantidade);
 
         response.setContentType("text/plain");
         response.getWriter().write("Produto adicionado ao carrinho!");
@@ -105,12 +107,6 @@ public class IndexController extends HttpServlet {
 
     private void removerItem(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        if (carrinho != null) {
-            int produtoId = Integer.parseInt(request.getParameter("id"));
-            carrinho.removerItem(produtoId);
-        }
 
         response.sendRedirect(request.getContextPath() + "/carrinho");
     }
@@ -123,13 +119,6 @@ public class IndexController extends HttpServlet {
 
     private void finalizarPedido(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        if (carrinho != null && !carrinho.getProdutos().isEmpty()) {
-            // Salvar o pedido no banco de dados (implementar a lógica conforme necessário)
-            // Limpar o carrinho
-            session.removeAttribute("carrinho");
-        }
 
         response.sendRedirect(request.getContextPath() + "/pedidoFinalizado.jsp");
     }

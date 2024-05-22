@@ -9,48 +9,34 @@ import java.util.List;
 
 
 public class Carrinho {
-    private List<ProdutoCarrinho> produtos;
+    private int id_carrinho;
+    private int id_usuario;
 
     public Carrinho() {
     }
 
-    public Carrinho(List<ProdutoCarrinho> produtos) {
-        this.produtos = produtos;
+    public Carrinho(int id_carrinho, int id_usuario) {
+        this.id_carrinho = id_carrinho;
+        this.id_usuario = id_usuario;
     }
 
-    public List<ProdutoCarrinho> getProdutos() {
-        return produtos;
+    public int getId_carrinho() {
+        return id_carrinho;
     }
 
-    public void setProdutos(List<ProdutoCarrinho> produtos) {
-        this.produtos = produtos;
+    public void setId_carrinho(int id_carrinho) {
+        this.id_carrinho = id_carrinho;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
     
-    public void addItem(Produto produto, int qtd){
-        for(ProdutoCarrinho item : produtos) {
-            if(item.getProduto().getIdProduto() == produto.getIdProduto()){
-                item.setQuantidade(item.getQuantidade() + qtd);
-                return;
-            }
-        }
-        produtos.add(new ProdutoCarrinho(produto, qtd));
-    }
     
-    public void removerItem(int produtoId){
-        produtos.removeIf(item -> item.getProduto().getIdProduto() == produtoId);
-    }
-    
-    public List<ProdutoCarrinho> getItens(){
-        return produtos;
-    }
-    
-    public double getTotal(){
-        double total = 0.0;
-        for(ProdutoCarrinho item : produtos){
-            total+= item.getQuantidade() * item.getProduto().getValor();
-        }
-        return total;
-    }
     
     
     

@@ -124,6 +124,11 @@
         <servlet-name>ProdutoUnicoCliente</servlet-name>
         <url-pattern>/produto-unico</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProdutoUnicoCliente</servlet-name>
+        <url-pattern>/adicionarProduto</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

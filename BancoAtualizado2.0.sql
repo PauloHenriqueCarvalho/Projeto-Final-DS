@@ -1,5 +1,5 @@
 -- Criação do banco de dados
-drop DATABASE projeto_final_db;
+DROP DATABASE IF EXISTS projeto_final_db;
 CREATE DATABASE projeto_final_db;
 USE projeto_final_db;
 
@@ -8,7 +8,7 @@ CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     email VARCHAR(70) NOT NULL,
-    senha VARCHAR(20) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(14),
     cpf VARCHAR(14) UNIQUE NOT NULL,
     data_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -34,12 +34,12 @@ CREATE TABLE endereco (
 	pais VARCHAR(100),
 	estado VARCHAR(100),
     bairro VARCHAR(100),
-    complemento VARCHAR(100)
+    complemento VARCHAR(100),
+    id_usuario int,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 
-INSERT INTO usuario (nome, email, senha, telefone, cpf, acesso) 
-VALUES ('Administrador', 'administrador@gmail.com', 'adm', '5551999999999', '12345678901', 'administrador');
 
 
 -- Tabela de categorias
@@ -65,7 +65,6 @@ CREATE TABLE produto (
 
 -- Tabela de subcategorias
 INSERT INTO categoria (nome) VALUES ('Bolos'), ('Salgados'), ('Doces'), ('Camisetas');
-INSERT INTO produto (nome, valor, id_categoria, descricao) VALUES ('batata', '12', '1','asdada');
 
 -- Tabela de estoque
 CREATE TABLE estoque (
@@ -108,15 +107,6 @@ INSERT INTO forma_pagamento (nome, descricao)
 VALUES ('Cartão de Débito', 'Pagamento realizado através de cartão de débito.');
 
 
--- Tabela de pedidos de pagamento
-CREATE TABLE pedido_pagamento (
-    id_pedido_pagamento INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT NOT NULL,
-    id_forma_pagamento INT NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
-    FOREIGN KEY (id_forma_pagamento) REFERENCES forma_pagamento(id_forma_pagamento)
-);
-
     -- Tabela de carrinho
     CREATE TABLE carrinho (
         id_carrinho INT AUTO_INCREMENT PRIMARY KEY,
@@ -124,7 +114,7 @@ CREATE TABLE pedido_pagamento (
         FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
     );
 
-    -- Tabela de produtos no carrinho
+    -- Tabela de probdutos no carrinho
     CREATE TABLE carrinho_produto (
         id_carrinho_produto INT AUTO_INCREMENT PRIMARY KEY,
         id_carrinho INT NOT NULL,
@@ -133,6 +123,15 @@ CREATE TABLE pedido_pagamento (
         FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho),
         FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
     );
+
+-- Tabela de pedidos de pagamento
+CREATE TABLE pedido_pagamento (
+    id_pedido_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_forma_pagamento INT NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_forma_pagamento) REFERENCES forma_pagamento(id_forma_pagamento)
+);
 
 -- Tabela de produtos em pedidos
 CREATE TABLE produto_pedido (
@@ -167,6 +166,47 @@ CREATE TABLE despesasEmpresa(
     data DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE wishlist (
+    id_wishlist INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+-- Criação da tabela de produtos na wishlist
+CREATE TABLE wishlist_produto (
+    id_wishlist_produto INT AUTO_INCREMENT PRIMARY KEY,
+    id_wishlist INT NOT NULL,
+    id_produto INT NOT NULL,
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_wishlist) REFERENCES wishlist(id_wishlist),
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
+);
+
+
+CREATE TABLE auditoria (
+    id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
+    tabela_alterada VARCHAR(100),
+    operacao VARCHAR(10),
+    dados_antigos TEXT,
+    dados_novos TEXT,
+    usuario_id INT,
+    data_operacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+    
+    
+
+DELIMITER //
+CREATE TRIGGER before_usuario_update
+BEFORE UPDATE ON usuario
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabela_alterada, operacao, dados_antigos, dados_novos, usuario_id)
+    VALUES ('usuario', 'UPDATE', OLD.email, NEW.email, NEW.id_usuario);
+END;
+//
+DELIMITER ;
+
 
 -- Trigger para inserção de produto no estoque
 DELIMITER //
@@ -191,6 +231,11 @@ END;
 
 DELIMITER ;
 
+
+INSERT INTO usuario (nome, email, senha, telefone, cpf, acesso) 
+VALUES ('Administrador', 'administrador@gmail.com', 'adm', '5551999999999', '12345678901', 'administrador');
+INSERT INTO usuario (nome, email, senha, telefone, cpf) 
+VALUES ('a', 'a@gmail.com', 'a', '5551999199999', '12345678301');
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 

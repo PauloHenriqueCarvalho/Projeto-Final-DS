@@ -79,7 +79,10 @@
                     </div>
 
                     <div class="col-md-5">
-                        <div class="product-details">
+                         <form method="post" action="adicionarProduto" name="frmAdicionar" class="product-details">
+                             
+                             <input type="hidden" name="idProduto" id="idProduto" value="${produto.idProduto}">
+                             
                             <h2 class="product-name">${produtos.nome}</h2>
                             <div>
                                 <div class="product-rating">
@@ -110,17 +113,15 @@
                                 <div class="qty-label">
                                     Quantidade
                                     <div class="input-number">
-                                        <input type="number">
+                                        <input type="number" name="qtd" id="qtd">
                                         <span class="qty-up">+</span>
                                         <span class="qty-down">-</span>
                                     </div>
                                 </div>
 
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+                                <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
                             </div>
-
-
-                        </div>
+                        </form>
                     </div>
                     <div class="col-md-12">
                         <div id="product-tab">
