@@ -8,8 +8,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <!-- Font Awesome -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -25,7 +25,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
             rel="stylesheet"
             />
-         <link rel="stylesheet" href="./styles/cadastro.css">
+        <link rel="stylesheet" href="./styles/cadastro.css">
         <title>Login</title>
     </head>
     <body>      
@@ -55,7 +55,12 @@
                                         </div>
 
                                         <p class="text-center text-muted mt-5 mb-0">Não tem conta? <a href="./cadastroUsuario"
-                                                                                                      class="fw-bold text-body"><u>Cadastrar-se</u></a></p>
+                                         <c:if test="${not empty errorMessage}">
+                                            <div style="color: red;">
+                                                ${errorMessage}
+                                            </div>
+                                            ,
+                                        </c:if>
                                     </form>
 
                                 </div>

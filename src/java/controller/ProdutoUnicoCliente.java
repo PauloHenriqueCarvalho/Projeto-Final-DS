@@ -87,7 +87,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
         String idProdutoStr = "" + Produto.getIdProdutoStatic();
         String quantidadeStr = "3";
         System.out.println("IdProduto : " + idProdutoStr);
-        if (idProdutoStr != null && quantidadeStr != null) {
+        if (idProdutoStr != null && quantidadeStr != null && Usuario.getIdUsuarioStatic() != 0) {
             p.setIdProduto(Integer.parseInt(idProdutoStr));
             int quantidade = Integer.parseInt(quantidadeStr);
 
@@ -101,6 +101,10 @@ public class ProdutoUnicoCliente extends HttpServlet {
             car.adicionarProdutoAoCarrinho(c);
             System.out.println("Adicionou");
         } else {
+            String errorMessage = "Voce precisa estar logado para Adicionar ao carrinho!";
+            request.setAttribute("errorMessage", errorMessage);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/produtoUnicoCliente.jsp");
+            dispatcher.forward(request, response);
             System.out.println("NULL");
         }
 

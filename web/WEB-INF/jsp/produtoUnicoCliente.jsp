@@ -120,6 +120,11 @@
                                 </div>
 
                                 <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+                                 <c:if test="${not empty errorMessage}">
+                                    <div style="color: red;">
+                                        ${errorMessage}
+                                    </div>
+                                </c:if>
                             </div>
                         </form>
                     </div>
