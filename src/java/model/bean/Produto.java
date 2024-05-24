@@ -19,8 +19,9 @@ public class Produto {
     private byte[] imagemBytes;
     private String imagemBase64;
     private Estoque estoque;
-
     private int quantidade;
+
+   
     public Produto() {
     }
 

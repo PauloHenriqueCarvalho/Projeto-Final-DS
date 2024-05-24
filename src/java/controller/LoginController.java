@@ -66,7 +66,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        String nextPage = "/WEB-INF/jsp/login.jsp"; // Definindo a página padrão
+        String nextPage = "/WEB-INF/jsp/login.jsp";
 
         if (url.equals("/logar")) {
             Usuario user = new Usuario();

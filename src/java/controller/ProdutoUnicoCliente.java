@@ -33,11 +33,15 @@ public class ProdutoUnicoCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
-
-        int idProduto = Integer.parseInt(request.getParameter("idPro"));
-        Produto.setIdProdutoStatic(idProduto);
+        
+        if(Produto.getIdProdutoStatic() == 0){
+             int idProduto = Integer.parseInt(request.getParameter("idPro"));
+             Produto.setIdProdutoStatic(idProduto);
+        }
+       
+        
         ProdutoDAO dao = new ProdutoDAO();
-        Produto produtos = dao.buscarPorId(idProduto);
+        Produto produtos = dao.buscarPorId(Produto.getIdProdutoStatic());
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
             produtos.setImagemBase64(imagemBase64);
@@ -85,7 +89,8 @@ public class ProdutoUnicoCliente extends HttpServlet {
         Produto p = new Produto();
 
         String idProdutoStr = "" + Produto.getIdProdutoStatic();
-        String quantidadeStr = "3";
+        String quantidadeStr = request.getParameter("qtd");
+        System.out.println("qtd: " + quantidadeStr);
         System.out.println("IdProduto : " + idProdutoStr);
         if (idProdutoStr != null && quantidadeStr != null && Usuario.getIdUsuarioStatic() != 0) {
             p.setIdProduto(Integer.parseInt(idProdutoStr));
@@ -93,18 +98,18 @@ public class ProdutoUnicoCliente extends HttpServlet {
 
             carrinho.setId_carrinho(Usuario.getIdUsuarioStatic());
             carrinho.setId_usuario(Usuario.getIdUsuarioStatic());
-
+ 
             c.setProduto(p);
             c.setCarrinho(carrinho);
             c.setQuantidade(quantidade);
-
+            
             car.adicionarProdutoAoCarrinho(c);
-            System.out.println("Adicionou");
+            response.sendRedirect(request.getContextPath() + "/inicio");
         } else {
             String errorMessage = "Voce precisa estar logado para Adicionar ao carrinho!";
+            response.sendRedirect(request.getContextPath() + "/produto-unico");
             request.setAttribute("errorMessage", errorMessage);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/produtoUnicoCliente.jsp");
-            dispatcher.forward(request, response);
+            
             System.out.println("NULL");
         }
 

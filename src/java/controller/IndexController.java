@@ -44,7 +44,7 @@ public class IndexController extends HttpServlet {
             if (c.getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
                 c.setImagemBase64(imagemBase64);
-                c.setQuantidade(3);
+        
             }
         }
         

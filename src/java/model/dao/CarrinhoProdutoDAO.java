@@ -94,9 +94,10 @@ public class CarrinhoProdutoDAO {
         List<Produto> produtos = new ArrayList<>();
         Connection con = Conexao.getConn();
         try {
-            stmt = con.prepareStatement("SELECT p.* FROM Produto p "
-                    + "INNER JOIN carrinho_produto cp ON p.id_Produto = cp.id_produto "
-                    + "WHERE cp.id_carrinho = ?");
+            stmt = con.prepareStatement("SELECT p.*, cp.quantidade\n"
+                    + "FROM Produto p\n"
+                    + "INNER JOIN carrinho_produto cp ON p.id_Produto = cp.id_produto\n"
+                    + "WHERE cp.id_carrinho = ?;");
             stmt.setInt(1, Usuario.getIdUsuarioStatic());
             rs = stmt.executeQuery();
 
@@ -107,7 +108,7 @@ public class CarrinhoProdutoDAO {
                 p.setCategoria(rs.getInt("id_categoria"));
                 p.setValor(rs.getFloat("valor"));
                 p.setDescricao(rs.getString("descricao"));
-
+                p.setQuantidade(rs.getInt("quantidade"));
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
