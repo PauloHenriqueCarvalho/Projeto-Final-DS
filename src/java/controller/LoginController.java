@@ -84,7 +84,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/inicioAdministrador");
                         return;
                     } else if(Usuario.getAcessoStatic() == 2){
-                        int idUsuario = valida.getId(request.getParameter("funcionario"));                   
+                        int idUsuario = valida.getId(request.getParameter("-----------------"));                   
                         response.sendRedirect(request.getContextPath() + "/inicioFuncionario");
                         return;
                     } else if(Usuario.getAcessoStatic() == 3){

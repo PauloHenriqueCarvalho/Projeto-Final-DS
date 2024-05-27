@@ -5,6 +5,7 @@
  */
 package model.bean;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -21,6 +22,7 @@ public class Usuario {
     private String cpf;
     private Timestamp dataRegistro;
     private String acesso;
+    private Date data_nascimento; // Use java.sql.Date
     private static int acessoStatic;
 
     public Usuario() {

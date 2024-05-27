@@ -51,7 +51,7 @@
                                             <label class="form-label" for="form3Example4cg">Senha</label>
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Cadastrar</button>
+                                            <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                                         </div>
 
                                         <p class="text-center text-muted mt-5 mb-0">Não tem conta? <a href="./cadastroUsuario"
