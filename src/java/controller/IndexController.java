@@ -13,16 +13,29 @@ import javax.servlet.http.HttpSession;
 import model.bean.Carrinho;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.SingOut;
+import model.bean.Usuario;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.UsuarioDAO;
 
 public class IndexController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "/WEB-INF/jsp/index2.jsp";
-
+        
+        if(SingOut.isSair()){
+            Usuario.setIdUsuarioStatic(0);
+            SingOut.setSair(false);
+        }
+        if(Usuario.getIdUsuarioStatic() != 0) {
+            UsuarioDAO u = new UsuarioDAO();
+            List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            request.setAttribute("usuario", usuarios);
+        }
+            
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);

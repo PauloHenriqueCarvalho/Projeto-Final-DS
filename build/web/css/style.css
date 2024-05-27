@@ -382,6 +382,20 @@ textarea.input {
   margin-right: 5px;
 }
 
+.header-btn-logout{
+  background: none;
+  border: none;
+  overflow: hidden;
+  border: transparent;
+}
+
+.teste-1{
+  background: none;
+  border: none;
+  overflow: hidden;
+  border: transparent;
+}
+
 /*----------------------------*\
 	Logo
 \*----------------------------*/
@@ -731,6 +745,12 @@ textarea.input {
 /*=========================================================
 	04 -> CATEGORY SHOP
 ===========================================================*/
+
+.sair{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
 
 .shop {
   position: relative;

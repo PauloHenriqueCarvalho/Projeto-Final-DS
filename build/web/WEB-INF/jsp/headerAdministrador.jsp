@@ -81,10 +81,13 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="./inicio">
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    <span>Sign Out</span>
-                                </a>
+                                <form action="sair" method="post">
+                                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </form>
+
                             </li>
                         </ul>
                     </li>

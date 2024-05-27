@@ -28,11 +28,19 @@
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
 
                         <c:choose>
-                            <c:when test="${empty usuarios}">
-                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                           
+                            <c:when test="${empty usuario}">
+                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                 
+                                <button class="teste-1">aaaa</button>          
                                 </c:when>
                                 <c:otherwise>                          
                                 <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                                <form action="sair" method="post" class="header-links pull-right">
+                                        <button>aaaa</button>
+                                        <button type="submit" class="sair">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </form>
                                 </c:otherwise>
                             </c:choose>
 

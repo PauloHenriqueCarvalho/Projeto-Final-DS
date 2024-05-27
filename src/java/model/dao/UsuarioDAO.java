@@ -85,31 +85,22 @@ public class UsuarioDAO {
         Usuario usuario = null;
         List<Usuario> usuarios = new ArrayList<>();
         try {
-            // Obtém uma conexão com o banco de dados (substitua este código pelo método de obtenção de conexão adequado)
-            conn = Conexao.getConn(); // Substitua MeuConectorBancoDados pelo seu conector
-
-            // Prepara a consulta SQL
+           
+            conn = Conexao.getConn(); 
             String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
             stmt = conn.prepareStatement(sql);
-
-            // Define o ID do usuário na consulta preparada
             stmt.setInt(1, idUsuario);
-
-            // Executa a consulta
             rs = stmt.executeQuery();
 
-            // Verifica se a consulta retornou algum resultado
             if (rs.next()) {
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("id_usuario"));
                 usuario.setNome(rs.getString("nome"));
                 usuarios.add(usuario);
-                // Adicione outros atributos do usuário conforme necessário
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Trate adequadamente esta exceção em sua aplicação
+            e.printStackTrace();
         } finally {
-            // Fecha os recursos (ResultSet, PreparedStatement e Connection)
             try {
                 if (rs != null) {
                     rs.close();
@@ -121,7 +112,7 @@ public class UsuarioDAO {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace(); // Trate adequadamente esta exceção em sua aplicação
+                e.printStackTrace(); 
             }
         }
 

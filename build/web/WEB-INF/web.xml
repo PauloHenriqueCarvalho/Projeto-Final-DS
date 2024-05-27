@@ -97,6 +97,10 @@
         <url-pattern>/inicioAdministrador</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>InicioAdministradorController</servlet-name>
+        <url-pattern>/sair</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>InicioFuncionarioController</servlet-name>
         <url-pattern>/inicioFuncionario</url-pattern>
     </servlet-mapping>
