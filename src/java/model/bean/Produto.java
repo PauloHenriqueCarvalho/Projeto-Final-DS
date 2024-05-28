@@ -20,12 +20,13 @@ public class Produto {
     private String imagemBase64;
     private Estoque estoque;
     private int quantidade;
+    private int idProduto_Carrinho;
 
    
     public Produto() {
     }
 
-    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque, int quantidade) {
+    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque, int quantidade, int idProduto_Carrinho) {
         this.idProduto = idProduto;
         this.categoria = categoria;
         this.nome = nome;
@@ -35,6 +36,7 @@ public class Produto {
         this.imagemBase64 = imagemBase64;
         this.estoque = estoque;
         this.quantidade = quantidade;
+        this.idProduto_Carrinho = idProduto_Carrinho;
     }
 
     public int getIdProduto() {
@@ -117,6 +119,16 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
+    public int getIdProduto_Carrinho() {
+        return idProduto_Carrinho;
+    }
+
+    public void setIdProduto_Carrinho(int idProduto_Carrinho) {
+        this.idProduto_Carrinho = idProduto_Carrinho;
+    }
+
+    
+    
    
     
     

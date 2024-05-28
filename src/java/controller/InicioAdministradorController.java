@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
-import model.bean.SingOut;
+import model.bean.Projeto;
 import model.dao.CategoriaDAO;
 
 /**
@@ -70,7 +70,7 @@ public class InicioAdministradorController extends HttpServlet {
             throws ServletException, IOException {
         String url = request.getServletPath();
         if(url.equals("/sair")){
-            SingOut.setSair(true);
+            Projeto.setSair(true);
             response.sendRedirect(request.getContextPath() + "/inicio");
             
         } else {

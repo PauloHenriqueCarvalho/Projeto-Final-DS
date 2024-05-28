@@ -18,6 +18,7 @@ import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
@@ -34,28 +35,27 @@ public class ProdutoUnicoCliente extends HttpServlet {
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
         
-        if(Produto.getIdProdutoStatic() == 0){
-             int idProduto = Integer.parseInt(request.getParameter("idPro"));
-             Produto.setIdProdutoStatic(idProduto);
+        //Valida se o Usuario ta logado
+        if(Usuario.getIdUsuarioStatic() != 0) {
+            UsuarioDAO u = new UsuarioDAO();
+            List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            request.setAttribute("usuario", usuarios);
         }
-       
-        
+            
+        //pega os dados do produto pelo id
         ProdutoDAO dao = new ProdutoDAO();
-        Produto produtos = dao.buscarPorId(Produto.getIdProdutoStatic());
+        Produto produtos = dao.buscarPorId(Projeto.getIdProdutoAtual());
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
             produtos.setImagemBase64(imagemBase64);
         }
         request.setAttribute("produtos", produtos);
-
+        
+        //Lista as categoria do header 
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
-        System.out.println("Lista cateogira: " + categoria);
         request.setAttribute("categorias", categoria);
 
-        UsuarioDAO usu = new UsuarioDAO();
-        List<Usuario> usuarios = usu.getUsuarioById(Usuario.getIdUsuarioStatic());
-        request.setAttribute("usuarios", usuarios);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
@@ -90,8 +90,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
 
         String idProdutoStr = "" + Produto.getIdProdutoStatic();
         String quantidadeStr = request.getParameter("qtd");
-        System.out.println("qtd: " + quantidadeStr);
-        System.out.println("IdProduto : " + idProdutoStr);
+        
         if (idProdutoStr != null && quantidadeStr != null && Usuario.getIdUsuarioStatic() != 0) {
             p.setIdProduto(Integer.parseInt(idProdutoStr));
             int quantidade = Integer.parseInt(quantidadeStr);
@@ -110,7 +109,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/produto-unico");
             request.setAttribute("errorMessage", errorMessage);
             
-            System.out.println("NULL");
         }
 
     }

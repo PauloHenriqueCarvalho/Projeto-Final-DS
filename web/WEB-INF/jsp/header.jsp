@@ -31,18 +31,17 @@
                             <c:when test="${empty usuario}">
                                 <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                 
                                 <button class="teste-1">aaaa</button>          
-                                </c:when>
-                                <c:otherwise>                          
+                            </c:when>
+                            <c:otherwise>                          
                                 <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
                                 <form action="sair" method="post" class="header-links pull-right">
-                                        <button>aaaa</button>
-                                        <button type="submit" class="sair">
+                                    <button type="submit" class="sair">
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                         <span>Sign Out</span>
                                     </button>
                                 </form>
-                                </c:otherwise>
-                            </c:choose>
+                            </c:otherwise>
+                        </c:choose>
 
                     </ul>
                 </div>
@@ -113,65 +112,70 @@
                                                                 <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
                                                                 <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valor}</h4>
                                                             </div>
-                                                            <button class="delete"><i class="fa fa-close"></i></button>
+                                                            <form action="deletarProduto" method="post">
+                                                                <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
+                                                                <button type="submit" class="delete"><i class="fa fa-close"></i></button>
+                                                            </form>
+                                                            
                                                         </div>
                                                     </c:forEach>
-                                                </c:otherwise>
-                                             </c:choose>       
-                                            </div>
-                                            <div class="cart-summary">
-                                                <small>3 Item(s) selected</small>
-                                                <h5>SUBTOTAL: $2940.00</h5>
-                                            </div>
-                                            <div class="cart-btns">
-                                                <a href="#">View Cart</a>
-                                                <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /Cart -->
-
-                                    <!-- Menu Toogle -->
-                                    <div class="menu-toggle">
-                                        <a href="#">
-                                            <i class="fa fa-bars"></i>
-                                            <span>Menu</span>
-
-                                        </a>
+                                                </div>
+                                                <div class="cart-summary">
+                                                    <small>3 Item(s) selected</small>
+                                                    <h5>SUBTOTAL: $2940.00</h5>
+                                                </div>
+                                                <div class="cart-btns">
+                                                    <a href="#">View Cart</a>
+                                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>       
 
                                     </div>
-                                    <!-- /Menu Toogle -->
                                 </div>
-                            </div>
-                            <!-- /ACCOUNT -->
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- container -->
-                </div>
-                <!-- /MAIN HEADER -->
-            </header>
-            <!-- /HEADER -->
+                                <!-- /Cart -->
 
-            <!-- NAVIGATION -->
-            <nav id="navigation">
-                <!-- container -->
-                <div class="container">
-                    <!-- responsive-nav -->
-                    <div id="responsive-nav">
-                        <!-- NAV -->
-                        <ul class="main-nav nav navbar-nav">
-                            <li class="active"><a href="./inicio">Home</a></li>
-                                <c:forEach items="${categorias}" var="categoria">
-                                <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
-                                </c:forEach>
-                        </ul>
-                        <!-- /NAV -->
+                                <!-- Menu Toogle -->
+                                <div class="menu-toggle">
+                                    <a href="#">
+                                        <i class="fa fa-bars"></i>
+                                        <span>Menu</span>
+
+                                    </a>
+
+                                </div>
+                                <!-- /Menu Toogle -->
+                            </div>
+                        </div>
+                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- /responsive-nav -->
+                    <!-- row -->
                 </div>
-                <!-- /container -->
-            </nav>
-            <!-- /NAVIGATION -->
-        </body>
-    </html>
+                <!-- container -->
+            </div>
+            <!-- /MAIN HEADER -->
+        </header>
+        <!-- /HEADER -->
+
+        <!-- NAVIGATION -->
+        <nav id="navigation">
+            <!-- container -->
+            <div class="container">
+                <!-- responsive-nav -->
+                <div id="responsive-nav">
+                    <!-- NAV -->
+                    <ul class="main-nav nav navbar-nav">
+                        <li class="active"><a href="./inicio">Home</a></li>
+                            <c:forEach items="${categorias}" var="categoria">
+                            <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
+                            </c:forEach>
+                    </ul>
+                    <!-- /NAV -->
+                </div>
+                <!-- /responsive-nav -->
+            </div>
+            <!-- /container -->
+        </nav>
+        <!-- /NAVIGATION -->
+    </body>
+</html>

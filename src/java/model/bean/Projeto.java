@@ -9,10 +9,19 @@ package model.bean;
  *
  * @author Senai
  */
-public class SingOut {
+public class Projeto {
     private static boolean sair;
+    private static int idProdutoAtual;
 
-    public SingOut() {
+    public Projeto() {
+    }
+
+    public static int getIdProdutoAtual() {
+        return idProdutoAtual;
+    }
+
+    public static void setIdProdutoAtual(int idProdutoAtual) {
+        Projeto.idProdutoAtual = idProdutoAtual;
     }
 
     public static boolean isSair() {
@@ -20,7 +29,7 @@ public class SingOut {
     }
 
     public static void setSair(boolean sair) {
-        SingOut.sair = sair;
+        Projeto.sair = sair;
     }
 
     

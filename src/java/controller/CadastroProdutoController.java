@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.Usuario;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.UsuarioDAO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -30,22 +32,20 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class CadastroProdutoController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoriaDAO dao = new CategoriaDAO();
         List<Categoria> listaCategorias = dao.listarTodos();
         request.setAttribute("categorias", listaCategorias);
         String nextPage = "/WEB-INF/jsp/cadastroProduto.jsp";
-
+        
+        if(Usuario.getIdUsuarioStatic() != 0) {
+            UsuarioDAO u = new UsuarioDAO();
+            List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            request.setAttribute("usuario", usuarios);
+        }
+            
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
     }

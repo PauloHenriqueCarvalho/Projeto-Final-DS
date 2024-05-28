@@ -85,8 +85,8 @@
                         </div>
                         <div class="row">
                             <c:forEach items="${produtos}" var="produto">
-                                <a href="./produto-unico?idPro=${produto.idProduto}">
                                     <div class="col-md-4 col-xs-6">
+                                        
                                         <div class="product">
                                             <div class="product-img">
                                                 <img class="img-card" src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}">
@@ -107,17 +107,18 @@
                                                     <i class="fa fa-star"></i>
                                                 </div>
                                                 <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                    <form class="product-btns"  action="listaDesejos" method="post">
+                                                        <input type="hidden" name="idProduto" id="idProduto" value="${produto.idProduto}">
+                                                        <button type="submit" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Adicionar na Lista de Desejos</span></button>
+                                                    </form>
                                                 </div>
                                             </div>
-                                            <div class="add-to-cart">
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                            </div>
-                                        </div>
+                                            <form  action="produtoPage" method="post" class="add-to-cart">
+                                                <input type="hidden" name="idProduto" id="idProduto" value="${produto.idProduto}">
+                                                <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Add ao Carrinho</button>
+                                            </form>
+                                        </div>-
                                     </div>
-                                </a>
                             </c:forEach>
                         </div>
                         <div class="store-filter clearfix">                      

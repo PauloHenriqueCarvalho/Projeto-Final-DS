@@ -18,6 +18,7 @@ import java.util.List;
 import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
 import model.bean.Produto;
+import model.bean.Projeto;
 import model.bean.Usuario;
 
 /**
@@ -46,15 +47,12 @@ public class CarrinhoProdutoDAO {
     public boolean adicionarProdutoAoCarrinho(CarrinhoProduto carrinhoProduto) {
         Connection conexao = null;
         PreparedStatement stmt = null;
-        ResultSet rs = null;
 
         try {
             conexao = Conexao.getConn();
             String sql = "INSERT INTO carrinho_produto (id_produto, id_carrinho, quantidade) VALUES (?, ?, ?)";
             stmt = conexao.prepareStatement(sql);
-            System.out.println("Static Prodtuo: " + Produto.getIdProdutoStatic());
-            System.out.println("Static Usuario: " + Usuario.getIdUsuarioStatic());
-            stmt.setInt(1, Produto.getIdProdutoStatic());
+            stmt.setInt(1, Projeto.getIdProdutoAtual());
             stmt.setInt(2, Usuario.getIdUsuarioStatic());
             stmt.setInt(3, carrinhoProduto.getQuantidade());
 
@@ -62,28 +60,17 @@ public class CarrinhoProdutoDAO {
             return linhasAfetadas > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return false;   
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (stmt != null) {
-                try {
+            try {
+                if (stmt != null) {
                     stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-            if (conexao != null) {
-                try {
+                if (conexao != null) {
                     conexao.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -94,9 +81,9 @@ public class CarrinhoProdutoDAO {
         List<Produto> produtos = new ArrayList<>();
         Connection con = Conexao.getConn();
         try {
-            stmt = con.prepareStatement("SELECT p.*, cp.quantidade\n"
-                    + "FROM Produto p\n"
-                    + "INNER JOIN carrinho_produto cp ON p.id_Produto = cp.id_produto\n"
+            stmt = con.prepareStatement("SELECT p.*, cp.quantidade, cp.id_carrinho_produto\n"
+                    + "FROM produto p\n"
+                    + "INNER JOIN carrinho_produto cp ON p.id_produto = cp.id_produto\n"
                     + "WHERE cp.id_carrinho = ?;");
             stmt.setInt(1, Usuario.getIdUsuarioStatic());
             rs = stmt.executeQuery();
@@ -109,6 +96,7 @@ public class CarrinhoProdutoDAO {
                 p.setValor(rs.getFloat("valor"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setQuantidade(rs.getInt("quantidade"));
+                p.setIdProduto_Carrinho(rs.getInt("id_carrinho_produto"));
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.bean.Carrinho;
 import model.bean.Categoria;
 import model.bean.Produto;
-import model.bean.SingOut;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
@@ -26,9 +26,9 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         String url = "/WEB-INF/jsp/index2.jsp";
         
-        if(SingOut.isSair()){
+        if(Projeto.isSair()){
             Usuario.setIdUsuarioStatic(0);
-            SingOut.setSair(false);
+            Projeto.setSair(false);
         }
         if(Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
@@ -139,7 +139,14 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = request.getServletPath();
+        if(url.equals("/deletarProduto")){
+            
+            System.out.println("Deletar: " + request.getParameter("idProduto"));
+        } else {
+             processRequest(request, response);
+        }
+       
     }
 
     @Override

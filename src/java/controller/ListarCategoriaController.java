@@ -16,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.Projeto;
+import model.bean.Usuario;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.UsuarioDAO;
 
 /**
  *
@@ -43,6 +46,13 @@ public class ListarCategoriaController extends HttpServlet {
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
 
+        if(Usuario.getIdUsuarioStatic() != 0) {
+            UsuarioDAO u = new UsuarioDAO();
+            List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            request.setAttribute("usuario", usuarios);
+        }
+            
+        
         ProdutoDAO dao = new ProdutoDAO();
         List<Produto> produtos = dao.listarPorCategoria(idCat);
     
@@ -58,40 +68,31 @@ public class ListarCategoriaController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = request.getServletPath();
+        if(url.equals("/produtoPage")){
+            System.out.println("Id do Produto : " + request.getParameter("idProduto"));
+            Projeto.setIdProdutoAtual(Integer.parseInt(request.getParameter("idProduto")));
+            response.sendRedirect(request.getContextPath() + "/produto-unico");
+            
+        }else if(url.equals("/listaDesejos")){
+             System.out.println("Ip : " + request.getMethod());
+             
+        } else {
+            processRequest(request, response);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

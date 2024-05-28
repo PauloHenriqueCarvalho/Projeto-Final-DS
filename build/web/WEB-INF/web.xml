@@ -76,6 +76,10 @@
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/inicio</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/categoria</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/buscar</url-pattern>
@@ -105,6 +109,12 @@
         <url-pattern>/inicioFuncionario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/deletarProduto</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet-mapping>
         <servlet-name>EstoqueProdutosController</servlet-name>
         <url-pattern>/estoqueProduto</url-pattern>
     </servlet-mapping>
@@ -123,6 +133,15 @@
     <servlet-mapping>
         <servlet-name>ListarCategoriaController</servlet-name>
         <url-pattern>/lista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <url-pattern>/produtoPage</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <url-pattern>/listaDesejos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProdutoUnicoCliente</servlet-name>
