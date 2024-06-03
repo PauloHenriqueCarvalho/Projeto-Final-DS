@@ -25,14 +25,13 @@
                     </ul>
 
                     <ul class="header-links pull-right">
-                        <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+                        <li><a href="#"><i class="fa fa-dollar"></i></a></li>
 
                         <c:choose>
                             <c:when test="${empty usuario}">
-                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                 
-                                <button class="teste-1">aaaa</button>          
-                            </c:when>
-                            <c:otherwise>                          
+                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                        
+                                </c:when>
+                                <c:otherwise>                          
                                 <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
                                 <form action="sair" method="post" class="header-links pull-right">
                                     <button type="submit" class="sair">
@@ -83,9 +82,7 @@
                             <div class="header-ctn">
                                 <!-- Wishlist -->
                                 <div>
-                                    <a href="#">
-                                        <p class="icons"><i class="fa fa-heart-o"></i></p>
-                                    </a>
+                                    <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
                                 <!-- /Wishlist -->
 
@@ -110,23 +107,40 @@
                                                             </div>
                                                             <div class="product-body">
                                                                 <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
-                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valor}</h4>
+                                                                <c:choose>
+                                                                    <c:when test="${carrinho.categoria == 1}">
+                                                                        <h4 class="product-price"><span class="qty">${carrinho.quantidade}kg</span>$${carrinho.valorAdicional}</h4>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                                
                                                             </div>
                                                             <form action="deletarProduto" method="post">
                                                                 <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
-                                                                <button type="submit" class="delete"><i class="fa fa-close"></i></button>
+                                                                <button type="submit" onclick="removeCarrinho(event)" class="delete"><i class="fa fa-close"></i></button>
+                                                                
+                                                                <script>
+                                                                    function removeCarrinho(event) {
+                                                                        event.preventDefault();
+                                                                        swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
+                                                                            event.target.closest('form').submit();
+                                                                        });
+                                                                    }
+                                                                </script>
                                                             </form>
-                                                            
+
                                                         </div>
                                                     </c:forEach>
                                                 </div>
                                                 <div class="cart-summary">
                                                     <small>3 Item(s) selected</small>
-                                                    <h5>SUBTOTAL: $2940.00</h5>
+                                                    <h5>SUBTOTAL: $${total}</h5>
                                                 </div>
                                                 <div class="cart-btns">
-                                                    <a href="#">View Cart</a>
-                                                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                                    <a href="./revisar-carrinho">View Cart</a>
+                                                    <a href="./revisar-carrinho">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>       
@@ -156,6 +170,7 @@
             <!-- /MAIN HEADER -->
         </header>
         <!-- /HEADER -->
+   
 
         <!-- NAVIGATION -->
         <nav id="navigation">
@@ -178,4 +193,5 @@
         </nav>
         <!-- /NAVIGATION -->
     </body>
+    <script src="./js/wishlist.js"></script>
 </html>

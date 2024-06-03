@@ -166,19 +166,14 @@ CREATE TABLE despesasEmpresa(
     data DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE wishlist (
-    id_wishlist INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
-);
 
 -- Criação da tabela de produtos na wishlist
 CREATE TABLE wishlist_produto (
     id_wishlist_produto INT AUTO_INCREMENT PRIMARY KEY,
-    id_wishlist INT NOT NULL,
+    id_usuario INT NOT NULL,
     id_produto INT NOT NULL,
     data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_wishlist) REFERENCES wishlist(id_wishlist),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
 );
 

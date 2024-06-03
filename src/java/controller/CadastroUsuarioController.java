@@ -35,7 +35,7 @@ public class CadastroUsuarioController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nextPage = "/WEB-INF/jsp/cadastro.jsp";
+        String nextPage = "/WEB-INF/jsp/cadastro2.jsp";
         
         if(Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
@@ -106,16 +106,13 @@ public class CadastroUsuarioController extends HttpServlet {
 
                 dao.insertCliente(usuario);
                 request.setAttribute("successMessage", "Cadastro realizado com sucesso!");
-                nextPage = "./login";
+                response.sendRedirect(request.getContextPath() + "/login");
             }
         }
 
         // Definir mensagens de erro na requisição
         request.setAttribute("errorMessage", errorMessage);
 
-        // Encaminhar para a próxima página
-        RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);
     }
 
     /**

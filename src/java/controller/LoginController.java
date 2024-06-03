@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String nextPage = "/WEB-INF/jsp/login.jsp";
+       String nextPage = "/WEB-INF/jsp/login2.jsp";
        
        if(Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
@@ -74,7 +74,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        String nextPage = "/WEB-INF/jsp/login.jsp";
 
         if (url.equals("/logar")) {
             Usuario user = new Usuario();
@@ -105,17 +104,20 @@ public class LoginController extends HttpServlet {
                     
                 } else {
                     request.setAttribute("errorMessage", "Usuário ou senha inválidos");
+                     response.sendRedirect(request.getContextPath() + "/login");
                 }
             } catch (Exception e) {
                 request.setAttribute("errorMessage", "Erro ao autenticar usuário");
+                response.sendRedirect(request.getContextPath() + "/login");
             }
+        } else {
+            processRequest(request, response);
         }
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(Usuario.getIdUsuarioStatic());
         request.setAttribute("usuario", usuario);
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);
+      
     }
 
     /**

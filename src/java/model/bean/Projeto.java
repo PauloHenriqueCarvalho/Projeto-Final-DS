@@ -12,16 +12,16 @@ package model.bean;
 public class Projeto {
     private static boolean sair;
     private static int idProdutoAtual;
+    private float valorCarrinho;
+    private static boolean bolo;
+    private static boolean salgado;
+    private static boolean doce;
 
     public Projeto() {
     }
 
-    public static int getIdProdutoAtual() {
-        return idProdutoAtual;
-    }
-
-    public static void setIdProdutoAtual(int idProdutoAtual) {
-        Projeto.idProdutoAtual = idProdutoAtual;
+    public Projeto(float valorCarrinho) {
+        this.valorCarrinho = valorCarrinho;
     }
 
     public static boolean isSair() {
@@ -32,6 +32,49 @@ public class Projeto {
         Projeto.sair = sair;
     }
 
+    public static int getIdProdutoAtual() {
+        return idProdutoAtual;
+    }
+
+    public static void setIdProdutoAtual(int idProdutoAtual) {
+        Projeto.idProdutoAtual = idProdutoAtual;
+    }
+
+    public float getValorCarrinho() {
+        return valorCarrinho;
+    }
+
+    public void setValorCarrinho(float valorCarrinho) {
+        this.valorCarrinho = valorCarrinho;
+    }
+
+    public static boolean isBolo() {
+        return bolo;
+    }
+
+    public static void setBolo(boolean bolo) {
+        Projeto.bolo = bolo;
+    }
+
+    public static boolean isSalgado() {
+        return salgado;
+    }
+
+    public static void setSalgado(boolean salgado) {
+        Projeto.salgado = salgado;
+    }
+
+    public static boolean isDoce() {
+        return doce;
+    }
+
+    public static void setDoce(boolean doce) {
+        Projeto.doce = doce;
+    }
+
+  
+
+    
     
     
     

@@ -52,6 +52,14 @@
         <servlet-name>ProdutoUnicoCliente</servlet-name>
         <servlet-class>controller.ProdutoUnicoCliente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListaDesejosController</servlet-name>
+        <servlet-class>controller.ListaDesejosController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <servlet-class>controller.CheckoutRevisarCarrinhoController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -76,7 +84,7 @@
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/inicio</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/categoria</url-pattern>
     </servlet-mapping>
@@ -112,8 +120,10 @@
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/deletarProduto</url-pattern>
     </servlet-mapping>
-    
-    
+    <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/listaDesejosIndex</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EstoqueProdutosController</servlet-name>
         <url-pattern>/estoqueProduto</url-pattern>
@@ -138,7 +148,14 @@
         <servlet-name>ListarCategoriaController</servlet-name>
         <url-pattern>/produtoPage</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <url-pattern>/lista-filtro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarCategoriaController</servlet-name>
+        <url-pattern>/removerListaDesejos</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListarCategoriaController</servlet-name>
         <url-pattern>/listaDesejos</url-pattern>
@@ -151,7 +168,34 @@
         <servlet-name>ProdutoUnicoCliente</servlet-name>
         <url-pattern>/adicionarProduto</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ListaDesejosController</servlet-name>
+        <url-pattern>/deletarListaDejesos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListaDesejosController</servlet-name>
+        <url-pattern>/lista-desejos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/revisar-carrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/deletarProdutoCarrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/listaDesejosCarrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/atualizarCarrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/continuar-checkout</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

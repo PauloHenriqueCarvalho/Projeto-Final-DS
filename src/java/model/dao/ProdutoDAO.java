@@ -88,6 +88,26 @@ public class ProdutoDAO {
         return produtos;
     }
 
+    public float readById(int id) {
+        float produto = 0;
+        try {
+            Connection c = Conexao.getConn();
+            PreparedStatement ps = c.prepareStatement("select * from produto where id_produto = ?");
+            System.out.println("Id Prouto: " + id);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                produto = rs.getFloat("valor");
+            }
+            rs.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return produto;
+    }
+
     // Método para listar todos os produtos
     public List<Produto> listarTodos() {
         List<Produto> produtos = new ArrayList<>();
@@ -127,6 +147,64 @@ public class ProdutoDAO {
         return produtos;
     }
 
+    public List<Produto> listarPorCategoria(int idCategoria, String filter, int currentPage, int productsPerPage) {
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            Connection con = Conexao.getConn();
+            String sql = "SELECT * FROM produto WHERE id_categoria = ?";
+
+            if (filter != null) {
+                if (filter.equals("asc")) {
+                    sql += " ORDER BY valor ASC";
+                } else if (filter.equals("desc")) {
+                    sql += " ORDER BY valor DESC";
+                }
+            }
+
+            sql += " LIMIT ? OFFSET ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, idCategoria);
+            stmt.setInt(2, productsPerPage);
+            stmt.setInt(3, (currentPage - 1) * productsPerPage);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("id_produto"));
+                produto.setCategoria(rs.getInt("id_categoria"));
+                produto.setNome(rs.getString("nome"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setValor(rs.getFloat("valor"));
+                produto.setImagemBytes(rs.getBytes("imagem"));
+                produtos.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
+
+    public int countProdutosByCategoria(int idCategoria) {
+        int total = 0;
+        
+        try {
+             Connection con = Conexao.getConn();
+            String sql = "SELECT COUNT(*) AS total FROM produto WHERE id_categoria = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idCategoria);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     // Método para listar produtos por categoria
     public List<Produto> listarPorCategoria(int c) {
         List<Produto> produtos = new ArrayList<>();
@@ -146,7 +224,7 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_Produto"));
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(rs.getInt("id_categoria"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getFloat("valor"));   
 
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {

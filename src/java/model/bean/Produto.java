@@ -19,14 +19,22 @@ public class Produto {
     private byte[] imagemBytes;
     private String imagemBase64;
     private Estoque estoque;
-    private int quantidade;
+    private float quantidade;
     private int idProduto_Carrinho;
-
+    
+    private int idUsuario;
+    private Massa idMassa;
+    private Recheio idRecheio;
+    private Topper idTopper;
+    private int idSabor;
+    private Cobertura idCobertura;
+    private float valorAdicional;
+    
    
     public Produto() {
     }
 
-    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque, int quantidade, int idProduto_Carrinho) {
+    public Produto(int idProduto, int categoria, String nome, String descricao, Float valor, byte[] imagemBytes, String imagemBase64, Estoque estoque, float quantidade, int idProduto_Carrinho, int idUsuario, Massa idMassa, Recheio idRecheio, Topper idTopper, int idSabor, Cobertura idCobertura, float valorAdicional) {
         this.idProduto = idProduto;
         this.categoria = categoria;
         this.nome = nome;
@@ -37,6 +45,13 @@ public class Produto {
         this.estoque = estoque;
         this.quantidade = quantidade;
         this.idProduto_Carrinho = idProduto_Carrinho;
+        this.idUsuario = idUsuario;
+        this.idMassa = idMassa;
+        this.idRecheio = idRecheio;
+        this.idTopper = idTopper;
+        this.idSabor = idSabor;
+        this.idCobertura = idCobertura;
+        this.valorAdicional = valorAdicional;
     }
 
     public int getIdProduto() {
@@ -111,11 +126,11 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    public int getQuantidade() {
+    public float getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(float quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -127,6 +142,63 @@ public class Produto {
         this.idProduto_Carrinho = idProduto_Carrinho;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Massa getIdMassa() {
+        return idMassa;
+    }
+
+    public void setIdMassa(Massa idMassa) {
+        this.idMassa = idMassa;
+    }
+
+    public Recheio getIdRecheio() {
+        return idRecheio;
+    }
+
+    public void setIdRecheio(Recheio idRecheio) {
+        this.idRecheio = idRecheio;
+    }
+
+    public Topper getIdTopper() {
+        return idTopper;
+    }
+
+    public void setIdTopper(Topper idTopper) {
+        this.idTopper = idTopper;
+    }
+
+    public int getIdSabor() {
+        return idSabor;
+    }
+
+    public void setIdSabor(int idSabor) {
+        this.idSabor = idSabor;
+    }
+
+    public Cobertura getIdCobertura() {
+        return idCobertura;
+    }
+
+    public void setIdCobertura(Cobertura idCobertura) {
+        this.idCobertura = idCobertura;
+    }
+
+    public float getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(float valorAdicional) {
+        this.valorAdicional = valorAdicional;
+    }
+
+   
     
     
    

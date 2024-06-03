@@ -98,7 +98,7 @@
                                     <script>
                                         $(document).ready(function () {
                                             // Máscara para telefone
-                                            $('#telefone').inputmask('(99) 9999-9999');
+                                            $('#telefone').inputmask('(99) 99999-9999');
 
                                             // Máscara para CPF
                                             $('#cpf').inputmask('999.999.999-99');
@@ -122,7 +122,7 @@
                                                     return;
                                                 }
                                             });
-                                        });
+                                        }); 
                                     </script>
                                     
 

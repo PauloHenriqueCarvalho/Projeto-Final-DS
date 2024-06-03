@@ -15,27 +15,29 @@ import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.Projeto;
 import model.bean.Usuario;
+import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
 import model.dao.UsuarioDAO;
+import model.dao.WishListDAO;
 
 public class IndexController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "/WEB-INF/jsp/index2.jsp";
-        
-        if(Projeto.isSair()){
+
+        if (Projeto.isSair()) {
             Usuario.setIdUsuarioStatic(0);
             Projeto.setSair(false);
         }
-        if(Usuario.getIdUsuarioStatic() != 0) {
+        if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
             request.setAttribute("usuario", usuarios);
         }
-            
+
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
@@ -48,20 +50,22 @@ public class IndexController extends HttpServlet {
                 produto.setImagemBase64(imagemBase64);
             }
         }
+        
         request.setAttribute("produtos", produtos);
-        
-        
-        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();   
+
+        CarrinhoDAO cDAO = new CarrinhoDAO();
+        float total = cDAO.precoCarrinho();
+        request.setAttribute("total", total);
+
+        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
         List<Produto> carrinho = car.listarProdutosDoCarrinho();
-         for (Produto c : carrinho) {
+        for (Produto c : carrinho) {
             if (c.getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
                 c.setImagemBase64(imagemBase64);
-        
+
             }
         }
-        
-        System.out.println("Carrinho: " + carrinho);
         request.setAttribute("carrinhos", carrinho);
 
         RequestDispatcher d = getServletContext().getRequestDispatcher(url);
@@ -73,20 +77,8 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         String url = request.getServletPath();
         System.out.println("URL> " + url);
-        if (url.equals("/buscar")) {
-            System.out.println("Buscar");
-            buscarProduto(request, response);
-        } else if (url.equals("/carrinho")) {
-            exibirCarrinho(request, response);
-        } else if (url.equals("/addCarrinho")) {
-            System.out.println("add");
-            adicionarItem(request, response);
-        } else if (url.equals("/removerCarrinho")) {
-            System.out.println("rem");
-            removerItem(request, response);
-        } else if (url.equals("/finalizarPedido")) {
-            System.out.println("final");
-            finalizarPedido(request, response);
+       if(url.equals("/pica")){
+           
         } else {
             processRequest(request, response);
         }
@@ -111,42 +103,41 @@ public class IndexController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void adicionarItem(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        response.setContentType("text/plain");
-        response.getWriter().write("Produto adicionado ao carrinho!");
-    }
-
-    private void removerItem(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        response.sendRedirect(request.getContextPath() + "/carrinho");
-    }
-
-    private void exibirCarrinho(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/carrinho.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void finalizarPedido(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        response.sendRedirect(request.getContextPath() + "/pedidoFinalizado.jsp");
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        if(url.equals("/deletarProduto")){
-            
-            System.out.println("Deletar: " + request.getParameter("idProduto"));
+        System.out.println("url: " + url);
+        if (url.equals("/deletarProduto")) {
+            System.out.println("entras");
+            System.out.println("id: " + request.getParameter("idProduto"));
+            CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
+            boolean a = dao.excluirProdutoCarrinho(Integer.parseInt(request.getParameter("idProduto")));
+            System.out.println("A " + a);
+            response.sendRedirect(request.getContextPath() + "/inicio");
+
+        } else if (url.equals("/produtoPage")) {
+            System.out.println("Id do Produto : " + request.getParameter("idProduto"));
+            Projeto.setIdProdutoAtual(Integer.parseInt(request.getParameter("idProduto")));
+            response.sendRedirect(request.getContextPath() + "/produto-unico");
+
+        } else if (url.equals("/listaDesejosIndex")) {
+            WishListDAO w = new WishListDAO();
+            if (Usuario.getIdUsuarioStatic() != 0) {
+                boolean valida = w.adicionarProdutoAoCarrinho(Integer.parseInt(request.getParameter("idProduto")));
+                System.out.println("Valida: " + valida);
+                request.getSession().setAttribute("validacaoLista", valida);
+
+            } else {
+                System.out.println("Eçlse");
+                request.getSession().setAttribute("alerta", "Você precisa estar logado para adicionar produtos à lista de desejos");
+            }
+            response.sendRedirect(request.getContextPath() + "/inicio");
         } else {
-             processRequest(request, response);
+            processRequest(request, response);
         }
-       
+
     }
 
     @Override

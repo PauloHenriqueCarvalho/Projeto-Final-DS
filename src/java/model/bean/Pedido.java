@@ -13,8 +13,8 @@ import java.sql.Date;
  */
 public class Pedido {
     private int id_pedido;
-    private int id_cliente;
-    private int id_funcionario;
+    private Usuario id_cliente;
+    private FormaPagamento idPagamento;
     private Date data_pedido;
     private String status;
     private float total;
@@ -22,10 +22,10 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(int id_pedido, int id_cliente, int id_funcionario, Date data_pedido, String status, float total) {
+    public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Date data_pedido, String status, float total) {
         this.id_pedido = id_pedido;
         this.id_cliente = id_cliente;
-        this.id_funcionario = id_funcionario;
+        this.idPagamento = idPagamento;
         this.data_pedido = data_pedido;
         this.status = status;
         this.total = total;
@@ -39,20 +39,20 @@ public class Pedido {
         this.id_pedido = id_pedido;
     }
 
-    public int getId_cliente() {
+    public Usuario getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(Usuario id_cliente) {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_funcionario() {
-        return id_funcionario;
+    public FormaPagamento getIdPagamento() {
+        return idPagamento;
     }
 
-    public void setId_funcionario(int id_funcionario) {
-        this.id_funcionario = id_funcionario;
+    public void setIdPagamento(FormaPagamento idPagamento) {
+        this.idPagamento = idPagamento;
     }
 
     public Date getData_pedido() {
@@ -78,6 +78,8 @@ public class Pedido {
     public void setTotal(float total) {
         this.total = total;
     }
+
+    
     
     
 }

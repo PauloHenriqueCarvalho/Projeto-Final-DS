@@ -12,7 +12,7 @@ package model.bean;
 public class CarrinhoProduto {
     private int idCarrinhoProduto;
     private Carrinho carrinho;
-    private Produto produto;
+    private ProdutoCarrinho produto;
     private int quantidade;
 
     public CarrinhoProduto() {
@@ -34,13 +34,7 @@ public class CarrinhoProduto {
         this.carrinho = carrinho;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
+   
 
     public int getQuantidade() {
         return quantidade;
@@ -50,12 +44,22 @@ public class CarrinhoProduto {
         this.quantidade = quantidade;
     }
 
-    public CarrinhoProduto(int idCarrinhoProduto, Carrinho carrinho, Produto produto, int quantidade) {
+    public CarrinhoProduto(int idCarrinhoProduto, Carrinho carrinho, ProdutoCarrinho produto, int quantidade) {
         this.idCarrinhoProduto = idCarrinhoProduto;
         this.carrinho = carrinho;
         this.produto = produto;
         this.quantidade = quantidade;
     }
+
+    public ProdutoCarrinho getProduto() {
+        return produto;
+    }
+
+    public void setProduto(ProdutoCarrinho produto) {
+        this.produto = produto;
+    }
+
+  
 
    
     

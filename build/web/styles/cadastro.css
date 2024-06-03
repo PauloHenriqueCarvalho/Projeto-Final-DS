@@ -32,19 +32,28 @@ and open the template in the editor.
 
 
 btn btn-success btn-block btn-lg gradient-custom-4 text-body{
-    background-color: pink;
+    background-color: #614031;
 }
 .btn-success {
-    --mdb-btn-bg: #ff69b4; /* rosa */
+    --mdb-btn-bg: #614031; /* rosa */
     --mdb-btn-color: #fff;
-    --mdb-btn-box-shadow: 0 4px 9px -4px #ff69b4;
-    --mdb-btn-hover-bg: #ff3e9b; /* rosa mais escuro no hover */
+    --mdb-btn-box-shadow: 0 4px 9px -4px #614031;
+    --mdb-btn-hover-bg: #614031; /* rosa mais escuro no hover */
     --mdb-btn-hover-color: #fff;
-    --mdb-btn-focus-bg: #ff3e9b; /* rosa mais escuro quando focado */
+    --mdb-btn-focus-bg: #614031; /* rosa mais escuro quando focado */
     --mdb-btn-focus-color: #fff;
-    --mdb-btn-active-bg: #ff1f85; /* rosa mais escuro quando clicado */
+    --mdb-btn-active-bg: #614031; /* rosa mais escuro quando clicado */
     --mdb-btn-active-color: #fff;
-    --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(255, 105, 180, 0.3), 0 4px 18px 0 rgba(255, 105, 180, 0.2);
+}
+
+
+
+.btn-admin{
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px
 }
 
 
@@ -55,6 +64,6 @@ btn btn-success btn-block btn-lg gradient-custom-4 text-body{
     
 }
 #botoes button{
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
 import model.bean.Produto;
+import model.bean.ProdutoCarrinho;
 import model.bean.Usuario;
 
 
@@ -71,4 +72,27 @@ public class CarrinhoDAO {
         }
         return produtos;
     }
+    
+    public float precoCarrinho(){
+        float preco = 0;
+        try{
+            Connection c = Conexao.getConn();
+            PreparedStatement ps = c.prepareStatement("Select * from produto_carrinho where id_usuario = ?");
+            ps.setInt(1, Usuario.getIdUsuarioStatic());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                preco += rs.getFloat("valorAdicional");
+                
+            }
+            System.out.println("Preco final: " + preco);
+            rs.close();
+            ps.close();
+            c.close();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return preco;
+    }
+    
 }
