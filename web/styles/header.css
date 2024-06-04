@@ -1,0 +1,207 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14/04/2024, 19:31:17
+    Author     : paulo
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
+:root{
+    --light: #f8f9fa;
+}
+
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+.promocao {
+    display: flex;
+    height: 35px;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+
+}
+
+h3 {
+    font-size: 11px;
+    color: #fff;
+}
+
+span {
+    color: rgb(173, 173, 173)
+}
+
+header {
+    display: flex;
+    background-color:var(--light);  
+    height: 120px;
+
+}
+
+.search {
+    /* border: 1px solid red; */
+    width: 60%;
+    display: flex;
+    padding-left: 20px;
+    justify-content: center;
+    align-items: center;
+
+}
+.carrinho{
+    width: 10%;
+    display: flex;
+    padding-left: 20px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.logo {
+    /* border: 1px solid red;  */
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons {
+    /* border: 1px solid red; */
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
+    padding-right: 20px;
+    align-items: center;
+    gap: 25px;
+}
+
+.info {
+    height: 50px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+i {
+    font-size: 35px;
+}
+
+h1 {
+    font-size: 30px;
+    font-family: "Rowdies", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: black;
+}
+
+
+#wallet {
+    color: #fff;
+    font-size: 20px;
+}
+
+#txt {
+    color: black;
+}
+
+
+
+
+.form-control{
+    width: 500px;
+}
+
+.d-flex{
+    display: flex!important;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    border-radius: 20px;
+}
+#search-icon{
+    font-size: 20px;
+}
+
+.btn-outline-success{
+    border: none;
+}
+.form-control{  
+    border: none;
+}
+
+p{
+    font-size: 10px;
+}
+
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: space-around;
+}
+
+.btn.btn-secondary {
+    background-color:var(--light);  ; /* Substitua #ff0000 pela cor desejada */
+    color: black; /* Define a cor do texto dentro do botão */
+    border: none;
+    
+}
+
+#txt{
+    color: white;
+    font-size: 17px;
+}
+
+
+
+.ls-cart .ls-cart-header:before {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -moz-transition: all 0.35s ease;
+    -o-transition: all 0.35s ease;
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+    font: 12px "Locastyle";
+    color: black;
+    pointer-events: none;
+    content: "\e60f";
+    position: absolute;
+    right: 20px;
+    top: 39%;
+}
+.ls-cart{
+    width: auto;
+    height: 70px;
+    position: relative; 
+    z-index: 999; 
+}
+.ls-cart-header{
+    height: 60px;
+}
+
+#qtd{
+    font-size: 13px;
+    color: black;
+}
+
+
+.ls-theme-gray .ls-cart-header, html .ls-cart-header {
+
+    background-color: #f8f9fa;
+}
+.cards{
+    display: grid;
+
+}
