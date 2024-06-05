@@ -1,0 +1,12 @@
+main{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-main{
+    width: 70%;
+    height: 500px;
+    background-color: black;
+}

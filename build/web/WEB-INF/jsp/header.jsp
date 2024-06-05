@@ -75,6 +75,8 @@
                                 <div id="searchResults"></div>
                             </div>
                         </div>
+                        
+                        
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
@@ -84,7 +86,6 @@
                                 <div>
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
-                                <!-- /Wishlist -->
 
                                 <!-- Cart -->
                                 <div class="dropdown">
@@ -180,10 +181,10 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="./inicio">Home</a></li>
                             <c:forEach items="${categorias}" var="categoria">
                             <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
                             </c:forEach>
+                            <li><a href="./endereco"><i class="fa-solid fa-location-dot"></i>Endereco</a></li>
                     </ul>
                     <!-- /NAV -->
                 </div>

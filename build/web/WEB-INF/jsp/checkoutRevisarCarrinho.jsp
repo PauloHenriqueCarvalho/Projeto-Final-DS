@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -353,7 +354,7 @@
                     mostrarSpinner();
 
                     // URL da API de cálculo de frete
-                    var apiUrl = "https://www.cepcerto.com/ws/json/" + cep;
+                
 
                     // Chamada AJAX para calcular o frete usando jQuery
                     $.ajax({
