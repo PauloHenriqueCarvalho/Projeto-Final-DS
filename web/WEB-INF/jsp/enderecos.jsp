@@ -61,45 +61,24 @@
                 <div class="container-main">
                     <h2>Meus Endereços</h2>
                     <div class="cards-endereco">
+                    <c:forEach items="${enderecos}" var="e">
                         <div class="informacoes-endereco">
                             <h3 class="end-padrao">Endereço Padrão</h3>
-                            <p>Paulo Henrique</p>
-                            <h3>RUA AUGUSTO GOMES 919</h3>
-                            <h3>LONDRINA, PR - 86083590</h3>
-                            <h3>TEL- (43) 9 9195-0011</h3>
+                            <p>${e.idUsuario.nome}</p>
+                            <h3>${e.rua} ${e.numero}</h3>
+                            <h3>${e.cidade}, ${e.estado} - ${e.cep}</h3>
+                            <h3>TEL- ${e.idUsuario.telefone}</h3>
                             <div class="button-group">
                                 <button class="edit-btn">Editar Endereço</button>
                                 <button class="remove-btn">Remover Endereço</button>
                             </div>
                         </div>
-                        <div class="informacoes-endereco">
-                            <h3>Endereço Secundário</h3>
-                            <p>Maria Clara</p>
-                            <h3>AVENIDA BRASIL 1234</h3>
-                            <h3>CURITIBA, PR - 80000000</h3>
-                            <h3>TEL- (41) 9 9999-9999</h3>
-                            <div class="button-group">
-                                <button class="edit-btn">Editar Endereço</button>
-                                <button class="remove-btn">Remover Endereço</button>
-                            </div>
-                        </div>
-                        <div class="informacoes-endereco">
-                            <h3>Endereço Trabalho</h3>
-                            <p>José Silva</p>
-                            <h3>RUA DA EMPRESA 456</h3>
-                            <h3>SAO PAULO, SP - 01234567</h3>
-                            <h3>TEL- (11) 9 8888-8888</h3>
-                            <div class="button-group">
-                                <button class="edit-btn">Editar Endereço</button>
-                                <button class="remove-btn">Remover Endereço</button>
-                            </div>
-                        </div>
+                    </c:forEach>
+                        
                     </div>
-                    <div class="add-endereco">
-                        <button id="add-btn">+</button>
-                    </div>
+
                     <div class="btn-confirmar">
-                        <button>CONFIRMAR</button>
+                        <button id="add-btn">Adicionar Endereco</button>
                     </div>
                 </div>
             

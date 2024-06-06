@@ -56,7 +56,7 @@
                         <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
-                                <a href="#" class="logo">
+                                <a href="./inicio" class="logo">
                                     <img class="img-logo" src="./img/image.webp" alt="">
                                 </a>
                             </div>
@@ -181,6 +181,7 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
+                        <li><a href="./inicio"><i class="fa-solid fa-location-dot"></i>Home</a></li>
                             <c:forEach items="${categorias}" var="categoria">
                             <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
                             </c:forEach>
