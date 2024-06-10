@@ -14,12 +14,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.ProdutoCarrinhoSabores;
 import model.bean.Usuario;
 import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
+import model.dao.CategoriaDAO;
+import model.dao.EnderecoDAO;
 import model.dao.ProdutoCarrinhoSaboresDAO;
+import model.dao.UsuarioDAO;
 import model.dao.WishListDAO;
 
 /**
@@ -35,7 +39,18 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
         CarrinhoDAO cDAO = new CarrinhoDAO();
         float total = cDAO.precoCarrinho();
         request.setAttribute("total", total);
-
+        
+        
+        if (Usuario.getIdUsuarioStatic() != 0) {
+            UsuarioDAO u = new UsuarioDAO();
+            List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            request.setAttribute("usuario", usuarios);
+        }
+        CategoriaDAO cat = new CategoriaDAO();
+        List<Categoria> categoria = cat.listarTodos();
+        request.setAttribute("categorias", categoria);
+        EnderecoDAO daoEndereco = new EnderecoDAO();
+        
         ProdutoCarrinhoSaboresDAO pcsDAO = new ProdutoCarrinhoSaboresDAO();
         List<ProdutoCarrinhoSabores> sabores = pcsDAO.read();
         request.setAttribute("sabores", sabores);
@@ -123,16 +138,16 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
             String cep = request.getParameter("cep");;
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             List<Produto> carrinho = dao.listarProdutosDoCarrinho();
-//
-//            if (cep == null || cep.isEmpty()) {
-//                request.getSession().setAttribute("continuarError", "Adicione o CEP!");
-//                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
-//            } else if (carrinho.isEmpty()) {
-//                request.getSession().setAttribute("continuarError", "Adicione produtos ao carrinho!");
-//                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
-//            } else {
-//                response.sendRedirect(request.getContextPath() + "/endereco-checkout");
-//            }
+
+            if (cep == null || cep.isEmpty()) {
+                request.getSession().setAttribute("continuarError", "Adicione o CEP!");
+                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
+            } else if (carrinho.isEmpty()) {
+                request.getSession().setAttribute("continuarError", "Adicione produtos ao carrinho!");
+                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
+            } else {
+                response.sendRedirect("./checkout-endereco");
+            }
             System.out.println("Teste   "); 
         } else {
             processRequest(request, response);

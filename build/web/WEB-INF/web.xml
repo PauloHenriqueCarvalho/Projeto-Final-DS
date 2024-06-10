@@ -64,6 +64,14 @@
         <servlet-name>EnderecoController</servlet-name>
         <servlet-class>controller.EnderecoController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckoutEnderecoController</servlet-name>
+        <servlet-class>controller.CheckoutEnderecoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutPagamentoController</servlet-name>
+        <servlet-class>controller.CheckoutPagamentoController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -127,6 +135,10 @@
     <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/listaDesejosIndex</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/buscaProdutos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EstoqueProdutosController</servlet-name>
@@ -203,6 +215,30 @@
     <servlet-mapping>
         <servlet-name>EnderecoController</servlet-name>
         <url-pattern>/endereco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnderecoController</servlet-name>
+        <url-pattern>/add-endereco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnderecoController</servlet-name>
+        <url-pattern>/remover-endereco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnderecoController</servlet-name>
+        <url-pattern>/definirEnderecoPadrao</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutEnderecoController</servlet-name>
+        <url-pattern>/checkout-endereco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutEnderecoController</servlet-name>
+        <url-pattern>/continuar-checkout-pagamento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutPagamentoController</servlet-name>
+        <url-pattern>/checkout-pagamento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

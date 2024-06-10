@@ -12,32 +12,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.bean.Endereco;
 import model.bean.Massa;
+import model.bean.Usuario;
 
 /**
  *
  * @author paulo
  */
 public class MassaDAO {
-    public List<Massa> readMassas(){
+
+    public List<Massa> readMassas() {
         List<Massa> masssas = new ArrayList<>();
-        try{
+        try {
             Connection c = Conexao.getConn();
             PreparedStatement ps = c.prepareStatement("select * from massa");
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Massa m = new Massa();
                 m.setIdMassa(rs.getInt("id_massa"));
                 m.setNome(rs.getString("nome"));
                 m.setValorAdicional(rs.getFloat("valorAdicional"));
-                 masssas.add(m);
+                masssas.add(m);
             }
             rs.close();
             ps.close();
             c.close();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return masssas;
     }
+
+    
+
 }

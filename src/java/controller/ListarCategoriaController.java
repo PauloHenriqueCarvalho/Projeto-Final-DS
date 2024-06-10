@@ -44,10 +44,13 @@ public class ListarCategoriaController extends HttpServlet {
 
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
-        Categoria c = cat.readById(idCat);
-        request.setAttribute("categoriaAtual", c.getNome());
+        if (idCat != -1) {
+            Categoria c = cat.readById(idCat);
+            request.setAttribute("categoriaAtual", c.getNome());
+        } else {
+            request.setAttribute("categoriaAtual", "Todos Produtos");
+        }
         request.setAttribute("categorias", categoria);
-        
         CarrinhoDAO cDAO = new CarrinhoDAO();
         float total = cDAO.precoCarrinho();
         request.setAttribute("total", total);
@@ -63,7 +66,6 @@ public class ListarCategoriaController extends HttpServlet {
         }
         request.setAttribute("carrinhos", carrinho);
 
-
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
@@ -71,11 +73,23 @@ public class ListarCategoriaController extends HttpServlet {
         }
 
         ProdutoDAO dao = new ProdutoDAO();
-        List<Produto> produtos = dao.listarPorCategoria(idCat, filter, currentPage, PRODUCTS_PER_PAGE);
-        
-        // Calcula a quantidade total de páginas
-        int totalProducts = dao.countProdutosByCategoria(idCat);
-        
+        int totalProducts = 0;
+        List<Produto> produtos = null;
+        if(idCat != -1){
+             produtos = dao.listarPorCategoria(idCat, filter, currentPage, PRODUCTS_PER_PAGE);
+
+            // Calcula a quantidade total de páginas
+             totalProducts = dao.countProdutosByCategoria(idCat);
+             request.setAttribute("idCat", idCat);
+        } else {
+             produtos = dao.listarTodos( filter, currentPage, PRODUCTS_PER_PAGE);
+
+            // Calcula a quantidade total de páginas
+             totalProducts = dao.countProdutosTodos();
+             request.setAttribute("idCat", -1);
+        }
+       
+
         int totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
 
         for (Produto produto : produtos) {
@@ -89,7 +103,7 @@ public class ListarCategoriaController extends HttpServlet {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("selectedFilter", filter);
-        request.setAttribute("idCat", idCat);
+        
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
@@ -98,7 +112,72 @@ public class ListarCategoriaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = request.getServletPath();
+
+        if (url.equals("/busca")) {
+
+            idCat = Integer.parseInt(request.getParameter("cat"));
+            int currentPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+            String filter = request.getParameter("filter");
+
+            CategoriaDAO cat = new CategoriaDAO();
+            List<Categoria> categoria = cat.listarTodos();
+            Categoria c = cat.readById(idCat);
+            request.setAttribute("categoriaAtual", c.getNome());
+            request.setAttribute("categorias", categoria);
+
+            CarrinhoDAO cDAO = new CarrinhoDAO();
+            float total = cDAO.precoCarrinho();
+            request.setAttribute("total", total);
+
+            CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
+            List<Produto> carrinho = car.listarProdutosDoCarrinho();
+            for (Produto ca : carrinho) {
+                if (ca.getImagemBytes() != null) {
+                    String imagemBase64 = Base64.getEncoder().encodeToString(ca.getImagemBytes());
+                    ca.setImagemBase64(imagemBase64);
+
+                }
+            }
+            request.setAttribute("carrinhos", carrinho);
+
+            if (Usuario.getIdUsuarioStatic() != 0) {
+                UsuarioDAO u = new UsuarioDAO();
+                List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+                request.setAttribute("usuario", usuarios);
+            }
+
+            ProdutoDAO dao = new ProdutoDAO();
+
+            // Calcula a quantidade total de páginas
+            int totalProducts = dao.countProdutosByCategoria(idCat);
+
+            int totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
+
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("selectedFilter", filter);
+            request.setAttribute("idCat", idCat);
+            String termo = request.getParameter("termo");
+            termo = "%" + termo + "%";
+
+            List<Produto> produtos = dao.listarPorCategoriaBusca(idCat, filter, currentPage, PRODUCTS_PER_PAGE, termo);
+            for (int i = 0; i < produtos.size(); i++) {
+                if (produtos.get(i).getImagemBytes() != null) {
+                    String imagemBase64 = Base64.getEncoder().encodeToString(produtos.get(i).getImagemBytes());
+                    produtos.get(i).setImagemBase64(imagemBase64);
+                }
+            }
+
+            request.setAttribute("produtos", produtos);
+
+            // Redirecione de volta para a página principal
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listaProdutosCliente.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            processRequest(request, response);
+            System.out.println("Else");
+        }
     }
 
     @Override

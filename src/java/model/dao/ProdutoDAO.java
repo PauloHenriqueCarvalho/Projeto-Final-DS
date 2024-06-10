@@ -186,6 +186,45 @@ public class ProdutoDAO {
         }
         return produtos;
     }
+    
+    public List<Produto> listarTodos( String filter, int currentPage, int productsPerPage) {
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            Connection con = Conexao.getConn();
+            String sql = "SELECT * FROM produto";
+
+            if (filter != null) {
+                if (filter.equals("asc")) {
+                    sql += " ORDER BY valor ASC";
+                } else if (filter.equals("desc")) {
+                    sql += " ORDER BY valor DESC";
+                }
+            }
+
+            sql += " LIMIT ? OFFSET ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, productsPerPage);
+            stmt.setInt(2, (currentPage - 1) * productsPerPage);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("id_produto"));
+                produto.setCategoria(rs.getInt("id_categoria"));
+                produto.setNome(rs.getString("nome"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setValor(rs.getFloat("valor"));
+                produto.setImagemBytes(rs.getBytes("imagem"));
+                produtos.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
 
     public int countProdutosByCategoria(int idCategoria) {
         int total = 0;
@@ -195,6 +234,23 @@ public class ProdutoDAO {
             String sql = "SELECT COUNT(*) AS total FROM produto WHERE id_categoria = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, idCategoria);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+     public int countProdutosTodos() {
+        int total = 0;
+        
+        try {
+             Connection con = Conexao.getConn();
+            String sql = "SELECT COUNT(*) AS total FROM produto";
+            PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 total = rs.getInt("total");
@@ -408,6 +464,48 @@ public class ProdutoDAO {
             e.printStackTrace();
         }
     }
+    
+    
+    public List<Produto> listarPorCategoriaBusca(int idCategoria, String filter, int currentPage, int productsPerPage, String busca) {
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            Connection con = Conexao.getConn();
+            String sql = "SELECT * FROM produto WHERE id_categoria = ? AND WHERE nome LIKE ?";
+
+            if (filter != null) {
+                if (filter.equals("asc")) {
+                    sql += " ORDER BY valor ASC";
+                } else if (filter.equals("desc")) {
+                    sql += " ORDER BY valor DESC";
+                }
+            }
+
+            sql += " LIMIT ? OFFSET ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, idCategoria);
+            stmt.setString(2, "%" + busca + "%");
+            stmt.setInt(3, productsPerPage);
+            stmt.setInt(4, (currentPage - 1) * productsPerPage);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(rs.getInt("id_produto"));
+                produto.setCategoria(rs.getInt("id_categoria"));
+                produto.setNome(rs.getString("nome"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setValor(rs.getFloat("valor"));
+                produto.setImagemBytes(rs.getBytes("imagem"));
+                produtos.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
 
     public List<Produto> busca(String busca) {
         List<Produto> produtos = new ArrayList<>();
@@ -418,22 +516,19 @@ public class ProdutoDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Produto produto = new Produto();
-                produto.setIdProduto(rs.getInt("id_Produto"));
-                produto.setNome(rs.getString("nome"));
-                produto.setValor(rs.getFloat("valor"));
-                // Defina outros atributos do produto...
+                Produto p = new Produto();
+                p.setIdProduto(rs.getInt("id_produto"));
+                p.setNome(rs.getString("nome"));
+                p.setCategoria(rs.getInt("id_categoria"));
+                p.setValor(rs.getFloat("valor"));
+                p.setDescricao(rs.getString("descricao"));
 
-                // Cria um estoque para o produto
                 Blob imagemBlob = rs.getBlob("imagem");
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
-                    produto.setImagemBytes(imagemBytes);
+                    p.setImagemBytes(imagemBytes);
                 }
-                // Associa o estoque ao produto
-
-                // Adiciona o produto à lista
-                produtos.add(produto);
+                produtos.add(p);
             }
 
             // Feche os recursos

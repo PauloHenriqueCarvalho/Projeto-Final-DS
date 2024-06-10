@@ -161,6 +161,9 @@ public class UsuarioDAO {
                 // Aqui você precisa instanciar um objeto Usuario
                 u = new Usuario();
                 u.setNome(rs.getString("nome"));
+                u.setTelefone(rs.getString("telefone"));
+                u.setIdUsuario(id);
+          
             }
             rs.close();
             stmt.close();

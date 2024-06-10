@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container-endereco {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.payment-methods, .summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10px;
+}
+
+.payment-methods {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.summary {
+    flex: 1;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.method {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.method:hover {
+    background-color: #f9f9f9;
+}
+
+.method input {
+    margin-right: 10px;
+}
+
+.method label {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.method img {
+    width: 80px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.discount, .installments, .price {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.special-conditions {
+    color: green;
+    font-size: 0.8em;
+}
+
+.address, .coupon, .prices, .recaptcha {
+    margin-bottom: 20px;
+}
+
+.address p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.address button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.coupon input {
+    width: calc(100% - 80px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.coupon button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.prices button{
+    padding: 5px 10px;
+    background-color: #614031;
+    color: #fff;
+    width: 300px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.prices p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prices .total {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+
+.card-info input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

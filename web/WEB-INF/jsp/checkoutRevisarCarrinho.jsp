@@ -13,6 +13,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css"
+            rel="stylesheet"
+            /> 
 
         <script
             type="text/javascript"
@@ -31,11 +35,11 @@
             rel="stylesheet"
             />
         <!-- MDB -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css"
-            rel="stylesheet"
-            /> 
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+        
+        
+        
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -45,49 +49,195 @@
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
 
         <link rel="stylesheet" href="./css/checkout.css">
+        
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-        <!-- /HEADER -->
-        <section class="vh-10" style="background-color: #fff;">
-            <div class="container py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12">
-                        <div class="card card-stepper" style="border-radius: 16px;">
+       <header>
+            <!-- TOP HEADER -->
+            <div id="top-header">
+                <div class="container">
+                    <ul class="header-links pull-left">
+                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99195-0011 </a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> 919 Augusto Gomes Jd das Palmeiras</a></li>
+                    </ul>
 
-                            <div class="card-body p-5">
+                    <ul class="header-links pull-right">
+                        <li><a href="#"><i class="fa fa-dollar"></i></a></li>
 
-                                <div class="d-flex justify-content-between align-items-center mb-5">
-                                    <div>
-                                        <h5 class="mb-0">Carrinho <span class="text-primary font-weight-bold"></span></h5>
-                                    </div>
-                                    <div class="text-end">
-                                        <p class="mb-0">Nome <span>01/12/19</span></p>
+                        <c:choose>
+                            <c:when test="${empty usuario}">
+                                <li><a href="./logar"><i class="fa fa-user-o"></i>Login / Cadastro</a></li>                        
+                                </c:when>
+                                <c:otherwise>                          
+                                <li><a href="#"><i class="fa fa-user-o"></i> Minha Conta</a></li>
+                                <form action="sair" method="post" class="header-links pull-right">
+                                    <button type="submit" class="sair">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /TOP HEADER -->
+
+            <!-- MAIN HEADER -->
+            <div id="header">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- LOGO -->
+                        <div class="col-md-3">
+                            <div class="header-logo">
+                                <a href="./inicio" class="logo">
+                                    <img class="img-logo" src="./img/image.webp" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /LOGO -->
+
+                        <!-- SEARCH BAR -->
+                        <div class="col-md-6">
+                            <div class="header-search">
+                                <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
+
+
+                                    <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
+                                    <button  class="search-btn" type="submit">Search</button>
+                                </form>
+                                <div id="searchResults"></div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!-- /SEARCH BAR -->
+
+                        <!-- ACCOUNT -->
+                        <div class="col-md-3 clearfix">
+                            <div class="header-ctn">
+                                <!-- Wishlist -->
+                                <div>
+                                    <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
+                                </div>
+
+                                <!-- Cart -->
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <p class="icons"><i class="fa fa-shopping-cart"></i></p>
+                                    </a>
+                                    <div class="cart-dropdown">
+                                        <div class="cart-list">
+                                            <c:choose>
+                                                <c:when test="${empty carrinhos}">
+                                                    <li>
+                                                        <p>O seu carrinho está vazio.</p>
+                                                    </li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:forEach items="${carrinhos}" var="carrinho">
+                                                        <div class="product-widget">
+                                                            <div class="product-img">
+                                                                <img class="img-card-cart" src="data:image/jpeg;base64,${carrinho.imagemBase64}" alt="${carrinho.nome}">
+                                                            </div>
+                                                            <div class="product-body">
+                                                                <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
+                                                                <c:choose>
+                                                                    <c:when test="${carrinho.categoria == 1}">
+                                                                        <h4 class="product-price"><span class="qty">${carrinho.quantidade}kg</span>$${carrinho.valorAdicional}</h4>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                                
+                                                            </div>
+                                                            <form action="deletarProduto" method="post">
+                                                                <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
+                                                                <button type="submit" onclick="removeCarrinho(event)" class="delete"><i class="fa fa-close"></i></button>
+                                                                
+                                                                <script>
+                                                                    function removeCarrinho(event) {
+                                                                        event.preventDefault();
+                                                                        swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
+                                                                            event.target.closest('form').submit();
+                                                                        });
+                                                                    }
+                                                                </script>
+                                                            </form>
+
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                                <div class="cart-summary">
+                                                    <small>3 Item(s) selected</small>
+                                                    <h5>SUBTOTAL: $${total}</h5>
+                                                </div>
+                                                <div class="cart-btns">
+                                                    <a href="./revisar-carrinho">View Cart</a>
+                                                    <a href="./revisar-carrinho">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>       
 
                                     </div>
                                 </div>
+                                <!-- /Cart -->
 
-                                <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
-                                    <li class="step0 active text-center" id="step1"></li>
-                                    <li class="step0 text-muted text-center" id="step2"></li>
-                                    <li class="step0 text-muted text-center" id="step3"></li>
-                                    <li class="step0 text-muted text-end" id="step4"></li>
-                                </ul>
+                                <!-- Menu Toogle -->
+                                <div class="menu-toggle">
+                                    <a href="#">
+                                        <i class="fa fa-bars"></i>
+                                        <span>Menu</span>
+
+                                    </a>
+
+                                </div>
+                                <!-- /Menu Toogle -->
+                            </div>
+                        </div>
+                        <!-- /ACCOUNT -->
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+            <!-- /MAIN HEADER -->
+        </header>
+            <!-- /HEADER -->
+            <section class="vh-10" style="background-color: #fff;">
+                <div class="container py-5 h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12">
+                            <div class="card card-stepper" style="border-radius: 16px;">
+
+                                <div class="card-body p-5">
+
+                                    <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
+                                        <li class="step0 active text-center" id="step1"></li>
+                                        <li class="step0 active text-center" id="step2"></li>
+                                        <li class="step0 text-muted text-end" id="step3"></li>
+                                    </ul>
+
+                                </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <main>
-            <section class="h-100 gradient-custom">
-                <div class="container py-5">
-                  
+            </section>
+        <hr>
+            <main>
+                <section class="h-100 gradient-custom">
+                    <div class="container py-5">
+
                         <div class="col-md-8">
-                            <div class="card mb-4">
+                           <div class="card mb-4">
                                 <div class="card-header py-3">
                                     <h5 class="mb-0">Carrinho - ${qtdCarrinho} items</h5>
                                 </div>
@@ -145,7 +295,7 @@
                                                     </c:choose>
                                                 </form>
                                             </div>
-                             
+
                                             <form id="checkout-form" action="atualizarCarrinho" method="post" class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                                 <div class="d-flex mb-4" style="max-width: 300px">
                                                     <button class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
@@ -169,59 +319,59 @@
                                                 <p class="text-start text-md-center">
                                                     <strong>$${c.valorAdicional}</strong>
                                                 </p>
-                                            </</form>>
+                                            </form>>
                                         </div>
                                         <hr class="my-4" />
                                     </c:forEach>
                                 </div>
-                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
-                                    <h5 class="mb-0">Resumo</h5>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Resumo</h5>
+                            </div>
+                            <form action="continuar-checkout" method="post" class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Produtos
+                                        <span>R$${total}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Frete
+                                        <span id="shipping-cost">Gratis</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong>Total do Pedido</strong>
+                                            <strong>
+                                                <p class="mb-0">(incluindo FRETE)</p>
+                                            </strong>
+                                        </div>
+                                        <span><strong id="total-cost">R$${total}</strong></span>
+                                    </li>
+                                </ul>
+                                <div class="mb-4">
+                                    <label for="cep" class="form-label">CEP</label>
+                                    <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite seu CEP" />
+                                    <button type="button"  class="btn btn-secondary mt-2" onclick="calcularFrete()">Calcular Frete</button>
                                 </div>
-                                <form action="continuar-checkout" method="post" class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                            Produtos
-                                            <span>R$${total}</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                            Frete
-                                            <span id="shipping-cost">Gratis</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                            <div>
-                                                <strong>Total do Pedido</strong>
-                                                <strong>
-                                                    <p class="mb-0">(incluindo FRETE)</p>
-                                                </strong>
-                                            </div>
-                                            <span><strong id="total-cost">R$${total}</strong></span>
-                                        </li>
-                                    </ul>
-                                    <div class="mb-4">
-                                        <label for="cep" class="form-label">CEP</label>
-                                        <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite seu CEP" />
-                                        <button type="button"  class="btn btn-secondary mt-2" onclick="calcularFrete()">Calcular Frete</button>
-                                    </div>
-                                    <div id="loading-spinner" class="loading-spinner"></div>
-                                    <div id="feedback-message"></div>
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
-                                    <c:if test="${not empty sessionScope.feedback}">
-                                        <div id="update-feedback" class="alert alert-success">${sessionScope.feedback}</div>
-                                        <c:remove var="feedback" scope="session"/>
-                                    </c:if>
-                                    <c:if test="${not empty sessionScope.continuarError}">
-                                        <div class="alert alert-danger">${sessionScope.continuarError}</div>
-                                        <c:remove var="continuarError" scope="session"/>
-                                    </c:if>
-                                </form>
-                            </div>
+                                <div id="loading-spinner" class="loading-spinner"></div>
+                                <div id="feedback-message"></div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
+                                <c:if test="${not empty sessionScope.feedback}">
+                                    <div id="update-feedback" class="alert alert-success">${sessionScope.feedback}</div>
+                                    <c:remove var="feedback" scope="session"/>
+                                </c:if>
+                                <c:if test="${not empty sessionScope.continuarError}">
+                                    <div class="alert alert-danger">${sessionScope.continuarError}</div>
+                                    <c:remove var="continuarError" scope="session"/>
+                                </c:if>
+                            </form>
                         </div>
-                    
-                </div>
+
+
+                    </div>
             </section>
 
             <script>
@@ -261,7 +411,7 @@
                     mostrarSpinner();
 
                     // URL da API de cálculo de frete
-                
+
 
                     // Chamada AJAX para calcular o frete usando jQuery
                     $.ajax({
@@ -310,7 +460,7 @@
                     }
                 });
 
-  
+
                 function removeCarrinho(event) {
                     event.preventDefault();
                     swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {

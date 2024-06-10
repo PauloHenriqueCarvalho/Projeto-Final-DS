@@ -58,19 +58,40 @@
                     </div>
             </div>
             <main>
+                
                 <div class="container-main">
                     <h2>Meus Endereços</h2>
                     <div class="cards-endereco">
                     <c:forEach items="${enderecos}" var="e">
                         <div class="informacoes-endereco">
-                            <h3 class="end-padrao">Endereço Padrão</h3>
+                            <c:choose>
+                                <c:when test="${e.enderecoPadrao == true}">
+                                    <h3 class="end-padrao">Endereço Padrão</h3>
+                                </c:when>
+                                <c:otherwise>
+                                    <h3 class="end-padrao">Endereço Alternativo</h3>
+                                </c:otherwise>
+                            </c:choose>
+                            
                             <p>${e.idUsuario.nome}</p>
-                            <h3>${e.rua} ${e.numero}</h3>
-                            <h3>${e.cidade}, ${e.estado} - ${e.cep}</h3>
+                            <h3>${e.logradouro} ${e.numero}</h3>
+                            <h3>${e.localidade}, ${e.uf} - ${e.cep}</h3>
                             <h3>TEL- ${e.idUsuario.telefone}</h3>
                             <div class="button-group">
                                 <button class="edit-btn">Editar Endereço</button>
-                                <button class="remove-btn">Remover Endereço</button>
+                                <c:if test="${!e.enderecoPadrao}">
+                                    <form action="definirEnderecoPadrao" method="post">
+                                        <input type="hidden" id="idEndereco" name="idEndereco" value="${e.idEndereco}">
+                                        <button class="edit-btn">Definir como padrão</button>
+                                    </form>
+                                    
+                                </c:if>
+                                
+                                <form action="remover-endereco" method="post">
+                                    <input type="hidden" value="${e.idEndereco}" id="idEndereco" name="idEndereco">
+                                    <button class="remove-btn" onclick="showAlertRemover(event)">Remover Endereço</button>
+                                </form>
+                                
                             </div>
                         </div>
                     </c:forEach>
@@ -80,6 +101,7 @@
                     <div class="btn-confirmar">
                         <button id="add-btn">Adicionar Endereco</button>
                     </div>
+                    <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Nao sei meu CEP</a>
                 </div>
             
                 <div id="modal" class="modal">
@@ -109,19 +131,13 @@
                     <div class="modal-content">
                         <span class="close-add">&times;</span>
                         <h2>Adicionar Endereço</h2>
-                        <form id="add-form">
-                            <label for="add-nome">Nome:</label>
-                            <input type="text" id="add-nome" name="nome">
-                            <label for="add-rua">Rua:</label>
-                            <input type="text" id="add-rua" name="rua">
-                            <label for="add-cidade">Cidade:</label>
-                            <input type="text" id="add-cidade" name="cidade">
-                            <label for="add-estado">Estado:</label>
-                            <input type="text" id="add-estado" name="estado">
+                        <form action="add-endereco" method="post">
                             <label for="add-cep">CEP:</label>
-                            <input type="text" id="add-cep" name="cep">
-                            <label for="add-telefone">Telefone:</label>
-                            <input type="text" id="add-telefone" name="telefone">
+                            <input type="number" id="cep" name="cep" required="">
+                            <label for="add-telefone">Numero</label>
+                            <input type="number" id="telefone" name="numero" required="">
+                            <label for="add-telefone">Complemento</label>
+                            <input type="text" id="complemento" name="complemento">
                             <button type="submit">Adicionar</button>
                         </form>
                     </div>
@@ -132,6 +148,7 @@
             
 
 <!-- jQuery Plugins -->
+<script src="js/alert.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slick.min.js"></script>

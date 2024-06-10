@@ -15,6 +15,7 @@
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
         <link rel="stylesheet" href="css/font-awesome.min.css">
+        
 
         <link rel="stylesheet" href="./styles/home.css">
         <link type="text/css" rel="stylesheet" href="css/style.css"/>

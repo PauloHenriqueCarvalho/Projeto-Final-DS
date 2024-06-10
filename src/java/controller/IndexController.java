@@ -50,7 +50,7 @@ public class IndexController extends HttpServlet {
                 produto.setImagemBase64(imagemBase64);
             }
         }
-        
+
         request.setAttribute("produtos", produtos);
 
         CarrinhoDAO cDAO = new CarrinhoDAO();
@@ -76,33 +76,61 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        System.out.println("URL> " + url);
-       if(url.equals("/pica")){
-           
+
+        if (url.equals("/buscaProdutos")) {
+            if (Projeto.isSair()) {
+                Usuario.setIdUsuarioStatic(0);
+                Projeto.setSair(false);
+            }
+            if (Usuario.getIdUsuarioStatic() != 0) {
+                UsuarioDAO u = new UsuarioDAO();
+                List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+                request.setAttribute("usuario", usuarios);
+            }
+
+            CategoriaDAO cat = new CategoriaDAO();
+            List<Categoria> categoria = cat.listarTodos();
+            request.setAttribute("categorias", categoria);
+
+            CarrinhoDAO cDAO = new CarrinhoDAO();
+            float total = cDAO.precoCarrinho();
+            request.setAttribute("total", total);
+
+            CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
+            List<Produto> carrinho = car.listarProdutosDoCarrinho();
+            for (Produto c : carrinho) {
+                if (c.getImagemBytes() != null) {
+                    String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                    c.setImagemBase64(imagemBase64);
+
+                }
+            }
+            request.setAttribute("carrinhos", carrinho);
+
+            System.out.println("Entra aqui  ");
+            String termo = request.getParameter("termo");
+            termo = "%" + termo + "%";
+
+            ProdutoDAO dao = new ProdutoDAO();
+            List<Produto> produtos = dao.busca(termo);
+            for (int i = 0; i < produtos.size(); i++) {
+                if (produtos.get(i).getImagemBytes() != null) {
+                    String imagemBase64 = Base64.getEncoder().encodeToString(produtos.get(i).getImagemBytes());
+                    produtos.get(i).setImagemBase64(imagemBase64);
+                }
+
+            }
+
+            request.setAttribute("produtos", produtos);
+
+            // Redirecione de volta para a página principal
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listaProdutosCliente.jsp");
+            dispatcher.forward(request, response);
         } else {
             processRequest(request, response);
+            System.out.println("Else");
         }
     }
-
-    private void buscarProduto(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String termo = request.getParameter("termo");
-        termo = "%" + termo + "%";
-
-        ProdutoDAO dao = new ProdutoDAO();
-        List<Produto> produtos = dao.busca(termo);
-        for (Produto produto : produtos) {
-            if (produto.getImagemBytes() != null) {
-                String imagemBase64 = Base64.getEncoder().encodeToString(produto.getImagemBytes());
-                produto.setImagemBase64(imagemBase64);
-            }
-        }
-
-        request.setAttribute("produtos", produtos);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
-        dispatcher.forward(request, response);
-    }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

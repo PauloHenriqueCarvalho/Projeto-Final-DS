@@ -66,9 +66,7 @@
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
-                                <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
-
-
+                                <form class="form-inline my-2 my-lg-0" action="buscaProdutos" method="GET">
                                     <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
                                     <button  class="search-btn" type="submit">Search</button>
                                 </form>
@@ -185,7 +183,11 @@
                             <c:forEach items="${categorias}" var="categoria">
                             <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
                             </c:forEach>
-                            <li><a href="./endereco"><i class="fa-solid fa-location-dot"></i>Endereco</a></li>
+                            <li ><a href="./lista?cat=-1">Todos Produtos</a></li>
+                            <c:if test="${!empty usuario}">
+                                <li><a href="./endereco"><i class="fa-solid fa-location-dot"></i>Endereco</a></li>
+                            </c:if>
+                           
                     </ul>
                     <!-- /NAV -->
                 </div>
