@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
+import model.bean.Empresa;
 import model.bean.Produto;
 import model.bean.Usuario;
 import model.dao.CategoriaDAO;
@@ -45,6 +46,8 @@ public class EstoqueProdutosController extends HttpServlet {
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
+        
+        
 
         List<Produto> produto = dao.listarTodosComEstoque();
         for (int i = 0; i < produto.size(); i++) {

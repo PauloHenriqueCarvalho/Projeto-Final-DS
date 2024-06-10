@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,8 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
+import model.bean.Empresa;
+import model.bean.Produto;
 import model.bean.Projeto;
 import model.dao.CategoriaDAO;
+import model.dao.ProdutoDAO;
 
 /**
  *
@@ -37,6 +41,28 @@ public class InicioAdministradorController extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         String nextPage = "/WEB-INF/jsp/inicioAdministrador.jsp";
+        
+         ProdutoDAO dao = new ProdutoDAO();
+         
+         Empresa e = new Empresa();
+        e.setFuncionarios(12);
+        e.setVendas(32);
+        e.setVendido(322);
+        request.setAttribute("e", e);
+
+        CategoriaDAO cat = new CategoriaDAO();
+        List<Categoria> listaCategorias = cat.listarTodos();
+        request.setAttribute("categorias", listaCategorias);
+
+        List<Produto> produto = dao.listarTodosComEstoque();
+        for (int i = 0; i < produto.size(); i++) {
+            if (produto.get(i).getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getImagemBytes());
+                produto.get(i).setImagemBase64(imagemBase64);
+            }
+
+        }
+        request.setAttribute("produtos", produto);  
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);

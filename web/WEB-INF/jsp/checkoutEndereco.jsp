@@ -152,7 +152,7 @@
                                                 </div>
                                                 <div class="cart-summary">
                                                     <small>3 Item(s) selected</small>
-                                                    <h5>SUBTOTAL: $${total}</h5>
+                                                    <h5>3, $${total}</h5>
                                                 </div>
                                                 <div class="cart-btns">
                                                     <a href="./revisar-carrinho">View Cart</a>

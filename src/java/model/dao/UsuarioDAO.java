@@ -27,6 +27,9 @@ public class UsuarioDAO {
     public void insertCliente(Usuario usuario) {
         String senha = usuario.getSenha();
 //        String hashedSenha = encoder.encode(senha);
+    
+        
+
 
         try {
             String sql = "INSERT INTO usuario (nome, senha, email, telefone, cpf) VALUES (?, ?, ?, ?, ?)";
