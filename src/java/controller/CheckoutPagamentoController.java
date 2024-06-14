@@ -97,7 +97,35 @@ public class CheckoutPagamentoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = request.getServletPath();
+        
+        if(url.equals("/finalizar-compra")){
+            String paymentMethod = request.getParameter("payment");
+            String pixKey = request.getParameter("pix-key");
+            String cardNumber = request.getParameter("card-number");
+            String cardName = request.getParameter("card-name");
+            String cardExpiry = request.getParameter("card-expiry");
+            String cardCVV = request.getParameter("card-cvv");
+            String couponCode = request.getParameter("coupon-code");
+
+            // Imprima os valores capturados
+            System.out.println("Método de Pagamento: " + paymentMethod);
+            System.out.println("Chave Pix: " + pixKey);
+            System.out.println("Número do Cartão: " + cardNumber);
+            System.out.println("Nome no Cartão: " + cardName);
+            System.out.println("Validade do Cartão: " + cardExpiry);
+            System.out.println("CVV do Cartão: " + cardCVV);
+            System.out.println("Código do Cupom: " + couponCode);
+            
+            if(paymentMethod.equals("pix")){
+                response.sendRedirect("./pagamentoPix");
+            } else{
+                response.sendRedirect("./checkoutFinal");
+            }
+            
+        } else {
+            processRequest(request, response);
+        }
     }
 
     /**

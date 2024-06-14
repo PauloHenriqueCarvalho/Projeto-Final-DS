@@ -39,7 +39,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         
         
-        
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -281,13 +280,13 @@
                                                     <input type="hidden" name="idProduto" id="idProduto" value="${c.idProduto}">
                                                     <c:choose>
                                                         <c:when test="${empty usuario}">
-                                                            <button type="submit" onclick="showAlert4(event)" class="btn btn-danger btn-sm mb-2">
+                                                             <button type="submit" onclick="showAlert4(event)" class="btn btn-danger btn-sm mb-2">
                                                                 <i class="fa fa-heart-o"></i>
                                                                 <span class="tooltipp"></span>
                                                             </button>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <button type="submit" onclick="showAlert4(event)" class="add-to-wishlist">
+                                                             <button type="submit" onclick="showAlert4(event)" class="add-to-wishlist">
                                                                 <i class="fa fa-heart-o"></i>
                                                                 <span class="tooltipp">Adicionar na Lista de Desejos</span>
                                                             </button>
@@ -474,7 +473,7 @@
         </main>
     </body>
     <!-- MDB -->
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js type="text/javascript"></script>
+   <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js type="text/javascript"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slick.min.js"></script>

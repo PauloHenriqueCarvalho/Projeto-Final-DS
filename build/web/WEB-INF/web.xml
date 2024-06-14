@@ -72,6 +72,10 @@
         <servlet-name>CheckoutPagamentoController</servlet-name>
         <servlet-class>controller.CheckoutPagamentoController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckoutFinalController</servlet-name>
+        <servlet-class>controller.CheckoutFinalController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -239,6 +243,14 @@
     <servlet-mapping>
         <servlet-name>CheckoutPagamentoController</servlet-name>
         <url-pattern>/checkout-pagamento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutPagamentoController</servlet-name>
+        <url-pattern>/finalizar-compra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutFinalController</servlet-name>
+        <url-pattern>/checkoutFinal</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

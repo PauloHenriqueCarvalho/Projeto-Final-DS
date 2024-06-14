@@ -208,7 +208,7 @@
             </div>
         </section>
         <hr>
-        <form id="main-endereco" class="container-endereco" action="continuar-checkout-pagamento" method="post">
+         <form id="main-endereco" class="container-endereco" action="continuar-checkout-pagamento" method="post" onsubmit="return validarFormulario()">
             <div class="address">
                 <input type="hidden" id="idEndereco" name="idEndereco" value="${e.idEndereco}">
                 <h3>Endereco de Entrega</h3>
@@ -217,15 +217,14 @@
                     <p>${e.localidade} ${e.uf} - ${e.cep}</p>
                 </div>
                 <a href="./endereco"><p class="choose-address">Escolher outro endereco</p></a>
-
                 <div class="row">
                     <div class="col-12 mt-3">
                         <label for="datePicker" class="form-label">Escolha a data de entrega:</label>
-                        <input type="date" class="form-control" id="datePicker" name="dataEntrega" placeholder="Selecione a data de entrega">
+                        <input type="date" class="form-control" id="datePicker" name="dataEntrega" placeholder="Selecione a data de entrega" required>
                     </div>
                     <div class="col-12 mt-3">
-                        <label for="datePicker" class="form-label">Escolha a hora de entrega:</label>
-                        <input type="time" class="form-control" id="datePicker" name="horarioEntrega" placeholder="Selecione o horario de entrega">
+                        <label for="timePicker" class="form-label">Escolha a hora de entrega:</label>
+                        <input type="time" class="form-control" id="timePicker" name="horarioEntrega" placeholder="Selecione o horario de entrega" required>
                     </div>
                 </div>
             </div>
@@ -238,15 +237,11 @@
                             <span>${c.nome}</span>
                         </div>
                         <div>
-
                             <span>${c.quantidade}</span>
-
                         </div>
                         <div>${c.quantidade}x R$<strong>$${c.valorAdicional}</strong></div>
                     </div>
                 </c:forEach>
-
-
                 <div class="summary">
                     <span>Frete</span>
                     <span>R$10</span>
@@ -258,8 +253,6 @@
                 <button type="submit" class="payment-button">Pagamento</button>
             </div>
         </form>
-                
-
         <!-- jQuery Plugins -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -267,5 +260,20 @@
         <script src="js/nouislider.min.js"></script>
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
+        <script>
+            function validarFormulario() {
+                const dataEntrega = document.getElementById('datePicker').value;
+                const horarioEntrega = document.getElementById('timePicker').value;
+                if (!dataEntrega) {
+                    alert('Por favor, selecione a data de entrega.');
+                    return false;
+                }
+                if (!horarioEntrega) {
+                    alert('Por favor, selecione a hora de entrega.');
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </body>
 </html>

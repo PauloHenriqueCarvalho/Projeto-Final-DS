@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('cartao').checked) {
         cardInfo.style.display = 'block';
     }
+    
+    
 
     // Add form submission event listener to validate card info
     form.addEventListener('submit', function(event) {
@@ -80,3 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return regex.test(cvv);
     }
 });
+
+ document.getElementById('copy-button').addEventListener('click', function() {
+            // Seleciona o campo de entrada da chave Pix
+            var pixKeyInput = document.getElementById('pix-key');
+            
+            // Seleciona o texto do campo de entrada
+            pixKeyInput.select();
+            pixKeyInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+            // Copia o texto selecionado para a área de transferência
+            document.execCommand('copy');
+
+            // Alerta o usuário que a chave foi copiada
+            alert('Chave Pix copiada: ' + pixKeyInput.value);
+        });

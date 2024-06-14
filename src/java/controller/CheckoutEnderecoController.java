@@ -97,6 +97,25 @@ public class CheckoutEnderecoController extends HttpServlet {
             Timestamp dataFinal = null;
             // Concatena a data e o horário em uma única string
             String dataHoraString = dataEntrega + " " + horarioEntrega;
+            
+
+            if (dataEntrega == null || dataEntrega.isEmpty() || horarioEntrega == null || horarioEntrega.isEmpty()) {
+                request.setAttribute("erro", "Data e horário de entrega são obrigatórios.");
+                processRequest(request, response);
+                return;
+            }
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                java.util.Date parsedDate = dateFormat.parse(dataHoraString);
+                dataFinal = new Timestamp(parsedDate.getTime());
+            } catch (java.text.ParseException e) {
+                Logger.getLogger(CheckoutEnderecoController.class.getName()).log(Level.SEVERE, null, e);
+                request.setAttribute("erro", "Data e horário de entrega inválidos.");
+                processRequest(request, response);
+                return;
+            }
+            
 
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
