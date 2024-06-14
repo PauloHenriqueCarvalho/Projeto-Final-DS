@@ -30,7 +30,7 @@ public class CheckoutFinalController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String url = "/WEB-INF/jsp/checkoutFinal.jsp";
+       String url = "/WEB-INF/jsp/CheckoutFinal.jsp";
        RequestDispatcher r = getServletContext().getRequestDispatcher(url);
         r.forward(request, response);
     }

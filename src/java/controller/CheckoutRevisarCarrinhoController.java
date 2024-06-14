@@ -135,20 +135,12 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
 
             response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
         } else if (url.equals("/continuar-checkout")) {
-            String cep = request.getParameter("cep");;
+            
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             List<Produto> carrinho = dao.listarProdutosDoCarrinho();
 
-            if (cep == null || cep.isEmpty()) {
-                request.getSession().setAttribute("continuarError", "Adicione o CEP!");
-                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
-            } else if (carrinho.isEmpty()) {
-                request.getSession().setAttribute("continuarError", "Adicione produtos ao carrinho!");
-                response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
-            } else {
-                response.sendRedirect("./checkout-endereco");
-            }
-            System.out.println("Teste   "); 
+            response.sendRedirect("./checkout-endereco");
+   
         } else {
             processRequest(request, response);
         }

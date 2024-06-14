@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Evelin Verissimo | Produtos</title>
-
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -210,208 +210,216 @@
         </section>
         <hr>
         <form id="payment-form" action="finalizar-compra" method="post">
-        <div class="container-endereco">
-            <div class="payment-methods">
-                <h2>ESCOLHA A FORMA DE PAGAMENTO</h2>
-                <div class="method">
-                    <input type="radio" id="pix" name="payment" value="pix" checked>
-                    <label for="pix">
-                        <img src="img/logo-pix-1024.png" alt="Pix">
-                        <span>PAGUE COM PIX</span>
-                    </label>
-                    <div class="pix-info">
-                        <input type="text" placeholder="Chave Pix" id="pix-key" name="pix-key" value="chave-pix-aleatoria">
-                        <button type="button" id="copy-button">Copiar Chave Pix</button>
+            <div class="container-endereco">
+                <div class="payment-methods">
+                    <h2>ESCOLHA A FORMA DE PAGAMENTO</h2>
+                    <div class="method">
+                        <input type="radio" id="pix" name="payment" value="pix" checked>
+                        <label for="pix">
+                            <img src="img/logo-pix-1024.png" alt="Pix">
+                            <span>PAGUE COM PIX</span>
+                        </label>
+                        <div class="pix-info">
+                           
+                        </div>
+                    </div>
+                    <div class="method">
+                        <input type="radio" id="boleto" name="payment" value="boleto">
+                        <label for="boleto">
+                            <img src="img/boleto.png" alt="Boleto">
+                            <span>PAGUE COM BOLETO</span>
+                        </label>
+                    </div>
+                    <div class="method">
+                        <input type="radio" id="cartao" name="payment" value="cartao">
+                        <label for="cartao">
+                            <img src="img/cartao.jpg" alt="Cartão">
+                            <span>PAGUE COM CARTÃO</span>
+                        </label>
+                        <div class="card-info" style="display: none;">
+                            <input type="text" placeholder="Número do Cartão" id="card-number" name="card-number">
+                            <small class="error-message" id="card-number-error"></small>
+                            <input type="text" placeholder="Nome no Cartão"  id="card-name"  name="card-name" onkeypress="validateInput(event)">
+
+                            <small class="error-message" id="card-name-error"></small>
+                            <input type="text" placeholder="Validade (MM/AA)" id="card-expiry" name="card-expiry">
+                            <small class="error-message" id="card-expiry-error"></small>
+                            <input type="text" placeholder="CVV" id="card-cvv" name="card-cvv">
+                            <small class="error-message" id="card-cvv-error"></small>
+                        </div>
                     </div>
                 </div>
-                <div class="method">
-                    <input type="radio" id="boleto" name="payment" value="boleto">
-                    <label for="boleto">
-                        <img src="img/boleto.png" alt="Boleto">
-                        <span>PAGUE COM BOLETO</span>
-                    </label>
-                </div>
-                <div class="method">
-                    <input type="radio" id="cartao" name="payment" value="cartao">
-                    <label for="cartao">
-                        <img src="img/cartao.jpg" alt="Cartão">
-                        <span>PAGUE COM CARTÃO</span>
-                    </label>
-                    <div class="card-info" style="display: none;">
-                        <input type="text" placeholder="Número do Cartão" id="card-number" name="card-number">
-                        <small class="error-message" id="card-number-error"></small>
-                        <input type="text" placeholder="Nome no Cartão" id="card-name" name="card-name">
-                        <small class="error-message" id="card-name-error"></small>
-                        <input type="text" placeholder="Validade (MM/AA)" id="card-expiry" name="card-expiry">
-                        <small class="error-message" id="card-expiry-error"></small>
-                        <input type="text" placeholder="CVV" id="card-cvv" name="card-cvv">
-                        <small class="error-message" id="card-cvv-error"></small>
+                <div class="summary">
+                    <div class="address">
+                        <p>${e.logradouro} ${e.numero}<br>${e.localidade} - ${e.uf} ${e.cep}</p>
+                        <p><strong>Frete:</strong>Entrega Propria<br>Entrega ${data}</p>
+                    </div>
+
+                    <div class="prices">
+                        <p><span>Subtotal</span><span>R$ ${total}</span></p>
+                        <p><span>Frete</span><span>R$ 10.00</span></p>
+                        <p class="total"><span>TOTAL</span><span>R$ ${total + 10}</span></p>
+                        <button type="submit" id="confirmar">Finalizar Compra</button>
                     </div>
                 </div>
             </div>
-            <div class="summary">
-                <div class="address">
-                    <p>${e.logradouro} ${e.numero}<br>${e.localidade} - ${e.uf} ${e.cep}</p>
-                    <p><strong>Frete:</strong>Entrega Propria<br>Entrega ${data}</p>
-                </div>
-                <div class="coupon">
-                    <input type="text" placeholder="Digite o seu cupom" id="coupon-code" name="coupon-code">
-                    <button type="button" id="apply-coupon">Aplicar</button>
-                </div>
-                <div class="prices">
-                    <p><span>Subtotal</span><span>R$ ${total}</span></p>
-                    <p><span>Frete</span><span>R$ 10.00</span></p>
-                    <p class="total"><span>TOTAL</span><span>R$ ${total + 10}</span></p>
-                    <button type="submit" id="confirmar">Finalizar Compra</button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
         <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const paymentMethods = document.querySelectorAll('input[name="payment"]');
-            const cardInfo = document.querySelector('.card-info');
-            const pixInfo = document.querySelector('.pix-info');
-            const cardNumber = document.getElementById('card-number');
-            const cardName = document.getElementById('card-name');
-            const cardExpiry = document.getElementById('card-expiry');
-            const cardCVV = document.getElementById('card-cvv');
-            const form = document.getElementById('payment-form');
+            function validateInput(event) {
+                const char = String.fromCharCode(event.which);
+                if (!/[a-zA-Z]/.test(char)) {
+                    event.preventDefault();
+                }
+            }
+        </script>
+        <script>
 
-            const cardNumberError = document.getElementById('card-number-error');
-            const cardNameError = document.getElementById('card-name-error');
-            const cardExpiryError = document.getElementById('card-expiry-error');
-            const cardCVVError = document.getElementById('card-cvv-error');
+     
 
-            paymentMethods.forEach(method => {
-                method.addEventListener('change', function() {
-                    if (this.id === 'cartao') {
-                        cardInfo.style.display = 'block';
-                        pixInfo.style.display = 'none';
-                    } else if (this.id === 'pix') {
-                        pixInfo.style.display = 'block';
-                        cardInfo.style.display = 'none';
+            document.addEventListener('DOMContentLoaded', function () {
+                const paymentMethods = document.querySelectorAll('input[name="payment"]');
+                const cardInfo = document.querySelector('.card-info');
+                const pixInfo = document.querySelector('.pix-info');
+                const cardNumber = document.getElementById('card-number');
+                const cardName = document.getElementById('card-name');
+                const cardExpiry = document.getElementById('card-expiry');
+                const cardCVV = document.getElementById('card-cvv');
+                const form = document.getElementById('payment-form');
+
+                const cardNumberError = document.getElementById('card-number-error');
+                const cardNameError = document.getElementById('card-name-error');
+                const cardExpiryError = document.getElementById('card-expiry-error');
+                const cardCVVError = document.getElementById('card-cvv-error');
+
+                paymentMethods.forEach(method => {
+                    method.addEventListener('change', function () {
+                        if (this.id === 'cartao') {
+                            cardInfo.style.display = 'block';
+                            pixInfo.style.display = 'none';
+                        } else if (this.id === 'pix') {
+                            pixInfo.style.display = 'block';
+                            cardInfo.style.display = 'none';
+                        } else {
+                            cardInfo.style.display = 'none';
+                            pixInfo.style.display = 'none';
+                        }
+                    });
+                });
+
+                // Ensure the correct state on page load
+                if (document.getElementById('cartao').checked) {
+                    cardInfo.style.display = 'block';
+                } else if (document.getElementById('pix').checked) {
+                    pixInfo.style.display = 'block';
+                }
+
+                // Real-time validation
+                cardNumber.addEventListener('input', function () {
+                    if (!validateCardNumber(cardNumber.value)) {
+                        cardNumberError.textContent = 'Número do cartão inválido.';
                     } else {
-                        cardInfo.style.display = 'none';
-                        pixInfo.style.display = 'none';
+                        cardNumberError.textContent = '';
                     }
                 });
-            });
 
-            // Ensure the correct state on page load
-            if (document.getElementById('cartao').checked) {
-                cardInfo.style.display = 'block';
-            } else if (document.getElementById('pix').checked) {
-                pixInfo.style.display = 'block';
-            }
+                cardName.addEventListener('input', function () {
+                    if (!validateCardName(cardName.value)) {
+                        cardNameError.textContent = 'Nome no cartão inválido.';
+                    } else {
+                        cardNameError.textContent = '';
+                    }
+                });
 
-            // Real-time validation
-            cardNumber.addEventListener('input', function() {
-                if (!validateCardNumber(cardNumber.value)) {
-                    cardNumberError.textContent = 'Número do cartão inválido.';
-                } else {
-                    cardNumberError.textContent = '';
-                }
-            });
+                cardExpiry.addEventListener('input', function () {
+                    if (!validateCardExpiry(cardExpiry.value)) {
+                        cardExpiryError.textContent = 'Validade do cartão inválida.';
+                    } else {
+                        cardExpiryError.textContent = '';
+                    }
+                });
 
-            cardName.addEventListener('input', function() {
-                if (!validateCardName(cardName.value)) {
-                    cardNameError.textContent = 'Nome no cartão inválido.';
-                } else {
-                    cardNameError.textContent = '';
-                }
-            });
+                cardCVV.addEventListener('input', function () {
+                    if (!validateCardCVV(cardCVV.value)) {
+                        cardCVVError.textContent = 'CVV do cartão inválido.';
+                    } else {
+                        cardCVVError.textContent = '';
+                    }
+                });
 
-            cardExpiry.addEventListener('input', function() {
-                if (!validateCardExpiry(cardExpiry.value)) {
-                    cardExpiryError.textContent = 'Validade do cartão inválida.';
-                } else {
-                    cardExpiryError.textContent = '';
-                }
-            });
-
-            cardCVV.addEventListener('input', function() {
-                if (!validateCardCVV(cardCVV.value)) {
-                    cardCVVError.textContent = 'CVV do cartão inválido.';
-                } else {
-                    cardCVVError.textContent = '';
-                }
-            });
-
-            // Add form submission event listener to validate card info
-            form.addEventListener('submit', function(event) {
+                // Add form submission event listener to validate card info
+                form.addEventListener('submit', function(event) {
                 if (document.getElementById('cartao').checked) {
                     if (!validateCardNumber(cardNumber.value)) {
-                        alert('Número do cartão inválido.');
+                        swal('Opa! Calma ae...', 'Numero do cartão invalido!', 'error');
                         event.preventDefault();
                         return;
                     }
 
-                    if (!validateCardName(cardName.value)) {
-                        alert('Nome no cartão inválido.');
-                        event.preventDefault();
-                        return;
-                    }
+                        if (!validateCardName(cardName.value)) {
+                            swal('Opa! Calma ae...', 'Nome do cartão invalido!', 'error');
+                            event.preventDefault();
+                            return;
+                        }
 
-                    if (!validateCardExpiry(cardExpiry.value)) {
-                        alert('Validade do cartão inválida.');
-                        event.preventDefault();
-                        return;
-                    }
+                        if (!validateCardExpiry(cardExpiry.value)) {
+                            swal('Opa! Calma ae...', 'Validade do cartão invalida!', 'error');
+                            event.preventDefault();
+                            return;
+                        }
 
-                    if (!validateCardCVV(cardCVV.value)) {
-                        alert('CVV do cartão inválido.');
-                        event.preventDefault();
-                        return;
+                        if (!validateCardCVV(cardCVV.value)) {
+                            swal('Opa! Calma ae...', 'CVV do cartão invalido!', 'error');
+                            event.preventDefault();
+                            return;
+                        }
                     }
+                });
+
+                function validateCardNumber(number) {
+                    // Simple validation for card number (example only, use more robust validation in production)
+                    const regex = /^[0-9]{16}$/;
+                    return regex.test(number);
                 }
+
+                function validateCardName(name) {
+                    // Simple validation for card name
+                    return name.trim() !== '';
+                }
+
+                function validateCardExpiry(expiry) {
+                    // Simple validation for card expiry (MM/YY)
+                    const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+                    return regex.test(expiry);
+                }
+
+                function validateCardCVV(cvv) {
+                    // Simple validation for CVV (3 or 4 digits)
+                    const regex = /^[0-9]{3,4}$/;
+                    return regex.test(cvv);
+                }
+
+                document.getElementById('copy-button').addEventListener('click', function () {
+                    // Seleciona o campo de entrada da chave Pix
+                    var pixKeyInput = document.getElementById('pix-key');
+
+                    // Seleciona o texto do campo de entrada
+                    pixKeyInput.select();
+                    pixKeyInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+                    // Copia o texto selecionado para a área de transferência
+                    document.execCommand('copy');
+
+                    // Alerta o usuário que a chave foi copiada
+                    alert('Chave Pix copiada: ' + pixKeyInput.value);
+                });
             });
-
-            function validateCardNumber(number) {
-                // Simple validation for card number (example only, use more robust validation in production)
-                const regex = /^[0-9]{16}$/;
-                return regex.test(number);
+        </script>
+        <style>
+            .error-message {
+                color: red;
+                font-size: 12px;
             }
-
-            function validateCardName(name) {
-                // Simple validation for card name
-                return name.trim() !== '';
-            }
-
-            function validateCardExpiry(expiry) {
-                // Simple validation for card expiry (MM/YY)
-                const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-                return regex.test(expiry);
-            }
-
-            function validateCardCVV(cvv) {
-                // Simple validation for CVV (3 or 4 digits)
-                const regex = /^[0-9]{3,4}$/;
-                return regex.test(cvv);
-            }
-
-            document.getElementById('copy-button').addEventListener('click', function() {
-                // Seleciona o campo de entrada da chave Pix
-                var pixKeyInput = document.getElementById('pix-key');
-                
-                // Seleciona o texto do campo de entrada
-                pixKeyInput.select();
-                pixKeyInput.setSelectionRange(0, 99999); // Para dispositivos móveis
-
-                // Copia o texto selecionado para a área de transferência
-                document.execCommand('copy');
-
-                // Alerta o usuário que a chave foi copiada
-                alert('Chave Pix copiada: ' + pixKeyInput.value);
-            });
-        });
-    </script>
-    <style>
-        .error-message {
-            color: red;
-            font-size: 12px;
-        }
-    </style>
+        </style>
 
         <!-- jQuery Plugins -->
         <script src="js/jquery.min.js"></script>

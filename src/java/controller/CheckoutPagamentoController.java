@@ -100,6 +100,8 @@ public class CheckoutPagamentoController extends HttpServlet {
         String url = request.getServletPath();
         
         if(url.equals("/finalizar-compra")){
+            Pedido p = new Pedido();
+            PedidoDAO pDAO = new PedidoDAO();
             String paymentMethod = request.getParameter("payment");
             String pixKey = request.getParameter("pix-key");
             String cardNumber = request.getParameter("card-number");

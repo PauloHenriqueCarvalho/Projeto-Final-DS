@@ -50,13 +50,14 @@
 
                     <form method="post" action="logar" class="card-body p-5 text-center">
 
+     
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="email" id="email"  name="email" class="form-control form-control-lg" />
+                            <input type="email" id="email"  name="email" class="form-control form-control-lg"  required=""/>
                             <label class="form-label" for="form3Example3cg">Seu Email</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="password" id="senha" name="senha" class="form-control form-control-lg" />
+                            <input type="password" id="senha" name="senha" class="form-control form-control-lg" required=""/>
                             <label class="form-label" for="form3Example4cg">Senha</label>
                         </div>
                         <div class="d-flex justify-content-center">
