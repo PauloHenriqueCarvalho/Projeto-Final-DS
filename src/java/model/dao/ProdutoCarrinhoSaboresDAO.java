@@ -53,19 +53,21 @@ public class ProdutoCarrinhoSaboresDAO {
     }
     
     public Sabor dadosSabor(int id){
-        Sabor s = new Sabor();
+        Sabor sabor = new Sabor();
         try{
             Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("select * from sabor where id_sabor = ?");
+            PreparedStatement ps = c.prepareStatement("select * from sabor where id_sabor = ? AND idPai != 0");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                Categoria ca = new Categoria();
-                ca.setIdCategoria(rs.getInt("id_categoria"));
-                s.setIdCategoria(ca);
-                s.setIdSabor(rs.getInt("id_sabor"));
-                s.setNome(rs.getString("nome"));
-                s.setValorAdicional(rs.getFloat("valorAdicional"));
+             
+                sabor.setIdSabor(rs.getInt("id_sabor"));
+                sabor.setIdPai(rs.getObject("id_produto") != null ? rs.getInt("id_produto") : null);
+                sabor.setNome(rs.getString("nome"));
+                sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
+                sabor.setDescricao(rs.getString("descricao"));
+                sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                sabor.setStatus(rs.getString("status"));
             }
             rs.close();
             ps.close();
@@ -74,6 +76,6 @@ public class ProdutoCarrinhoSaboresDAO {
         } catch(SQLException e){
             e.printStackTrace();
         }
-        return s;
+        return sabor;
     }
 }

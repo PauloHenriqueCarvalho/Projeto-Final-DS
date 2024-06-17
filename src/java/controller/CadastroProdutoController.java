@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,9 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
+import model.bean.ProdutoImagem;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.ProdutoImagemDAO;
 import model.dao.UsuarioDAO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -50,30 +54,13 @@ public class CadastroProdutoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    private void redirectToSuccessPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Redireciona para a página de produtos
-        response.sendRedirect(request.getContextPath() + "/inicioAdministrador");
-    }
-
-    private void redirectToErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Redireciona para a página de erro
-        response.sendRedirect(request.getContextPath() + "/cadastrar-produtos");
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,11 +68,13 @@ public class CadastroProdutoController extends HttpServlet {
         String url = request.getServletPath();
         if (url.equals("/cadastro-produto")) {
             System.out.println("Entra no id");
+            List<ProdutoImagem> imagens = new ArrayList<>();
             try {
                 // Parseia a requisição para obter os itens do formulário
                 List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 // Instancia um novo produto
                 Produto produto = new Produto();
+                Categoria categoria = new Categoria();
                 // Processa cada item do formulário
                 for (FileItem item : items) {
                     // Verifica se o item é um campo de formulário
@@ -103,8 +92,15 @@ public class CadastroProdutoController extends HttpServlet {
                                 break;
 
                             case "categoria":
-                                produto.setCategoria(Integer.parseInt(item.getString()));
+                               categoria.setIdCategoria(Integer.parseInt(item.getString()));
+                               produto.setCategoria(categoria);
                                 break;
+                            case "precoCusto":
+                                produto.setPrecoCusto(Float.parseFloat(item.getString()));
+                                break;
+                            case "quantidade":
+                                produto.setQuantidadeEstoque(Integer.parseInt(item.getString()));
+                                break;   
                         }
                     } else {
                         // Se não, o item é um arquivo de imagem
@@ -119,21 +115,40 @@ public class CadastroProdutoController extends HttpServlet {
                         }
                         byte[] imagemBytes = outputStream.toByteArray();
                         // Define a imagem do produto
-                        produto.setImagemBytes(imagemBytes);
-                        // Fecha os fluxos de entrada e saída
+                        ProdutoImagem imagem = new ProdutoImagem();
+                        imagem.setImagemBytes(imagemBytes);
+                        imagens.add(imagem);
+                        
                         inputStream.close();
                         outputStream.close();
                     }
                 }
-                // Após processar todos os itens do formulário, insere o produto no banco de dados
+                
                 ProdutoDAO dao = new ProdutoDAO();
-                boolean sucesso = dao.inserirProduto(produto);
-                if (sucesso) {
+                int sucesso = dao.inserirProduto(produto);
+                
+                
+                if (sucesso > 0 ) {
                     // Se a inserção for bem-sucedida, redireciona para .a página de produtos
-                    redirectToSuccessPage(request, response);
-                } else {
+                    ProdutoImagemDAO pmDAO = new ProdutoImagemDAO();
+                    Produto idProduto = new Produto();
+                    idProduto.setIdProduto(sucesso);
+                    for (int i = 0; i < imagens.size(); i++) {
+                        imagens.get(i).setProduto(idProduto);
+                        
+                        pmDAO.inserirImagem(imagens.get(i));
+                        System.out.println("Imagem: " + i);
+                    } 
+                   request.getSession().removeAttribute("erroCadastro");
+                    Projeto.setIdProdutoAtual(sucesso);
+                    response.sendRedirect(request.getContextPath() + "/tipoProduto");
+                }else if(sucesso == -2) {
+                    request.getSession().setAttribute("erroCadastro", "Ja existe esse produto cadastrado!");
+                    response.sendRedirect(request.getContextPath() + "/cadastroProduto");
+                    
+                }else {
                     // Se ocorrer algum erro, redireciona para a página de erro
-                    redirectToErrorPage(request, response);
+                    response.sendRedirect(request.getContextPath() + "/cadastroProduto");
                 }
             } catch (FileUploadException e) {
                 throw new ServletException("Cannot parse multipart request.", e);

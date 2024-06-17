@@ -20,7 +20,7 @@ import model.bean.Wishlist;
 
 /**
  *
- * @author Senai
+ * @author Paulo Henrique
  */
 public class WishListDAO {
     
@@ -109,7 +109,7 @@ public class WishListDAO {
                 Produto p = new Produto();
                 int id = rs.getInt("id_produto");
                 ProdutoDAO d = new ProdutoDAO();
-                p = d.buscarPorId(id);
+                p = d.readById(id);
                 
                 produto.add(p);
                 

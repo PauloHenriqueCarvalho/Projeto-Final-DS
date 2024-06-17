@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
-import model.bean.Empresa;
+
 import model.bean.Produto;
 import model.bean.Usuario;
 import model.dao.CategoriaDAO;
-import model.dao.EstoqueDAO;
+
 import model.dao.ProdutoDAO;
 
 /**
@@ -49,7 +49,7 @@ public class EstoqueProdutosController extends HttpServlet {
         
         
 
-        List<Produto> produto = dao.listarTodosComEstoque();
+        List<Produto> produto = dao.listarTodos();
         for (int i = 0; i < produto.size(); i++) {
             if (produto.get(i).getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getImagemBytes());

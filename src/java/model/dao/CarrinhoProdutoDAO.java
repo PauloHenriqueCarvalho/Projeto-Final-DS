@@ -19,19 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
-import model.bean.Cobertura;
-import model.bean.Massa;
+import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.ProdutoCarrinho;
 import model.bean.Projeto;
-import model.bean.Recheio;
 import model.bean.Sabor;
-import model.bean.Topper;
 import model.bean.Usuario;
 
 /**
  *
- * @author Joao Guilherme
+ * @author Paulo Henrique
  */
 public class CarrinhoProdutoDAO {
 
@@ -52,25 +49,23 @@ public class CarrinhoProdutoDAO {
             e.printStackTrace();
                    
         }*/
-    
     public boolean atualizarQuantidade(int idProdutoCarrinho, int quantidade) {
         String sql = "UPDATE produto_carrinho SET quantidade = ? WHERE id_produto_carrinho = ?";
-        
-        try{
+
+        try {
             Connection conn = Conexao.getConn();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, quantidade);
             pstmt.setInt(2, idProdutoCarrinho);
             int affectedRows = pstmt.executeUpdate();
-            
+
             return affectedRows > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
-    
-    
+
     public boolean excluirProdutoCarrinhoSemSabor(int idProdutoCarrinho) {
         PreparedStatement stmt = null;
         Connection con = Conexao.getConn();
@@ -116,41 +111,24 @@ public class CarrinhoProdutoDAO {
         PreparedStatement stmt = null;
         try {
             conexao = Conexao.getConn();
-            String sql = "INSERT INTO produto_carrinho (id_produto, id_usuario, quantidade, id_massa, id_recheio, id_topper, id_cobertura, valorAdicional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO produto_carrinho (id_produto, id_usuario, quantidade, valorAdicional) VALUES (?, ?, ?,?)";
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, produtoCarrinho.getProduto().getIdProduto());
             stmt.setInt(2, Usuario.getIdUsuarioStatic());
             stmt.setFloat(3, produtoCarrinho.getQuantidade());
 
-            if (produtoCarrinho.getProduto().getCategoria() == 1) {
-                stmt.setInt(4, produtoCarrinho.getIdMassa().getIdMassa());
-                stmt.setInt(5, produtoCarrinho.getIdRecheio().getIdRecheio());
-                stmt.setInt(6, produtoCarrinho.getIdTopper().getIdTopper());
-                stmt.setInt(7, produtoCarrinho.getIdCobertura().getIdCobertura());
-                valorAdicional += valorAdicionalCobertura(produtoCarrinho.getIdCobertura().getIdCobertura());
-                valorAdicional += valorAdicionalMassa(produtoCarrinho.getIdMassa().getIdMassa());
-                valorAdicional += valorAdicionalRecheio(produtoCarrinho.getIdRecheio().getIdRecheio());
-                valorAdicional += valorAdicionalTopper(produtoCarrinho.getIdTopper().getIdTopper());
-                valorAdicional += produtoCarrinho.getProduto().getValor();
-                valorAdicional = valorAdicional * produtoCarrinho.getQuantidade();
+            float precoAdicionalSabores = 0;
 
-                stmt.setFloat(8, valorAdicional);
-            } else {
-                float precoAdicionalSabores = 0;
-
-                for (int i = 0; i < sabores.size(); i++) {
-                    precoAdicionalSabores += valorAdicionalSabor(sabores.get(i));
-                }
-                System.out.println("Preco Sabor: " + precoAdicionalSabores);
-                stmt.setNull(4, Types.INTEGER);
-                stmt.setNull(5, Types.INTEGER);
-                stmt.setNull(6, Types.INTEGER);
-                stmt.setNull(7, Types.INTEGER);
-                valorAdicional += precoAdicionalSabores;
-                valorAdicional += produtoCarrinho.getProduto().getValor();
-                valorAdicional = valorAdicional * produtoCarrinho.getQuantidade();
-                stmt.setFloat(8, valorAdicional);
+            for (int i = 0; i < sabores.size(); i++) {
+                precoAdicionalSabores += valorAdicionalSabor(sabores.get(i));
             }
+            
+            System.out.println("Preco Sabor: " + precoAdicionalSabores);
+
+            valorAdicional += precoAdicionalSabores;
+            valorAdicional += produtoCarrinho.getProduto().getValor();
+            valorAdicional = valorAdicional * produtoCarrinho.getQuantidade();
+            stmt.setFloat(4, valorAdicional);
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -176,86 +154,6 @@ public class CarrinhoProdutoDAO {
                 e.printStackTrace();
             }
         }
-    }
-
-    public float valorAdicionalMassa(int idMassa) {
-        float valor = 0;
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from massa where id_massa = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                valor += rs.getFloat("valorAdicional");
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return valor;
-    }
-
-    public float valorAdicionalCobertura(int idMassa) {
-        float valor = 0;
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from cobertura where id_cobertura = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                valor += rs.getFloat("valorAdicional");
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return valor;
-    }
-
-    public float valorAdicionalRecheio(int idMassa) {
-        float valor = 0;
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from Recheio where id_Recheio = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                valor += rs.getFloat("valorAdicional");
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return valor;
-    }
-
-    public float valorAdicionalTopper(int idMassa) {
-        float valor = 0;
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from Topper where id_Topper = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                valor += rs.getFloat("valorAdicional");
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return valor;
     }
 
     public float valorAdicionalSabor(int idMassa) {
@@ -301,94 +199,7 @@ public class CarrinhoProdutoDAO {
         }
         return retorno;
     }
-    
-    
-    
-     public Massa buscaPorIdMassa(int idMassa) {
-        Massa m = new Massa();
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from massa where id_massa = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                m.setIdMassa(rs.getInt("id_massa"));
-                m.setNome(rs.getString("nome"));
-            }
-            rs.close();
-            ps.close();
-            c.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return m;
-    }
-     
-     public Recheio buscaPorIdRecheio(int idMassa) {
-        Recheio m = new Recheio();
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from Recheio where id_Recheio = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                m.setIdRecheio(rs.getInt("id_Recheio"));
-                m.setNome(rs.getString("nome"));
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return m;
-    }
-     
-     public Topper buscaPorIdTopper(int idMassa) {
-        Topper m = new Topper();
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from Topper where id_Topper = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                m.setIdTopper(rs.getInt("id_Topper"));
-                m.setNome(rs.getString("nome"));
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return m;
-    }
-     
-     public Cobertura buscaPorIdCobertura(int idMassa) {
-        Cobertura m = new Cobertura();
-        try {
-            Connection c = Conexao.getConn();
-            PreparedStatement ps = c.prepareStatement("SELECT * from Cobertura where id_Cobertura = ?");
-            ps.setInt(1, idMassa);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                m.setIdCobertura(rs.getInt("id_Cobertura"));
-                m.setNome(rs.getString("nome"));
-            }
-            rs.close();
-            ps.close();
-            c.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return m;
-    }
-     
-    
     public List<Produto> listarProdutosDoCarrinho() {
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -400,15 +211,10 @@ public class CarrinhoProdutoDAO {
                     + "    p.id_produto, \n"
                     + "    p.nome, \n"
                     + "    p.descricao, \n"
-                    + "    p.valor, \n"
-                    + "    p.imagem, \n"
+                    + "    p.valor, \n"       
                     + "    p.id_categoria, \n"
                     + "    pc.id_produto_carrinho, \n"
-                    + "    pc.id_usuario, \n"
-                    + "    pc.id_massa, \n"
-                    + "    pc.id_recheio, \n"
-                    + "    pc.id_topper, \n"
-                    + "    pc.id_cobertura, \n"
+                    + "    pc.id_usuario, \n"                  
                     + "    pc.quantidade,\n"
                     + "    pc.valorAdicional\n"
                     + "FROM \n"
@@ -421,41 +227,31 @@ public class CarrinhoProdutoDAO {
             stmt = con.prepareStatement(query);
             stmt.setInt(1, Usuario.getIdUsuarioStatic());
             rs = stmt.executeQuery();
-
+             ProdutoImagemDAO dao = new ProdutoImagemDAO();
             while (rs.next()) {
                 Produto p = new Produto();
-                Massa m = new Massa();
-                Recheio r = new Recheio();
-                Topper t = new Topper();
-                Cobertura c = new Cobertura();
-                m = buscaPorIdMassa(rs.getInt("id_massa"));
-                r = buscaPorIdRecheio(rs.getInt("id_recheio"));
-                t = buscaPorIdTopper(rs.getInt("id_topper"));
-                c = buscaPorIdCobertura(rs.getInt("id_cobertura"));
-
+                Categoria c = new Categoria();
+                c.setIdCategoria(rs.getInt("id_categoria"));
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
-                p.setCategoria(rs.getInt("id_categoria"));
+                p.setCategoria(c);
                 p.setValor(rs.getFloat("valor"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setQuantidade(rs.getFloat("quantidade"));
                 p.setIdProduto_Carrinho(rs.getInt("id_produto_carrinho"));
-
-                // Atributos específicos de produto_carrinho
-                Usuario u = new Usuario();
-                u.setIdUsuario(rs.getInt("id_usuario"));
-                p.setIdUsuario(rs.getInt("id_usuario"));
-                p.setIdMassa(m);
-                p.setIdRecheio(r);
-                p.setIdTopper(t);
-                p.setIdCobertura(c);
-                p.setValorAdicional(rs.getFloat("valorAdicional"));
-
-                Blob imagemBlob = rs.getBlob("imagem");
+                Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
+                // Atributos específicos de produto_carrinho
+                Usuario u = new Usuario();
+                u.setIdUsuario(rs.getInt("id_usuario"));
+                p.setIdUsuario(rs.getInt("id_usuario"));
+
+                p.setValorAdicional(rs.getFloat("valorAdicional"));
+
+            
 
                 produtos.add(p);
             }

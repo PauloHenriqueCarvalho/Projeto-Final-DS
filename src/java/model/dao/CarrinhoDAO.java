@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
+import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.ProdutoCarrinho;
 import model.bean.Usuario;
@@ -24,7 +25,7 @@ import model.bean.Usuario;
 
 /**
  *
- * @author Joao Guilherme
+ * @author Paulo Henrique
  */
 public class CarrinhoDAO {
     
@@ -32,6 +33,28 @@ public class CarrinhoDAO {
     Esse método deve retornar todos os produtos de um usuário fornecido como
     parâmetro, portanto deve ser chamado na página que exibe o carrinho.  
     */
+    
+    private Blob imagemPadrao(int idProduto){
+        Blob imagem = null;
+        try{
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM produto_imagem WHERE id_produto = ? AND imagemPadrao = true");
+            ps.setInt(1, idProduto);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                imagem = rs.getBlob("imagem");
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return imagem;
+    }
+    
+    
     private List<Produto> lerProdutos() {
         
         List<Produto> produtos = new ArrayList();
@@ -48,13 +71,15 @@ public class CarrinhoDAO {
             
             while (rs.next()) {
                 Produto p = new Produto();
+                Categoria c = new Categoria();
+                c.setIdCategoria(rs.getInt("id_categoria"));
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
-                p.setCategoria(rs.getInt("id_categoria"));
+                p.setCategoria(c);
                 p.setValor(rs.getFloat("valor"));
                 p.setDescricao(rs.getString("descricao"));
 
-                Blob imagemBlob = rs.getBlob("imagem");
+                Blob imagemBlob = imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);

@@ -76,6 +76,18 @@
         <servlet-name>CheckoutFinalController</servlet-name>
         <servlet-class>controller.CheckoutFinalController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EspecificacaoController</servlet-name>
+        <servlet-class>controller.EspecificacaoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PreviewProdutoController</servlet-name>
+        <servlet-class>controller.PreviewProdutoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TipoProdutoController</servlet-name>
+        <servlet-class>controller.TipoProdutoController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -251,6 +263,42 @@
     <servlet-mapping>
         <servlet-name>CheckoutFinalController</servlet-name>
         <url-pattern>/checkoutFinal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EspecificacaoController</servlet-name>
+        <url-pattern>/especificacaoProdutos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EspecificacaoController</servlet-name>
+        <url-pattern>/ver-produto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EspecificacaoController</servlet-name>
+        <url-pattern>/status-produto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EspecificacaoController</servlet-name>
+        <url-pattern>/deletar-produto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PreviewProdutoController</servlet-name>
+        <url-pattern>/previewProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PreviewProdutoController</servlet-name>
+        <url-pattern>/excluir-especifico</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TipoProdutoController</servlet-name>
+        <url-pattern>/tipoProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TipoProdutoController</servlet-name>
+        <url-pattern>/cadastro-especificacao</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TipoProdutoController</servlet-name>
+        <url-pattern>/cadastro-tipo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -50,7 +50,7 @@ public class IndexController extends HttpServlet {
                 produto.setImagemBase64(imagemBase64);
             }
         }
-
+        
         request.setAttribute("produtos", produtos);
 
         CarrinhoDAO cDAO = new CarrinhoDAO();

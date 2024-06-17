@@ -7,6 +7,7 @@ package model.bean;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -27,11 +28,18 @@ public class Pedido {
     private static int id_pedidoAtual;
     private static float freteAtual;
     private static Timestamp data_entregaAtual;
+    
+    private String dataEntregaFormatada;
+
+    public String getDataEntregaFormatada() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data_entrega);
+    }
+    
 
     public Pedido() {
     }
 
-    public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Timestamp data_pedido, Timestamp data_entrega, String status, float total, float frete, Endereco id_endereco) {
+    public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Timestamp data_pedido, Timestamp data_entrega, String status, float total, float frete, Endereco id_endereco, String dataEntregaFormatada) {
         this.id_pedido = id_pedido;
         this.id_cliente = id_cliente;
         this.idPagamento = idPagamento;
@@ -41,9 +49,17 @@ public class Pedido {
         this.total = total;
         this.frete = frete;
         this.id_endereco = id_endereco;
+        this.dataEntregaFormatada = dataEntregaFormatada;
+    }
+
+    public void setDataEntregaFormatada(String dataEntregaFormatada) {
+        this.dataEntregaFormatada = dataEntregaFormatada;
     }
     
     
+    
+   
+
     public int getId_pedido() {
         return id_pedido;
     }
@@ -52,6 +68,9 @@ public class Pedido {
         this.id_pedido = id_pedido;
     }
 
+    
+
+   
     public Usuario getId_cliente() {
         return id_cliente;
     }
@@ -148,6 +167,7 @@ public class Pedido {
         Pedido.data_entregaAtual = data_entregaAtual;
     }
 
+    
     
 
     

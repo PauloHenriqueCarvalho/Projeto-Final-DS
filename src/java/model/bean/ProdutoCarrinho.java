@@ -12,11 +12,9 @@ package model.bean;
 public class ProdutoCarrinho {
 
     private int idProdutoCarrinho;
-    private Massa idMassa;
-    private Recheio idRecheio;
-    private Topper idTopper;
+
     private Sabor idSabor;
-    private Cobertura idCobertura;
+
     private Produto produto;
     private float quantidade;
     private Usuario idUsuario;
@@ -26,29 +24,14 @@ public class ProdutoCarrinho {
     public ProdutoCarrinho() {
     }
 
-    public ProdutoCarrinho(int idProdutoCarrinho, Massa idMassa, Recheio idRecheio, Topper idTopper, Sabor idSabor, Cobertura idCobertura, Produto produto, float quantidade, Usuario idUsuario, float valorAdicional) {
+    public ProdutoCarrinho(int idProdutoCarrinho, Sabor idSabor, Produto produto, float quantidade, Usuario idUsuario, float valorAdicional) {
         this.idProdutoCarrinho = idProdutoCarrinho;
-        this.idMassa = idMassa;
-        this.idRecheio = idRecheio;
-        this.idTopper = idTopper;
         this.idSabor = idSabor;
-        this.idCobertura = idCobertura;
         this.produto = produto;
         this.quantidade = quantidade;
         this.idUsuario = idUsuario;
         this.valorAdicional = valorAdicional;
     }
-
-   
-
-    public float getValorAdicional() {
-        return valorAdicional;
-    }
-
-    public void setValorAdicional(float valorAdicional) {
-        this.valorAdicional = valorAdicional;
-    }
-    
 
     public int getIdProdutoCarrinho() {
         return idProdutoCarrinho;
@@ -58,44 +41,12 @@ public class ProdutoCarrinho {
         this.idProdutoCarrinho = idProdutoCarrinho;
     }
 
-    public Massa getIdMassa() {
-        return idMassa;
-    }
-
-    public void setIdMassa(Massa idMassa) {
-        this.idMassa = idMassa;
-    }
-
-    public Recheio getIdRecheio() {
-        return idRecheio;
-    }
-
-    public void setIdRecheio(Recheio idRecheio) {
-        this.idRecheio = idRecheio;
-    }
-
-    public Topper getIdTopper() {
-        return idTopper;
-    }
-
-    public void setIdTopper(Topper idTopper) {
-        this.idTopper = idTopper;
-    }
-
     public Sabor getIdSabor() {
         return idSabor;
     }
 
     public void setIdSabor(Sabor idSabor) {
         this.idSabor = idSabor;
-    }
-
-    public Cobertura getIdCobertura() {
-        return idCobertura;
-    }
-
-    public void setIdCobertura(Cobertura idCobertura) {
-        this.idCobertura = idCobertura;
     }
 
     public Produto getProduto() {
@@ -114,8 +65,6 @@ public class ProdutoCarrinho {
         this.quantidade = quantidade;
     }
 
-   
-
     public Usuario getIdUsuario() {
         return idUsuario;
     }
@@ -123,5 +72,15 @@ public class ProdutoCarrinho {
     public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
     }
+
+    public float getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(float valorAdicional) {
+        this.valorAdicional = valorAdicional;
+    }
+
+    
 
 }

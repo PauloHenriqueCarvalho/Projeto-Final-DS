@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -16,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Empresa;
+import model.bean.Pedido;
+
 import model.bean.Produto;
 import model.bean.Projeto;
 import model.dao.CategoriaDAO;
+import model.dao.PedidoDAO;
 import model.dao.ProdutoDAO;
 
 /**
@@ -44,17 +48,25 @@ public class InicioAdministradorController extends HttpServlet {
         
          ProdutoDAO dao = new ProdutoDAO();
          
-         Empresa e = new Empresa();
+        Empresa e = new Empresa();
         e.setFuncionarios(12);
         e.setVendas(32);
         e.setVendido(322);
         request.setAttribute("e", e);
+        
+        PedidoDAO daoP = new PedidoDAO();
+        List<Pedido> pedidos = daoP.read();
+        for (Pedido p : pedidos) {
+            p.setDataEntregaFormatada(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(p.getData_entrega()));
+        }
+        request.setAttribute("pedidos", pedidos);
+        
 
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
 
-        List<Produto> produto = dao.listarTodosComEstoque();
+        List<Produto> produto = dao.listarTodos();
         for (int i = 0; i < produto.size(); i++) {
             if (produto.get(i).getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getImagemBytes());

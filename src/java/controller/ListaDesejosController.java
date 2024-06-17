@@ -66,6 +66,7 @@ public class ListaDesejosController extends HttpServlet {
                 produto.setImagemBase64(imagemBase64);
             }
         }
+        
         request.setAttribute("produtos", produtos);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);

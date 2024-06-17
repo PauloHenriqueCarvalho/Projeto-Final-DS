@@ -23,6 +23,7 @@ import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.EnderecoDAO;
+import model.dao.PedidoDAO;
 import model.dao.UsuarioDAO;
 
 /**

@@ -18,7 +18,7 @@ import model.bean.Usuario;
 
 /**
  *
- * @author Senai
+ * @author Paulo Henrique
  */
 public class UsuarioDAO {
 

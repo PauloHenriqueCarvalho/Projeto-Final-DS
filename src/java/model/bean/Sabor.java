@@ -5,36 +5,32 @@
  */
 package model.bean;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author paulo
  */
 public class Sabor {
     private int idSabor;
-    private Categoria idCategoria;
+    private Integer idProduto;
     private String nome;
-    private float valorAdicional;
-
+    private Integer idPai; // Pode ser null, então use Integer ao invés de int
+    private String descricao;
+    private Float valorAdicional;
+    private String status;
     public Sabor() {
     }
 
-    public Sabor(int idSabor, Categoria idCategoria, String nome, float valorAdicional) {
+    public Sabor(int idSabor, Integer idProduto, String nome, Integer idPai, String descricao, Float valorAdicional, String status) {
         this.idSabor = idSabor;
-        this.idCategoria = idCategoria;
+        this.idProduto = idProduto;
         this.nome = nome;
+        this.idPai = idPai;
+        this.descricao = descricao;
         this.valorAdicional = valorAdicional;
+        this.status = status;
     }
-    
-    
-    public float getValorAdicional() {
-        return valorAdicional;
-    }
-
-    public void setValorAdicional(float valorAdicional) {
-        this.valorAdicional = valorAdicional;
-    }
-
-    
 
     public int getIdSabor() {
         return idSabor;
@@ -44,12 +40,12 @@ public class Sabor {
         this.idSabor = idSabor;
     }
 
-    public Categoria getIdCategoria() {
-        return idCategoria;
+    public Integer getIdProduto() {
+        return idProduto;
     }
 
-    public void setIdCategoria(Categoria idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setIdProduto(Integer idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {
@@ -59,7 +55,42 @@ public class Sabor {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Integer getIdPai() {
+        return idPai;
+    }
+
+    public void setIdPai(Integer idPai) {
+        this.idPai = idPai;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Float getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(Float valorAdicional) {
+        this.valorAdicional = valorAdicional;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+   
     
+
     
     
 }

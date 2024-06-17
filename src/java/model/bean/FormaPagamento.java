@@ -22,6 +22,31 @@ public class FormaPagamento {
         this.nome = nome;
         this.descricao = descricao;
     }
+
+    public int getId_forma_pagamento() {
+        return id_forma_pagamento;
+    }
+
+    public void setId_forma_pagamento(int id_forma_pagamento) {
+        this.id_forma_pagamento = id_forma_pagamento;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     
     
 }

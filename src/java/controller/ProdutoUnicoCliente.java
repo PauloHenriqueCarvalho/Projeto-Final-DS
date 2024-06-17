@@ -19,23 +19,17 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.Carrinho;
 import model.bean.CarrinhoProduto;
 import model.bean.Categoria;
-import model.bean.Cobertura;
-import model.bean.Massa;
 import model.bean.Produto;
 import model.bean.ProdutoCarrinho;
+import model.bean.ProdutoImagem;
 import model.bean.Projeto;
-import model.bean.Recheio;
 import model.bean.Sabor;
-import model.bean.Topper;
 import model.bean.Usuario;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
-import model.dao.CoberturaDAO;
-import model.dao.MassaDAO;
 import model.dao.ProdutoDAO;
-import model.dao.RecheioDAO;
+import model.dao.ProdutoImagemDAO;
 import model.dao.SaborDAO;
-import model.dao.TopperDAO;
 import model.dao.UsuarioDAO;
 
 /**
@@ -50,8 +44,8 @@ public class ProdutoUnicoCliente extends HttpServlet {
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
         ProdutoDAO dao = new ProdutoDAO();
-        Produto idcap = dao.buscarPorId(Projeto.getIdProdutoAtual());
-        int idCategoria = idcap.getCategoria();
+        Produto idcap = dao.readById(Projeto.getIdProdutoAtual());
+        int idCategoria =2;
         request.setAttribute("idCategoria", idCategoria);
         CarrinhoProdutoDAO daoCarrinho = new CarrinhoProdutoDAO();
 
@@ -60,25 +54,12 @@ public class ProdutoUnicoCliente extends HttpServlet {
             request.setAttribute("existeCarrinho", "Esse produto já está no carrinho! Remova-o para poder adicionar este");
         }
 
-        MassaDAO mDAO = new MassaDAO();
-        List<Massa> massas = mDAO.readMassas();
-        request.setAttribute("massas", massas);
-
-        RecheioDAO rDAO = new RecheioDAO();
-        List<Recheio> recheio = rDAO.readRecheio();
-        request.setAttribute("recheios", recheio);
-
-        CoberturaDAO cDAO = new CoberturaDAO();
-        List<Cobertura> cobertura = cDAO.readCobertura();
-        request.setAttribute("coberturas", cobertura);
-
-        TopperDAO tDAO = new TopperDAO();
-        List<Topper> toppers = tDAO.readTopper();
-        request.setAttribute("toppers", toppers);
-
         SaborDAO sDAO = new SaborDAO();
-        List<Sabor> sabores = sDAO.readSabor(idCategoria);
+        List<Sabor> sabores = sDAO.listarTiposProduto(Projeto.getIdProdutoAtual());
         request.setAttribute("sabores", sabores);
+        
+        List<Sabor> saboresEspecificos = sDAO.listarTodosEspecificos();
+        request.setAttribute("saboresEspecificos", saboresEspecificos);
 
         // Valida se o usuário está logado
         if (Usuario.getIdUsuarioStatic() != 0) {
@@ -90,12 +71,23 @@ public class ProdutoUnicoCliente extends HttpServlet {
         request.setAttribute("usuarios", Usuario.getIdUsuarioStatic());
 
         // Pega os dados do produto pelo ID
-        Produto produtos = dao.buscarPorId(Projeto.getIdProdutoAtual());
+        Produto produtos = dao.readById(Projeto.getIdProdutoAtual());
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
             produtos.setImagemBase64(imagemBase64);
         }
         request.setAttribute("produtos", produtos);
+        
+        ProdutoImagemDAO pmd = new ProdutoImagemDAO();
+        List<ProdutoImagem> imagensProdutos = pmd.listarImagem(Projeto.getIdProdutoAtual());
+        for (ProdutoImagem c : imagensProdutos) {
+            if (c.getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                c.setImagemBase64(imagemBase64);
+
+            }
+        }
+        request.setAttribute("imagensProdutos", imagensProdutos);
 
         // Lista as categorias do header
         CategoriaDAO cat = new CategoriaDAO();
@@ -119,7 +111,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
 
         if (url.equals("/adicionarProduto")) {
             g++;
-            
+
             CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
             CarrinhoProduto c = new CarrinhoProduto();
             Carrinho carrinho = new Carrinho();
@@ -127,81 +119,58 @@ public class ProdutoUnicoCliente extends HttpServlet {
             Produto produto = new Produto();
             ProdutoDAO produtoDAO = new ProdutoDAO();
             Usuario u = new Usuario();
-            Cobertura cobertura = new Cobertura();
-            Massa massa = new Massa();
-            Recheio recheio = new Recheio();
-            Topper topper = new Topper();
+
             Sabor sabor = new Sabor();
-            produto = produtoDAO.buscarPorId(Projeto.getIdProdutoAtual());
+            produto = produtoDAO.readById(Projeto.getIdProdutoAtual());
             u.setIdUsuario(Usuario.getIdUsuarioStatic());
             p.setQuantidade(Float.parseFloat(request.getParameter("qtd")));
             p.setIdUsuario(u);
             p.setProduto(produto);
             // Verificar se é bolo
-            if (produto.getCategoria() == 1) {
-                cobertura.setIdCobertura(Integer.parseInt(request.getParameter("cobertura")));
-                recheio.setIdRecheio(Integer.parseInt(request.getParameter("recheio")));
-                massa.setIdMassa(Integer.parseInt(request.getParameter("massa")));
-                topper.setIdTopper(Integer.parseInt(request.getParameter("topper")));
-                sabor.setIdSabor(0);
-                p.setIdCobertura(cobertura);
-                p.setIdMassa(massa);
-                p.setIdRecheio(recheio);
-                p.setIdTopper(topper);
-                p.setIdSabor(sabor);
-                ArrayList<Integer> sabores = new ArrayList<>();
-                if (car.adicionarProdutoAoCarrinho(p, sabores) != 0) {
-                    response.sendRedirect(request.getContextPath() + "/inicio");
-                } else {
-                    response.sendRedirect(request.getContextPath() + "/produto-unico");
-                }
-            } else {
-                String[] selectedSabores = request.getParameterValues("sabor");
 
-                if (selectedSabores == null || selectedSabores.length == 0 ) {
-                    request.setAttribute("erroSabor", "Por favor, selecione pelo menos um sabor.");
-                    processRequest(request, response);
-                    return;
-                }
-                 List<Integer> saborIds = Arrays.stream(selectedSabores)
-                        .map(Integer::parseInt)
-                        .collect(Collectors.toList());
-                 
-                boolean teste = false;
-                ArrayList<Integer> sabores = new ArrayList<>();
-                for (int saborId : saborIds) {
-                    Sabor saborSelecionado = new Sabor();
-                    saborSelecionado.setIdSabor(saborId);
-                    System.out.println("Sabores: " + saborId);
-                    sabores.add(saborId);
-                    
-                }
-                int idProdutoCarrinho = car.adicionarProdutoAoCarrinho(p, sabores);
+            String[] selectedSabores = request.getParameterValues("sabor");
 
-               
-                for (int saborId : saborIds) {
-                    Sabor saborSelecionado = new Sabor();
-                    saborSelecionado.setIdSabor(saborId);
-                    System.out.println("Sabores: " + saborId);
-                    teste = car.adicionarSabores(saborId, idProdutoCarrinho);
-                    if (!teste) {
-                        response.sendRedirect(request.getContextPath() + "/produto-unico");
-                    }
-                }
-                if (teste) {
-                    response.sendRedirect(request.getContextPath() + "/inicio");
-                } else {
+            if (selectedSabores == null || selectedSabores.length == 0) {
+                request.setAttribute("erroSabor", "Por favor, selecione pelo menos um sabor.");
+                processRequest(request, response);
+                return;
+            }
+            List<Integer> saborIds = Arrays.stream(selectedSabores)
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+            boolean teste = false;
+            ArrayList<Integer> sabores = new ArrayList<>();
+            for (int saborId : saborIds) {
+                Sabor saborSelecionado = new Sabor();
+                saborSelecionado.setIdSabor(saborId);
+                System.out.println("Sabores: " + saborId);
+                sabores.add(saborId);
+
+            }
+            int idProdutoCarrinho = car.adicionarProdutoAoCarrinho(p, sabores);
+
+            for (int saborId : saborIds) {
+                Sabor saborSelecionado = new Sabor();
+                saborSelecionado.setIdSabor(saborId);
+                System.out.println("Sabores: " + saborId);
+                teste = car.adicionarSabores(saborId, idProdutoCarrinho);
+                if (!teste) {
                     response.sendRedirect(request.getContextPath() + "/produto-unico");
                 }
             }
-
+            if (teste) {
+                response.sendRedirect(request.getContextPath() + "/inicio");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/produto-unico");
+            }
         } else {
             processRequest(request, response);
         }
-    }
+}
 
-    @Override
-    public String getServletInfo() {
+@Override
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
