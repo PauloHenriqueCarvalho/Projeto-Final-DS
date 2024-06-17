@@ -70,7 +70,7 @@
                                     <div class="card info-card sales-card">
 
                                         <div class="card-body">
-                                            <h5 class="card-title">Total Vendido <span>| tudo</span></h5>
+                                            <h5 class="card-title">Total Vendido <span>| Tudo</span></h5>
 
                                             <div class="d-flex align-items-center">
                                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -78,8 +78,6 @@
                                                 </div>
                                                 <div class="ps-3">
                                                     <h6>${e.vendas}</h6>
-                                                <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +97,7 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>$${e.vendido}</h6>
-                                                <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                                                <span class="text-success small pt-1 fw-bold">R$${e.lucro}</span> <span class="text-muted small pt-2 ps-1">lucro</span>
 
                                             </div>
                                         </div>
@@ -119,7 +117,7 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>${e.funcionarios}</h6>
-                                                <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                                               
                                             </div>
                                         </div>
 

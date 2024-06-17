@@ -101,7 +101,7 @@
                     <div class="btn-confirmar">
                         <button id="add-btn">Adicionar Endereco</button>
                     </div>
-                    <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Nao sei meu CEP</a>
+                   
                 </div>
             
                 <div id="modal" class="modal">
@@ -134,6 +134,7 @@
                         <form action="add-endereco" method="post">
                             <label for="add-cep">CEP:</label>
                             <input type="number" id="cep" name="cep" required="">
+                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Nao sei meu CEP</a>
                             <label for="add-telefone">Numero</label>
                             <input type="number" id="telefone" name="numero" required="">
                             <label for="add-telefone">Complemento</label>

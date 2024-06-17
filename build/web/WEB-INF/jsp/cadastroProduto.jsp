@@ -97,7 +97,7 @@
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="categoria">Categoria</label>
                                         <select id="categoria" name="categoria" class="form-select form-select-lg">
-                                            <option value="">Selecione uma categoria</option>
+                                           
                                             <c:forEach items="${categorias}" var="categoria">
                                                 <option value="${categoria.idCategoria}">${categoria.nome}</option>
                                             </c:forEach>

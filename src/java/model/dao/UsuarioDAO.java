@@ -43,6 +43,8 @@ public class UsuarioDAO {
             stmt.setString(5, usuario.getCpf());
 
             stmt.executeUpdate();
+            stmt.close();
+            c.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

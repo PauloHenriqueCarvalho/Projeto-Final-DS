@@ -12,13 +12,15 @@ package model.bean;
 public class Categoria {
     private int idCategoria;
     private String nome;
-
+    private boolean status;
+    
     public Categoria() {
     }
 
-    public Categoria(int idCategoria, String nome) {
+    public Categoria(int idCategoria, String nome, boolean status) {
         this.idCategoria = idCategoria;
         this.nome = nome;
+        this.status = status;
     }
 
     public int getIdCategoria() {
@@ -36,6 +38,16 @@ public class Categoria {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 
 
     

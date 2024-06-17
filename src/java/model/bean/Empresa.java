@@ -13,16 +13,18 @@ public class Empresa {
     private int id;
     private int funcionarios;
     private int vendas;
-   private int vendido;
+   private float vendido;
+   private float lucro;
 
     public Empresa() {
     }
 
-    public Empresa(int id, int funcionarios, int vendas, int vendido) {
+    public Empresa(int id, int funcionarios, int vendas, float vendido, float lucro) {
         this.id = id;
         this.funcionarios = funcionarios;
         this.vendas = vendas;
         this.vendido = vendido;
+        this.lucro = lucro;
     }
 
     public int getId() {
@@ -49,13 +51,26 @@ public class Empresa {
         this.vendas = vendas;
     }
 
-    public int getVendido() {
+    public float getVendido() {
         return vendido;
     }
 
-    public void setVendido(int vendido) {
+    public void setVendido(float vendido) {
         this.vendido = vendido;
     }
+
+    public float getLucro() {
+        return lucro;
+    }
+
+    public void setLucro(float lucro) {
+        this.lucro = lucro;
+    }
+    
+
+    
+
+    
    
   
 }

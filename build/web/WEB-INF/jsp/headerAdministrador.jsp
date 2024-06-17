@@ -51,36 +51,6 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                    <i class="bi bi-person"></i>
-                                    <span>My Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                                    <i class="bi bi-question-circle"></i>
-                                    <span>Need Help?</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
                                 <form action="sair" method="post">
                                     <button type="submit" class="dropdown-item d-flex align-items-center">
                                         <i class="bi bi-box-arrow-right"></i>
@@ -118,8 +88,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./estoqueProduto">
-                                <i class="bi bi-circle"></i><span>Estoque de Produtos</span>
+                            <a href="./cadastroCategoria">
+                                <i class="bi bi-circle"></i><span>Categorias</span>
                             </a>
                         </li>
                         <li>

@@ -55,25 +55,25 @@
                                     <div id="product-main-img">
                                         <div class="product-preview">
                                             <img src="data:image/jpeg;base64,${imagem.imagemBase64}">
-                                    </div>
-                                 </c:when>
-                                <c:otherwise> 
-                                    <div class="product-preview">
-                                        <img src="data:image/jpeg;base64,${imagem.imagemBase64}" >
-                                    </div>
-                                </c:otherwise>
-                             </c:choose>
-                        </c:forEach>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise> 
+                                        <div class="product-preview">
+                                            <img src="data:image/jpeg;base64,${imagem.imagemBase64}" >
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </div>
                     </div>
 
                     <div class="col-md-2 col-md-pull-5">
                         <div id="product-imgs">
-                        <c:forEach items="${imagensProdutos}" var="imagem">
-                            <div class="product-preview">
-                                <img src="data:image/jpeg;base64,${imagem.imagemBase64}">
-                            </div>
-                        </c:forEach>
+                            <c:forEach items="${imagensProdutos}" var="imagem">
+                                <div class="product-preview">
+                                    <img src="data:image/jpeg;base64,${imagem.imagemBase64}">
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
 
@@ -104,14 +104,16 @@
                                         <h4>${s.nome}</h4>
                                         <div id="sabores">
                                             <c:forEach items="${saboresEspecificos}" var="sa">
-                                                <div class="checkbox">
-                                                    <label style="min-height: 0px;">
-                                                        <c:if test="${s.idSabor == sa.idPai}">
+                                                <c:if test="${s.idSabor == sa.idPai}">
+                                                    <div class="checkbox">
+                                                        <label style="min-height: 0px;">
+
                                                             <input type="checkbox" name="sabor" value="${sa.idSabor}" data-nome="${sa.nome}" data-valor="${sa.valorAdicional}" onchange="updateSelectedFlavors()">
                                                             ${sa.nome} <span>+${sa.valorAdicional}</span>
-                                                        </c:if>
-                                                    </label>
-                                                </div>
+
+                                                        </label>
+                                                    </div>
+                                                </c:if>
                                             </c:forEach>
                                         </div>
                                     </label>
@@ -135,9 +137,9 @@
                                     </div>
 
                                     <hr>
-                                    Quantidade(em centos 1 = 100 unidades)
+                                    Quantidade(em centos 1 = 100 unidades) ou 1 = 1kg
                                     <div class="input-number">
-                                        <input type="number" value="1" step="1" name="qtd" id="qtd" required="">
+                                        <input type="number" value="1" step="0.5" name="qtd" id="qtd" required="">
                                     </div>
                                 </div>
 

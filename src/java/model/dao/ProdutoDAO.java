@@ -45,12 +45,12 @@ public class ProdutoDAO {
         }
         return retorno;
     }
-    
+
     public void alterarStatus(boolean status, int id) {
         try {
             Connection con = Conexao.getConn();
             PreparedStatement ps = con.prepareStatement("UPDATE PRODUTO SET status = ? WHERE id_produto = ?");
-            if(status){
+            if (status) {
                 ps.setString(1, "disponivel");
             } else {
                 ps.setString(1, "Indisponivel");
@@ -156,7 +156,7 @@ public class ProdutoDAO {
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
-                
+
                 //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
@@ -164,24 +164,26 @@ public class ProdutoDAO {
                     p.setImagemBytes(imagemBytes);
                 }
                 //Fim imagem do produto
-                
-                
-                
-                
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
-                
+
                 //Verificar se o produto ta disponivel
-                if (rs.getString("status").equals("disponivel")) {
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
                     p.setStatus(true);
                     produtos.add(p);
-                } else{
-                     p.setStatus(false);
+                } else {
+                    p.setStatus(false);
                 }
                 //Fim  verificar se o produto ta disponivel
 
-                
                 // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
@@ -189,8 +191,11 @@ public class ProdutoDAO {
                 calendar.add(Calendar.DAY_OF_MONTH, 7);
                 Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
 
-                if (dataCadastro.before(dataCadastroMais7Dias))p.setNovo(true);
-                else p.setNovo(false);
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
                 //Fim verificar se o produto é novo
 
             }
@@ -202,7 +207,8 @@ public class ProdutoDAO {
         }
         return produtos;
     }
-     public List<Produto> listarTodosAdm() {
+
+    public List<Produto> listarTodosAdm() {
         List<Produto> produtos = new ArrayList<>();
         ProdutoImagemDAO dao = new ProdutoImagemDAO();
         try {
@@ -218,7 +224,7 @@ public class ProdutoDAO {
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
-                
+
                 //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
@@ -226,25 +232,21 @@ public class ProdutoDAO {
                     p.setImagemBytes(imagemBytes);
                 }
                 //Fim imagem do produto
-                
-                
-                
-                
+
                 Categoria categoria = new Categoria();
-                CategoriaDAO categoriaD = new CategoriaDAO();
-                categoria = categoriaD.readById(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
-                
+
                 //Verificar se o produto ta disponivel
                 if (rs.getString("status").equals("disponivel")) {
                     p.setStatus(true);
-                    
-                } else{
-                     p.setStatus(false);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
                 }
                 //Fim  verificar se o produto ta disponivel
-                produtos.add(p);
-                
+
                 // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
@@ -252,8 +254,11 @@ public class ProdutoDAO {
                 calendar.add(Calendar.DAY_OF_MONTH, 7);
                 Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
 
-                if (dataCadastro.before(dataCadastroMais7Dias))p.setNovo(true);
-                else p.setNovo(false);
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
                 //Fim verificar se o produto é novo
 
             }
@@ -294,16 +299,47 @@ public class ProdutoDAO {
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
+
+                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
+                //Fim imagem do produto
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                produtos.add(p);
+                //Verificar se o produto ta disponivel
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+                //Fim  verificar se o produto ta disponivel
+
+                // Verificar se o produto é novo
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -341,16 +377,47 @@ public class ProdutoDAO {
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
+
+                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
+                //Fim imagem do produto
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                produtos.add(p);
+                //Verificar se o produto ta disponivel
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+                //Fim  verificar se o produto ta disponivel
+
+                // Verificar se o produto é novo
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -402,6 +469,7 @@ public class ProdutoDAO {
 
     public List<Produto> listarPorPesquisa(String search) {
         List<Produto> produtos = new ArrayList<>();
+        ProdutoImagemDAO dao = new ProdutoImagemDAO();
         try {
             Connection conexao = Conexao.getConn();
             PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM produto WHERE nome LIKE ?");
@@ -417,11 +485,46 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
+                //Imagem do Produto
+                Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    p.setImagemBytes(imagemBytes);
+                }
+                //Fim imagem do produto
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                produtos.add(p);
+                //Verificar se o produto ta disponivel
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+                //Fim  verificar se o produto ta disponivel
+
+                // Verificar se o produto é novo
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -488,6 +591,7 @@ public class ProdutoDAO {
 
     public List<Produto> listarPorCategoriaBusca(int idCategoria, String filter, int currentPage, int productsPerPage, String busca) {
         List<Produto> produtos = new ArrayList<>();
+        ProdutoImagemDAO dao = new ProdutoImagemDAO();
         try {
             Connection con = Conexao.getConn();
             String sql = "SELECT * FROM produto WHERE id_categoria = ? AND nome LIKE ?";
@@ -515,11 +619,46 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
+                //Imagem do Produto
+                Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    p.setImagemBytes(imagemBytes);
+                }
+                //Fim imagem do produto
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                produtos.add(p);
+                //Verificar se o produto ta disponivel
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+                //Fim  verificar se o produto ta disponivel
+
+                // Verificar se o produto é novo
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -532,6 +671,7 @@ public class ProdutoDAO {
 
     public List<Produto> busca(String busca) {
         List<Produto> produtos = new ArrayList<>();
+        ProdutoImagemDAO dao = new ProdutoImagemDAO();
         try {
             Connection conexao = Conexao.getConn();
             PreparedStatement ps = conexao.prepareStatement("SELECT * FROM produto WHERE nome LIKE ?");
@@ -547,11 +687,46 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
+                //Imagem do Produto
+                Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    p.setImagemBytes(imagemBytes);
+                }
+                //Fim imagem do produto
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                produtos.add(p);
+                //Verificar se o produto ta disponivel
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+                //Fim  verificar se o produto ta disponivel
+
+                // Verificar se o produto é novo
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+                //Fim verificar se o produto é novo
             }
             rs.close();
             ps.close();

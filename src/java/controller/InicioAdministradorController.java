@@ -20,10 +20,12 @@ import model.bean.Empresa;
 import model.bean.Pedido;
 
 import model.bean.Produto;
+import model.bean.ProdutoPedido;
 import model.bean.Projeto;
 import model.dao.CategoriaDAO;
 import model.dao.PedidoDAO;
 import model.dao.ProdutoDAO;
+import model.dao.ProdutoPedidoDAO;
 
 /**
  *
@@ -46,16 +48,39 @@ public class InicioAdministradorController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String nextPage = "/WEB-INF/jsp/inicioAdministrador.jsp";
         
-         ProdutoDAO dao = new ProdutoDAO();
-         
+        ProdutoDAO dao = new ProdutoDAO();
+        PedidoDAO daoP = new PedidoDAO();
+        ProdutoPedidoDAO daoPP = new ProdutoPedidoDAO();
+        
+        List<Pedido> pedidos = daoP.read();
+        List<ProdutoPedido> produtoPedidos = daoPP.read();
+        float valor = 0;
+        float preco = 0;
+        float custo = 0;
+        
+        for (int i = 0; i < produtoPedidos.size(); i++) {
+            custo+= produtoPedidos.get(i).getId_produto().getPrecoCusto();
+            preco+= produtoPedidos.get(i).getId_produto().getValor();
+        }
+        
+        
+        for (int i = 0; i < pedidos.size(); i++) {
+            valor+= pedidos.get(i).getTotal();
+        }
+        
         Empresa e = new Empresa();
-        e.setFuncionarios(12);
-        e.setVendas(32);
-        e.setVendido(322);
+        e.setFuncionarios(0);
+        
+        //Alterar Para pedidos Finalizados
+        e.setVendas(pedidos.size());
+        e.setVendido(valor);
+        e.setLucro(valor - custo);
+        
+        
+        
         request.setAttribute("e", e);
         
-        PedidoDAO daoP = new PedidoDAO();
-        List<Pedido> pedidos = daoP.read();
+        
         for (Pedido p : pedidos) {
             p.setDataEntregaFormatada(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(p.getData_entrega()));
         }

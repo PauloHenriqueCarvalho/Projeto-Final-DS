@@ -88,6 +88,10 @@
         <servlet-name>TipoProdutoController</servlet-name>
         <servlet-class>controller.TipoProdutoController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CadastroCategoriaController</servlet-name>
+        <servlet-class>controller.CadastroCategoriaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -299,6 +303,22 @@
     <servlet-mapping>
         <servlet-name>TipoProdutoController</servlet-name>
         <url-pattern>/cadastro-tipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastroCategoriaController</servlet-name>
+        <url-pattern>/cadastroCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastroCategoriaController</servlet-name>
+        <url-pattern>/cadastro-categoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastroCategoriaController</servlet-name>
+        <url-pattern>/deletar-categoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastroCategoriaController</servlet-name>
+        <url-pattern>/status-categoria</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

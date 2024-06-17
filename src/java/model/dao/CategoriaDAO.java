@@ -6,18 +6,67 @@
 package model.dao;
 
 import conexao.Conexao;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.bean.Categoria;
+import model.bean.Usuario;
 
 /**
  *
  * @author paulo
  */
 public class CategoriaDAO {
+    
+    public void insert(String nome) {
+        try {
+            String sql = "INSERT INTO categoria (nome) VALUES (?)";
+            Connection c = Conexao.getConn();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.executeUpdate();
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateStatus(int id, boolean status) {
+        try {
+            String sql = "UPDATE  categoria SET status = ? WHERE id_categoria = ?";
+            Connection c = Conexao.getConn();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setBoolean(1, status);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void delete(int id) {
+        try {
+            String sql = "DELETE FROM categoria WHERE id_categoria= ?";
+            Connection c = Conexao.getConn();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
      public List<Categoria> listarTodos() {
         List<Categoria> categorias = new ArrayList();
         try {
@@ -33,6 +82,36 @@ public class CategoriaDAO {
                 Categoria c = new Categoria();
                 c.setIdCategoria(rs.getInt("id_categoria"));
                 c.setNome(rs.getString("nome"));
+                c.setStatus(rs.getBoolean("status"));
+                if(rs.getBoolean("status"))categorias.add(c);
+                
+            }
+            rs.close();
+            stmt.close();
+            conexao.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return categorias;
+    }
+     public List<Categoria> listarTodosAdm() {
+        List<Categoria> categorias = new ArrayList();
+        try {
+            java.sql.Connection conexao = Conexao.getConn();
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            stmt = conexao.prepareStatement("SELECT * FROM categoria");
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Categoria c = new Categoria();
+                c.setIdCategoria(rs.getInt("id_categoria"));
+                c.setNome(rs.getString("nome"));
+                c.setStatus(rs.getBoolean("status"));
                 categorias.add(c);
             }
             rs.close();
@@ -61,6 +140,7 @@ public class CategoriaDAO {
             if (rs.next()) {
                 c.setIdCategoria(id);
                 c.setNome(rs.getString("nome"));
+                c.setStatus(rs.getBoolean("status"));
             }
 
             rs.close();
@@ -87,6 +167,7 @@ public class CategoriaDAO {
 
             if (rs.next()) {
                 c.setIdCategoria(rs.getInt("id_categoria"));
+                c.setStatus(rs.getBoolean("status"));
                 c.setNome(nome);
             }
 
@@ -113,6 +194,7 @@ public class CategoriaDAO {
 
             if (rs.next()) {
                 c.setIdCategoria(rs.getInt("id_categoria"));
+                c.setStatus(rs.getBoolean("status"));
             }
 
             rs.close();

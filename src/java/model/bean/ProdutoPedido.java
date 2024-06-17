@@ -11,18 +11,20 @@ package model.bean;
  */
 public class ProdutoPedido {
     private int id_produto_pedido;
-    private int id_pedido;
-    private int id_produto;
-    private int qtd;
+    private Pedido id_pedido;
+    private Produto id_produto;
+    private float valorAdicional;
+    private float quantidade;
 
     public ProdutoPedido() {
     }
 
-    public ProdutoPedido(int id_produto_pedido, int id_pedido, int id_produto, int qtd) {
+    public ProdutoPedido(int id_produto_pedido, Pedido id_pedido, Produto id_produto, float valorAdicional, float quantidade) {
         this.id_produto_pedido = id_produto_pedido;
         this.id_pedido = id_pedido;
         this.id_produto = id_produto;
-        this.qtd = qtd;
+        this.valorAdicional = valorAdicional;
+        this.quantidade = quantidade;
     }
 
     public int getId_produto_pedido() {
@@ -33,29 +35,43 @@ public class ProdutoPedido {
         this.id_produto_pedido = id_produto_pedido;
     }
 
-    public int getId_pedido() {
+    public Pedido getId_pedido() {
         return id_pedido;
     }
 
-    public void setId_pedido(int id_pedido) {
+    public void setId_pedido(Pedido id_pedido) {
         this.id_pedido = id_pedido;
     }
 
-    public int getId_produto() {
+    public Produto getId_produto() {
         return id_produto;
     }
 
-    public void setId_produto(int id_produto) {
+    public void setId_produto(Produto id_produto) {
         this.id_produto = id_produto;
     }
 
-    public int getQtd() {
-        return qtd;
+    public float getValorAdicional() {
+        return valorAdicional;
     }
 
-    public void setQtd(int qtd) {
-        this.qtd = qtd;
+    public void setValorAdicional(float valorAdicional) {
+        this.valorAdicional = valorAdicional;
     }
+
+    public float getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(float quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    
+
+    
+
+    
     
     
 }

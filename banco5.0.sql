@@ -1,4 +1,3 @@
--- Criação do banco de dados
 DROP DATABASE IF EXISTS projeto_final_db;
 CREATE DATABASE projeto_final_db;
 USE projeto_final_db;
@@ -37,7 +36,8 @@ CREATE TABLE endereco (
 -- Tabela de categorias
 CREATE TABLE categoria (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
+    nome VARCHAR(100) NOT NULL,
+    status bool default true
 );
 
 -- Tabela de produtos
@@ -86,8 +86,6 @@ CREATE TABLE pedido (
     FOREIGN KEY (id_forma_pagamento) REFERENCES forma_pagamento(id_forma_pagamento)
 );
 
-INSERT INTO pedido (id_forma_pagamento, id_cliente, frete, data_entrega, status, total, id_endereco) 
-VALUES (1, 1, 10.00, '2024-07-01 10:00:00', 'pendente', 100.00, 1);
 -- Tabela de sabores dos produtos
 CREATE TABLE sabor (
     id_sabor INT AUTO_INCREMENT PRIMARY KEY,
@@ -216,21 +214,4 @@ VALUES ('Pix', 'Pagamento realizado através da plataforma Pix.'),
 INSERT INTO produto (nome, descricao, valor, id_categoria, preco_custo, quantidade_estoque)
 VALUES ('Brigadeiro', 'Doce de chocolate tradicional brasileiro', 5.99, 3, 2.50, 100);
 
--- Sabores de exemplo
-INSERT INTO sabor (id_produto, nome, descricao, valorAdicional, status) 
-VALUES (5, 'Sabor', 'Sabor chocolate', 2.50, 'disponivel'),
-       (5, 'Cobertura', 'Sabor', 2.50, 'disponivel');
 
-INSERT INTO sabor (nome, descricao, valorAdicional, status, idPai) 
-VALUES ('Ninho com morango', 'Branco', 2.50, 'disponivel', 11),
-       ('Brigadeiro', 'Preto', 2.00, 'disponivel', 11),
-       ('Ninho com nutella', 'Cor Branca', 2.50, 'disponivel', 11),
-       ('morango', 'Cor Rosa', 2.00, 'disponivel', 12),
-       ('chocolate', 'Cor Preta', 3.00, 'disponivel', 12),
-       ('branca', 'Cor Azul', 2.75, 'indisponivel', 12);
-
--- Seleção de sabores com idPai diferente de 0
-SELECT * FROM sabor WHERE idPai != 0;
-
--- Definindo a senha do usuário root no MySQL
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
