@@ -35,7 +35,7 @@ public class TipoProdutoController extends HttpServlet {
         request.setAttribute("produtoAtual", produtoAtual);
         
         SaborDAO daoS = new SaborDAO();
-        List<Sabor> sabores = daoS.listarTodosTipos();
+        List<Sabor> sabores = daoS.listarTiposProduto(Projeto.getIdProdutoAtual());
         request.setAttribute("especificacao", sabores);
         
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);

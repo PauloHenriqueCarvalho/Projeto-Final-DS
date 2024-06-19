@@ -84,6 +84,10 @@
                             </label>
                         </div>
 
+                        <c:if test="${not empty sessionScope.erroSenha}">
+                            <p style="color: red">${sessionScope.erroSenha}</p>
+                        </c:if>
+
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn-login">Cadastrar</button>
                         </div>

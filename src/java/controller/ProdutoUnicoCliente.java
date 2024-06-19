@@ -45,7 +45,7 @@ public class ProdutoUnicoCliente extends HttpServlet {
         String nextPage = "/WEB-INF/jsp/produtoUnicoCliente.jsp";
         ProdutoDAO dao = new ProdutoDAO();
         Produto idcap = dao.readById(Projeto.getIdProdutoAtual());
-        int idCategoria =2;
+        int idCategoria = 2;
         request.setAttribute("idCategoria", idCategoria);
         CarrinhoProdutoDAO daoCarrinho = new CarrinhoProdutoDAO();
 
@@ -53,11 +53,19 @@ public class ProdutoUnicoCliente extends HttpServlet {
         if (daoCarrinho.validaCarrinho(Projeto.getIdProdutoAtual())) {
             request.setAttribute("existeCarrinho", "Esse produto já está no carrinho! Remova-o para poder adicionar este");
         }
-
+        Produto produtos = dao.readById(Projeto.getIdProdutoAtual());
         SaborDAO sDAO = new SaborDAO();
         List<Sabor> sabores = sDAO.listarTiposProduto(Projeto.getIdProdutoAtual());
+        System.out.println("Lista: " + sabores);
+        if (sabores.isEmpty()) {
+            produtos.setSabor(false);
+            System.out.println("A");
+        } else {
+            produtos.setSabor(true);
+            System.out.println("B");
+        }
         request.setAttribute("sabores", sabores);
-        
+
         List<Sabor> saboresEspecificos = sDAO.listarTodosEspecificos();
         request.setAttribute("saboresEspecificos", saboresEspecificos);
 
@@ -71,13 +79,13 @@ public class ProdutoUnicoCliente extends HttpServlet {
         request.setAttribute("usuarios", Usuario.getIdUsuarioStatic());
 
         // Pega os dados do produto pelo ID
-        Produto produtos = dao.readById(Projeto.getIdProdutoAtual());
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
+
             produtos.setImagemBase64(imagemBase64);
         }
         request.setAttribute("produtos", produtos);
-        
+
         ProdutoImagemDAO pmd = new ProdutoImagemDAO();
         List<ProdutoImagem> imagensProdutos = pmd.listarImagem(Projeto.getIdProdutoAtual());
         for (ProdutoImagem c : imagensProdutos) {
@@ -167,10 +175,10 @@ public class ProdutoUnicoCliente extends HttpServlet {
         } else {
             processRequest(request, response);
         }
-}
+    }
 
-@Override
-        public String getServletInfo() {
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

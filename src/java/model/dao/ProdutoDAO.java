@@ -241,10 +241,11 @@ public class ProdutoDAO {
                 //Verificar se o produto ta disponivel
                 if (rs.getString("status").equals("disponivel")) {
                     p.setStatus(true);
-                    produtos.add(p);
+                    
                 } else {
                     p.setStatus(false);
                 }
+                produtos.add(p);
                 //Fim  verificar se o produto ta disponivel
 
                 // Verificar se o produto é novo

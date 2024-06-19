@@ -13,7 +13,7 @@ import java.sql.DriverManager;
  * @author Senai
  */
 public class Conexao {
-    private static final String url = "jdbc:mysql://localhost:3306/projeto_final_db?useSSL=false";;;;;
+    private static final String url = "jdbc:mysql://localhost:3306/projeto_final_db?useSSL=false";
 //    private static final String url = "jdbc:mysql://localhost:3306/projeto_final_db";
     private static final String user = "root";
     private static final String senha = "1234";

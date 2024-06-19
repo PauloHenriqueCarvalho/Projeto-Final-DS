@@ -139,7 +139,7 @@ public class CadastroProdutoController extends HttpServlet {
                         pmDAO.inserirImagem(imagens.get(i));
                         System.out.println("Imagem: " + i);
                     } 
-                   request.getSession().removeAttribute("erroCadastro");
+                    request.getSession().removeAttribute("erroCadastro");
                     Projeto.setIdProdutoAtual(sucesso);
                     response.sendRedirect(request.getContextPath() + "/tipoProduto");
                 }else if(sucesso == -2) {

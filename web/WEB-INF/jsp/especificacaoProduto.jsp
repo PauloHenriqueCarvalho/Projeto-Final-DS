@@ -53,6 +53,7 @@
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="./inicioAdministrador">Home</a></li>
+                            <li class="breadcrumb-item ">Produtos</li>
                             <li class="breadcrumb-item active">Especificacao de Produtos</li>
                         </ol>
                     </nav>
@@ -60,7 +61,6 @@
 
                 <section class="section dashboard">
                     <div class="row">
-
                         <!-- Left side columns -->
                         <div class="col-lg-8">
                             <div class="row">

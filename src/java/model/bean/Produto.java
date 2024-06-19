@@ -27,7 +27,7 @@ public class Produto {
     private float precoCusto;
     private float quantidadeEstoque;
     private Timestamp dataCadastro;
-    
+    private boolean sabor;
     private boolean status;
     
     private boolean novo;
@@ -41,7 +41,7 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int idProduto, Categoria categoria, String nome, String descricao, Float valor, ProdutoImagem imagem, byte[] imagemBytes, String imagemBase64, float quantidade, int idProduto_Carrinho, float precoCusto, float quantidadeEstoque, Timestamp dataCadastro, boolean status, boolean novo, int idUsuario, int idSabor, float valorAdicional) {
+    public Produto(int idProduto, Categoria categoria, String nome, String descricao, Float valor, ProdutoImagem imagem, byte[] imagemBytes, String imagemBase64, float quantidade, int idProduto_Carrinho, float precoCusto, float quantidadeEstoque, Timestamp dataCadastro, boolean sabor, boolean status, boolean novo, int idUsuario, int idSabor, float valorAdicional) {
         this.idProduto = idProduto;
         this.categoria = categoria;
         this.nome = nome;
@@ -55,6 +55,7 @@ public class Produto {
         this.precoCusto = precoCusto;
         this.quantidadeEstoque = quantidadeEstoque;
         this.dataCadastro = dataCadastro;
+        this.sabor = sabor;
         this.status = status;
         this.novo = novo;
         this.idUsuario = idUsuario;
@@ -174,6 +175,14 @@ public class Produto {
         this.dataCadastro = dataCadastro;
     }
 
+    public boolean isSabor() {
+        return sabor;
+    }
+
+    public void setSabor(boolean sabor) {
+        this.sabor = sabor;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -213,6 +222,8 @@ public class Produto {
     public void setValorAdicional(float valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
+
+   
 
     
 
