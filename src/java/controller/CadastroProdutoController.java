@@ -64,22 +64,15 @@ public class CadastroProdutoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Verifica se a requisição é do tipo multipart (upload de arquivo)
         String url = request.getServletPath();
         if (url.equals("/cadastro-produto")) {
-            System.out.println("Entra no id");
             List<ProdutoImagem> imagens = new ArrayList<>();
             try {
-                // Parseia a requisição para obter os itens do formulário
                 List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                // Instancia um novo produto
                 Produto produto = new Produto();
                 Categoria categoria = new Categoria();
-                // Processa cada item do formulário
                 for (FileItem item : items) {
-                    // Verifica se o item é um campo de formulário
                     if (item.isFormField()) {
-                        // Se sim, verifica o nome do campo e define o valor do produto de acordo
                         switch (item.getFieldName()) {
                             case "nome":
                                 produto.setNome(item.getString());
@@ -90,7 +83,6 @@ public class CadastroProdutoController extends HttpServlet {
                             case "preco":
                                 produto.setValor(Float.parseFloat(item.getString()));
                                 break;
-
                             case "categoria":
                                categoria.setIdCategoria(Integer.parseInt(item.getString()));
                                produto.setCategoria(categoria);
@@ -103,9 +95,6 @@ public class CadastroProdutoController extends HttpServlet {
                                 break;   
                         }
                     } else {
-                        // Se não, o item é um arquivo de imagem
-                        // Converte o InputStream do arquivo em um array de bytes
-                        System.out.println("Enrta no das imagens");
                         InputStream inputStream = item.getInputStream();
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         byte[] buffer = new byte[4096];
@@ -114,30 +103,24 @@ public class CadastroProdutoController extends HttpServlet {
                             outputStream.write(buffer, 0, bytesRead);
                         }
                         byte[] imagemBytes = outputStream.toByteArray();
-                        // Define a imagem do produto
                         ProdutoImagem imagem = new ProdutoImagem();
                         imagem.setImagemBytes(imagemBytes);
                         imagens.add(imagem);
-                        
                         inputStream.close();
                         outputStream.close();
                     }
-                }
-                
+                }   
                 ProdutoDAO dao = new ProdutoDAO();
                 int sucesso = dao.inserirProduto(produto);
                 
-                
                 if (sucesso > 0 ) {
-                    // Se a inserção for bem-sucedida, redireciona para .a página de produtos
                     ProdutoImagemDAO pmDAO = new ProdutoImagemDAO();
                     Produto idProduto = new Produto();
                     idProduto.setIdProduto(sucesso);
                     for (int i = 0; i < imagens.size(); i++) {
-                        imagens.get(i).setProduto(idProduto);
-                        
+                        imagens.get(i).setProduto(idProduto);                      
                         pmDAO.inserirImagem(imagens.get(i));
-                        System.out.println("Imagem: " + i);
+
                     } 
                     request.getSession().removeAttribute("erroCadastro");
                     Projeto.setIdProdutoAtual(sucesso);
@@ -147,28 +130,18 @@ public class CadastroProdutoController extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/cadastroProduto");
                     
                 }else {
-                    // Se ocorrer algum erro, redireciona para a página de erro
                     response.sendRedirect(request.getContextPath() + "/cadastroProduto");
                 }
             } catch (FileUploadException e) {
-                throw new ServletException("Cannot parse multipart request.", e);
+              e.printStackTrace();
             }
         } else {
             System.out.println("Else");
-            redirectToIndexPage(request, response);
+            response.sendRedirect(request.getContextPath() + "/inicio");
         }
     }
 
-    private void redirectToIndexPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Redireciona para a página inicial
-        response.sendRedirect(request.getContextPath() + "/inicio");
-    }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

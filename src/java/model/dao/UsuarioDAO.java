@@ -14,23 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import model.bean.Usuario;
 
-
-
 /**
  *
  * @author Paulo Henrique
  */
 public class UsuarioDAO {
 
-
-
-    public void insertCliente(Usuario usuario) {
+    public String insertCliente(Usuario usuario) {
         String senha = usuario.getSenha();
 //        String hashedSenha = encoder.encode(senha);
     
-        
-
-
+        if(verificarCpf(usuario.getCpf()))return "Já existe um usuario com esse CPF!";
+        if(verificarEmail(usuario.getEmail()))return "Já existe um usuario com esse Email!";
+        if(verificarTelefone(usuario.getTelefone()))return "Já existe um usuario com esse Telefone!";
         try {
             String sql = "INSERT INTO usuario (nome, senha, email, telefone, cpf) VALUES (?, ?, ?, ?, ?)";
             Connection c = Conexao.getConn();
@@ -41,14 +37,73 @@ public class UsuarioDAO {
 
             stmt.setString(4, usuario.getTelefone());
             stmt.setString(5, usuario.getCpf());
-
+            
             stmt.executeUpdate();
             stmt.close();
             c.close();
+            System.out.println("MSG: sucesso!");
+            return "sucesso";
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "erro";
         }
+    }
+    
+    public boolean verificarCpf(String cpf){
+        boolean retorno = false;
+        try{
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM usuario WHERE cpf = ?");
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                retorno = true;
+            }
+            rs.close();
+            ps.close();
+            ps.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return retorno;
+    }
+    
+    public boolean verificarEmail(String cpf){
+        boolean retorno = false;
+        try{
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM usuario WHERE email = ?");
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                retorno = true;
+            }
+            rs.close();
+            ps.close();
+            ps.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return retorno;
+    }
+     public boolean verificarTelefone(String cpf){
+        boolean retorno = false;
+        try{
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM usuario WHERE telefone = ?");
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                retorno = true;
+            }
+            rs.close();
+            ps.close();
+            ps.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return retorno;
     }
 
     public void validaUser(Usuario user) {
@@ -84,14 +139,14 @@ public class UsuarioDAO {
     }
 
     public List<Usuario> getUsuarioById(int idUsuario) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        Usuario usuario = null;
+
         List<Usuario> usuarios = new ArrayList<>();
         try {
-           
-            conn = Conexao.getConn(); 
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            Usuario usuario = null;
+            conn = Conexao.getConn();
             String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idUsuario);
@@ -103,22 +158,11 @@ public class UsuarioDAO {
                 usuario.setNome(rs.getString("nome"));
                 usuarios.add(usuario);
             }
+            rs.close();
+            stmt.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace(); 
-            }
         }
 
         return usuarios;
@@ -168,7 +212,7 @@ public class UsuarioDAO {
                 u.setNome(rs.getString("nome"));
                 u.setTelefone(rs.getString("telefone"));
                 u.setIdUsuario(id);
-          
+
             }
             rs.close();
             stmt.close();

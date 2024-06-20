@@ -19,28 +19,14 @@
 
         <title>Evelin Verissimo | Produto</title>
 
-        <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-        <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
-        <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
-
-        <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
-
-        <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
-
-        <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -66,7 +52,6 @@
                             </c:forEach>
                         </div>
                     </div>
-
                     <div class="col-md-2 col-md-pull-5">
                         <div id="product-imgs">
                             <c:forEach items="${imagensProdutos}" var="imagem">
@@ -76,7 +61,6 @@
                             </c:forEach>
                         </div>
                     </div>
-
                     <div class="col-md-5">
                         <form method="post" id="myForm" action="adicionarProduto" name="frmAdicionar" class="product-details">
                             <input type="hidden" name="idProduto" id="idProduto" value="${produto.idProduto}">
@@ -119,7 +103,6 @@
                                     </label>
                                 </c:forEach>
                                 <div class="qty-label">
-                                    <!-- Mensagem de erro para seleção de sabores -->
                                     <c:if test="${not empty erroSabor}">
                                         <div class="alert alert-danger">
                                             ${erroSabor}
@@ -142,9 +125,7 @@
                                         <input type="number" value="1" step="0.5" name="qtd" id="qtd" required="">
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="add-to-cart">
                                 <c:choose>
                                     <c:when test="${usuarios != 0}">
@@ -157,65 +138,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <button type="submit" onclick="showAlert(event)" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
-
                                     </c:otherwise>
-
-
                                 </c:choose>
-                                <script>
-                                    function showAlert(event) {
-                                        event.preventDefault();
-                                        swal('Opa! Calma ae...', 'Você precisa estar logado para adicionar ao carrinho!', 'error');
-                                    }
 
-                                    function updateSelectedFlavors() {
-                                        var checkboxes = document.querySelectorAll('#sabores input[type="checkbox"]');
-                                        var selectedFlavors = [];
-                                        var totalAdditionalCost = 0;
-
-                                        checkboxes.forEach(function (checkbox) {
-                                            if (checkbox.checked) {
-                                                var flavorName = checkbox.getAttribute('data-nome');
-                                                var flavorCost = parseFloat(checkbox.getAttribute('data-valor'));
-                                                selectedFlavors.push(flavorName + ' (+$' + flavorCost.toFixed(2) + ')');
-                                                totalAdditionalCost += flavorCost;
-                                            }
-                                        });
-
-                                        var selectedFlavorsList = document.getElementById('selectedFlavorsList');
-                                        selectedFlavorsList.innerHTML = '';
-
-                                        selectedFlavors.forEach(function (flavor) {
-                                            var li = document.createElement('li');
-                                            li.textContent = flavor;
-                                            selectedFlavorsList.appendChild(li);
-                                        });
-
-                                        var totalAdditionalCostElement = document.getElementById('totalAdditionalCost');
-                                        totalAdditionalCostElement.textContent = 'Custo adicional total: $' + totalAdditionalCost.toFixed(2);
-                                    }
-
-                                    function validateForm() {
-                                        var checkboxes = document.querySelectorAll('#sabores input[type="checkbox"]');
-                                        var isChecked = false;
-
-                                        checkboxes.forEach(function (checkbox) {
-                                            if (checkbox.checked) {
-                                                isChecked = true;
-                                            }
-                                        });
-
-                                        if (!isChecked) {
-                                            document.getElementById('error-message').style.display = 'block';
-                                        } else {
-                                            document.getElementById('error-message').style.display = 'none';
-                                            // Submeter o formulário aqui
-                                            document.forms["myForm"].submit();
-                                        }
-                                    }
-
-
-                                </script>
                             </div>
                         </form>
                     </div>
@@ -239,31 +164,7 @@
             </div>
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var input = document.querySelector('.input-number input[type="number"]');
-                var btnUp = document.querySelector('.qty-up');
-                var btnDown = document.querySelector('.qty-down');
-                var step = parseFloat(input.getAttribute('step'));
-                var min = parseFloat(input.getAttribute('min'));
-
-                btnUp.addEventListener('click', function () {
-                    var oldValue = parseFloat(input.value);
-                    var newVal = oldValue + step;
-                    input.value = newVal.toFixed(1);
-                });
-
-                btnDown.addEventListener('click', function () {
-                    var oldValue = parseFloat(input.value);
-                    if (oldValue > min) {
-                        var newVal = oldValue - step;
-                        input.value = newVal.toFixed(1);
-                    }
-                });
-            });
-        </script>
-
-        <!-- jQuery Plugins -->
+        <script src="js/produtoUnico.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/slick.min.js"></script>

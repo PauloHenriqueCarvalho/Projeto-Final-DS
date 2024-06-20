@@ -14,10 +14,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Evelin Verissimo | Produtos</title>
+        <title>Evelin Verissimo | Pagamento</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-        <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -27,11 +26,13 @@
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
         <link type="text/css" rel="stylesheet" href="css/checkout.css"/>
         <link type="text/css" rel="stylesheet" href="css/pagamento.css"/>
+        <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script> 
 
     </head>
     <body>
         <header>
-            <!-- TOP HEADER -->
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
@@ -61,15 +62,10 @@
                     </ul>
                 </div>
             </div>
-            <!-- /TOP HEADER -->
 
-            <!-- MAIN HEADER -->
             <div id="header">
-                <!-- container -->
                 <div class="container">
-                    <!-- row -->
                     <div class="row">
-                        <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
                                 <a href="./inicio" class="logo">
@@ -77,14 +73,9 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- /LOGO -->
-
-                        <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
-
-
                                     <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
                                     <button  class="search-btn" type="submit">Search</button>
                                 </form>
@@ -93,17 +84,12 @@
                         </div>
 
 
-                        <!-- /SEARCH BAR -->
 
-                        <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
-                                <!-- Wishlist -->
                                 <div>
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
-
-                                <!-- Cart -->
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <p class="icons"><i class="fa fa-shopping-cart"></i></p>
@@ -133,15 +119,6 @@
                                                             <form action="deletarProduto" method="post">
                                                                 <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
                                                                 <button type="submit" onclick="removeCarrinho(event)" class="delete"><i class="fa fa-close"></i></button>
-
-                                                                <script>
-                                                                    function removeCarrinho(event) {
-                                                                        event.preventDefault();
-                                                                        swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
-                                                                            event.target.closest('form').submit();
-                                                                        });
-                                                                    }
-                                                                </script>
                                                             </form>
 
                                                         </div>
@@ -160,9 +137,6 @@
 
                                     </div>
                                 </div>
-                                <!-- /Cart -->
-
-                                <!-- Menu Toogle -->
                                 <div class="menu-toggle">
                                     <a href="#">
                                         <i class="fa fa-bars"></i>
@@ -171,16 +145,11 @@
                                     </a>
 
                                 </div>
-                                <!-- /Menu Toogle -->
                             </div>
                         </div>
-                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- row -->
                 </div>
-                <!-- container -->
             </div>
-            <!-- /MAIN HEADER -->
         </header>
 
         <section class="vh-10" style="background-color: #fff;">
@@ -260,156 +229,7 @@
                 </div>
             </div>
         </form>
-        <script>
-            function validateInput(event) {
-                const char = String.fromCharCode(event.which);
-                if (!/[a-zA-Z]/.test(char)) {
-                    event.preventDefault();
-                }
-            }
-        </script>
-        <script>
 
-
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const paymentMethods = document.querySelectorAll('input[name="payment"]');
-                const cardInfo = document.querySelector('.card-info');
-                const pixInfo = document.querySelector('.pix-info');
-                const cardNumber = document.getElementById('card-number');
-                const cardName = document.getElementById('card-name');
-                const cardExpiry = document.getElementById('card-expiry');
-                const cardCVV = document.getElementById('card-cvv');
-                const form = document.getElementById('payment-form');
-
-                const cardNumberError = document.getElementById('card-number-error');
-                const cardNameError = document.getElementById('card-name-error');
-                const cardExpiryError = document.getElementById('card-expiry-error');
-                const cardCVVError = document.getElementById('card-cvv-error');
-
-                paymentMethods.forEach(method => {
-                    method.addEventListener('change', function () {
-                        if (this.id === 'cartao') {
-                            cardInfo.style.display = 'block';
-                            pixInfo.style.display = 'none';
-                        } else if (this.id === 'pix') {
-                            pixInfo.style.display = 'block';
-                            cardInfo.style.display = 'none';
-                        } else {
-                            cardInfo.style.display = 'none';
-                            pixInfo.style.display = 'none';
-                        }
-                    });
-                });
-
-                // Ensure the correct state on page load
-                if (document.getElementById('cartao').checked) {
-                    cardInfo.style.display = 'block';
-                } else if (document.getElementById('pix').checked) {
-                    pixInfo.style.display = 'block';
-                }
-
-                // Real-time validation
-                cardNumber.addEventListener('input', function () {
-                    if (!validateCardNumber(cardNumber.value)) {
-                        cardNumberError.textContent = 'Número do cartão inválido.';
-                    } else {
-                        cardNumberError.textContent = '';
-                    }
-                });
-
-                cardName.addEventListener('input', function () {
-                    if (!validateCardName(cardName.value)) {
-                        cardNameError.textContent = 'Nome no cartão inválido.';
-                    } else {
-                        cardNameError.textContent = '';
-                    }
-                });
-
-                cardExpiry.addEventListener('input', function () {
-                    if (!validateCardExpiry(cardExpiry.value)) {
-                        cardExpiryError.textContent = 'Validade do cartão inválida.';
-                    } else {
-                        cardExpiryError.textContent = '';
-                    }
-                });
-
-                cardCVV.addEventListener('input', function () {
-                    if (!validateCardCVV(cardCVV.value)) {
-                        cardCVVError.textContent = 'CVV do cartão inválido.';
-                    } else {
-                        cardCVVError.textContent = '';
-                    }
-                });
-
-                // Add form submission event listener to validate card info
-                form.addEventListener('submit', function (event) {
-                    if (document.getElementById('cartao').checked) {
-                        if (!validateCardNumber(cardNumber.value)) {
-                            swal('Opa! Calma ae...', 'Numero do cartão invalido!', 'error');
-                            event.preventDefault();
-                            return;
-                        }
-
-                        if (!validateCardName(cardName.value)) {
-                            swal('Opa! Calma ae...', 'Nome do cartão invalido!', 'error');
-                            event.preventDefault();
-                            return;
-                        }
-
-                        if (!validateCardExpiry(cardExpiry.value)) {
-                            swal('Opa! Calma ae...', 'Validade do cartão invalida!', 'error');
-                            event.preventDefault();
-                            return;
-                        }
-
-                        if (!validateCardCVV(cardCVV.value)) {
-                            swal('Opa! Calma ae...', 'CVV do cartão invalido!', 'error');
-                            event.preventDefault();
-                            return;
-                        }
-                    }
-                });
-
-                function validateCardNumber(number) {
-                    // Simple validation for card number (example only, use more robust validation in production)
-                    const regex = /^[0-9]{16}$/;
-                    return regex.test(number);
-                }
-
-                function validateCardName(name) {
-                    // Simple validation for card name
-                    return name.trim() !== '';
-                }
-
-                function validateCardExpiry(expiry) {
-                    // Simple validation for card expiry (MM/YY)
-                    const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-                    return regex.test(expiry);
-                }
-
-                function validateCardCVV(cvv) {
-                    // Simple validation for CVV (3 or 4 digits)
-                    const regex = /^[0-9]{3,4}$/;
-                    return regex.test(cvv);
-                }
-
-                document.getElementById('copy-button').addEventListener('click', function () {
-                    // Seleciona o campo de entrada da chave Pix
-                    var pixKeyInput = document.getElementById('pix-key');
-
-                    // Seleciona o texto do campo de entrada
-                    pixKeyInput.select();
-                    pixKeyInput.setSelectionRange(0, 99999); // Para dispositivos móveis
-
-                    // Copia o texto selecionado para a área de transferência
-                    document.execCommand('copy');
-
-                    // Alerta o usuário que a chave foi copiada
-                    alert('Chave Pix copiada: ' + pixKeyInput.value);
-                });
-            });
-        </script>
         <style>
             .error-message {
                 color: red;
@@ -417,7 +237,8 @@
             }
         </style>
 
-        <!-- jQuery Plugins -->
+        <script src="js/pagamento.js"></script>
+        <script src="js/validacoes.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/slick.min.js"></script>

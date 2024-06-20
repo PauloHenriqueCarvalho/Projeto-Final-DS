@@ -83,15 +83,20 @@ public class CadastroUsuarioController extends HttpServlet {
                     usuario.setTelefone(telefone);
                     usuario.setCpf(cpf);
 
-                    dao.insertCliente(usuario);
-                    request.setAttribute("successMessage", "Cadastro realizado com sucesso!");
-                    request.getSession().removeAttribute("erroCadastro");
-                    response.sendRedirect(request.getContextPath() + "/login");
+                    String cadastro = dao.insertCliente(usuario);
+                    System.out.println("Cadastr,.: " + cadastro);
+                    if(cadastro.equals("sucesso")){
+                        request.setAttribute("successMessage", "Cadastro realizado com sucesso!");
+                        request.getSession().removeAttribute("erroMsg");
+                        response.sendRedirect(request.getContextPath() + "/login");
+                    } else {
+                        request.getSession().setAttribute("erroMsg", cadastro);
+                        response.sendRedirect("./cadastroUsuario");
+                    }
+                    
                 }
                 errorMessage = "As senhas devem ser iguais!";
-                request.getSession().setAttribute("erroSenha", errorMessage);
-
-                response.sendRedirect("./cadastroUsuario");
+               
             }
 
             
@@ -101,11 +106,7 @@ public class CadastroUsuarioController extends HttpServlet {
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

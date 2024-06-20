@@ -9,21 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Font Awesome -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
             rel="stylesheet"
             />
-        <!-- Google Fonts -->
         <link
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
             rel="stylesheet"
             />
-        <!-- MDB -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
             rel="stylesheet"
             />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="./styles/cadastro.css">
         <link rel="stylesheet" href="css/login.css">
         <title>JSP Page</title>
@@ -46,7 +46,14 @@
                     <h2 class="text-uppercase text-center mb-5">Criar Conta</h2>
 
                     <form action="cadastrar" method="post">
+                        <c:set var="errorMessage" value="${sessionScope.erroMsg}" />
+                        <c:remove var="erroMsg" scope="session" />
 
+                        <c:if test="${not empty errorMessage}">
+                            <div class="alert alert-danger" role="alert">
+                                ${errorMessage}
+                            </div>
+                        </c:if>
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="text" id="nome" name="nome" class="form-control form-control-lg" required />
                             <label class="form-label" for="nome">Seu Nome</label>
@@ -96,37 +103,28 @@
 
                     </form>
 
-                    <!-- jQuery -->
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                    <!-- Inputmask -->
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 
 
                     <script>
                         $(document).ready(function () {
-                            // Máscara para telefone
                             $('#telefone').inputmask('(99) 99999-9999');
 
-                            // Máscara para CPF
                             $('#cpf').inputmask('999.999.999-99');
-
-                            // Validação do formulário
                             $('form').submit(function (e) {
                                 var telefone = $('#telefone').val();
                                 var cpf = $('#cpf').val();
-
-                                // Validar telefone (deve ter pelo menos 14 caracteres, incluindo parênteses e traços)
                                 if (telefone.length < 14) {
                                     alert('Por favor, insira um número de telefone válido.');
-                                    e.preventDefault(); // Impede o envio do formulário
+                                    e.preventDefault();
                                     return;
                                 }
 
-                                // Validar CPF (deve ter pelo menos 14 caracteres, incluindo pontos e traços)
                                 if (cpf.length < 14) {
                                     alert('Por favor, insira um CPF válido.');
-                                    e.preventDefault(); // Impede o envio do formulário
+                                    e.preventDefault();
                                     return;
                                 }
                             });

@@ -73,15 +73,7 @@ public class ListaDesejosController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -103,23 +95,14 @@ public class ListaDesejosController extends HttpServlet {
 
             request.setAttribute("produtos", produtos);
 
-            // Redirecione de volta para a página principal
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listaDesejos.jsp");
             dispatcher.forward(request, response);
         } else {
             processRequest(request, response);
-            System.out.println("Else");
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -127,7 +110,6 @@ public class ListaDesejosController extends HttpServlet {
         if (url.equals("/deletarListaDejesos")) {
             WishListDAO w = new WishListDAO();
             if (Usuario.getIdUsuarioStatic() != 0) {
-                System.out.println("Id produto: " + Integer.parseInt(request.getParameter("idProduto")));
                 boolean removido = w.removerProdutoDaLista(Integer.parseInt(request.getParameter("idProduto")));
                 request.getSession().setAttribute("remocaoLista", removido);
 
@@ -135,7 +117,6 @@ public class ListaDesejosController extends HttpServlet {
                 request.getSession().setAttribute("alerta", "Você precisa estar logado para remover produtos da lista de desejos");
             }
             response.sendRedirect(request.getContextPath() + "/lista-desejos");
-            System.out.println("Produto removido da lista de desejos");
 
         } else {
             processRequest(request, response);
@@ -143,11 +124,7 @@ public class ListaDesejosController extends HttpServlet {
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

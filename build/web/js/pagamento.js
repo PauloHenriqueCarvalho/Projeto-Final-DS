@@ -1,99 +1,123 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const paymentMethods = document.querySelectorAll('input[name="payment"]');
     const cardInfo = document.querySelector('.card-info');
+    const pixInfo = document.querySelector('.pix-info');
     const cardNumber = document.getElementById('card-number');
     const cardName = document.getElementById('card-name');
     const cardExpiry = document.getElementById('card-expiry');
     const cardCVV = document.getElementById('card-cvv');
-    const form = document.querySelector('form');  // Assuming your form element is here
+    const form = document.getElementById('payment-form');
+
+    const cardNumberError = document.getElementById('card-number-error');
+    const cardNameError = document.getElementById('card-name-error');
+    const cardExpiryError = document.getElementById('card-expiry-error');
+    const cardCVVError = document.getElementById('card-cvv-error');
 
     paymentMethods.forEach(method => {
-        method.addEventListener('change', function() {
+        method.addEventListener('change', function () {
             if (this.id === 'cartao') {
                 cardInfo.style.display = 'block';
+                pixInfo.style.display = 'none';
+            } else if (this.id === 'pix') {
+                pixInfo.style.display = 'block';
+                cardInfo.style.display = 'none';
             } else {
                 cardInfo.style.display = 'none';
+                pixInfo.style.display = 'none';
             }
         });
     });
 
-    // Ensure the correct state on page load
     if (document.getElementById('cartao').checked) {
         cardInfo.style.display = 'block';
+    } else if (document.getElementById('pix').checked) {
+        pixInfo.style.display = 'block';
     }
-    
-    
 
-    // Add form submission event listener to validate card info
-    form.addEventListener('submit', function(event) {
+
+    cardName.addEventListener('input', function () {
+        if (!validateCardName(cardName.value)) {
+            cardNameError.textContent = 'Nome no cartão inválido.';
+        } else {
+            cardNameError.textContent = '';
+        }
+    });
+
+    cardExpiry.addEventListener('input', function () {
+        if (!validateCardExpiry(cardExpiry.value)) {
+            cardExpiryError.textContent = 'Validade do cartão inválida.';
+        } else {
+            cardExpiryError.textContent = '';
+        }
+    });
+
+    cardCVV.addEventListener('input', function () {
+        if (!validateCardCVV(cardCVV.value)) {
+            cardCVVError.textContent = 'CVV do cartão inválido.';
+        } else {
+            cardCVVError.textContent = '';
+        }
+    });
+
+    form.addEventListener('submit', function (event) {
         if (document.getElementById('cartao').checked) {
-            if (!validateCardNumber(cardNumber.value)) {
-                alert('Número do cartão inválido.');
-                event.preventDefault();
-                return;
-            }
+
 
             if (!validateCardName(cardName.value)) {
-                alert('Nome no cartão inválido.');
+                swal('Opa! Calma ae...', 'Nome do cartão invalido!', 'error');
                 event.preventDefault();
                 return;
             }
 
             if (!validateCardExpiry(cardExpiry.value)) {
-                alert('Validade do cartão inválida.');
+                swal('Opa! Calma ae...', 'Validade do cartão invalida!', 'error');
                 event.preventDefault();
                 return;
             }
 
             if (!validateCardCVV(cardCVV.value)) {
-                alert('CVV do cartão inválido.');
+                swal('Opa! Calma ae...', 'CVV do cartão invalido!', 'error');
                 event.preventDefault();
                 return;
             }
         }
     });
 
-    function validateCardNumber(number) {
-        // Simple validation for card number (example only, use more robust validation in production)
-        const regex = /^[0-9]{16}$/;
-        return regex.test(number);
-    }
 
     function validateCardName(name) {
-        // Simple validation for card name
         return name.trim() !== '';
     }
 
     function validateCardExpiry(expiry) {
-        // Simple validation for card expiry (MM/YY)
         const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
         return regex.test(expiry);
     }
 
     function validateCardCVV(cvv) {
-        // Simple validation for CVV (3 or 4 digits)
         const regex = /^[0-9]{3,4}$/;
         return regex.test(cvv);
     }
+
+    document.getElementById('copy-button').addEventListener('click', function () {
+        var pixKeyInput = document.getElementById('pix-key');
+
+        pixKeyInput.select();
+        pixKeyInput.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+
+        alert('Chave Pix copiada: ' + pixKeyInput.value);
+    });
 });
 
- document.getElementById('copy-button').addEventListener('click', function() {
-            // Seleciona o campo de entrada da chave Pix
-            var pixKeyInput = document.getElementById('pix-key');
-            
-            // Seleciona o texto do campo de entrada
-            pixKeyInput.select();
-            pixKeyInput.setSelectionRange(0, 99999); // Para dispositivos móveis
-
-            // Copia o texto selecionado para a área de transferência
-            document.execCommand('copy');
-
-            // Alerta o usuário que a chave foi copiada
-            alert('Chave Pix copiada: ' + pixKeyInput.value);
-        });
+function validateInput(event) {
+    const char = String.fromCharCode(event.which);
+    if (!/[a-zA-Z]/.test(char)) {
+        event.preventDefault();
+    }
+}
+function removeCarrinho(event) {
+    event.preventDefault();
+    swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
+        event.target.closest('form').submit();
+    });
+}

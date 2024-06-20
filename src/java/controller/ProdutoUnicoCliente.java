@@ -56,20 +56,16 @@ public class ProdutoUnicoCliente extends HttpServlet {
         Produto produtos = dao.readById(Projeto.getIdProdutoAtual());
         SaborDAO sDAO = new SaborDAO();
         List<Sabor> sabores = sDAO.listarTiposProduto(Projeto.getIdProdutoAtual());
-        System.out.println("Lista: " + sabores);
         if (sabores.isEmpty()) {
             produtos.setSabor(false);
-            System.out.println("A");
         } else {
             produtos.setSabor(true);
-            System.out.println("B");
         }
         request.setAttribute("sabores", sabores);
 
         List<Sabor> saboresEspecificos = sDAO.listarTodosEspecificos();
         request.setAttribute("saboresEspecificos", saboresEspecificos);
 
-        // Valida se o usuário está logado
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
@@ -77,8 +73,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
         }
 
         request.setAttribute("usuarios", Usuario.getIdUsuarioStatic());
-
-        // Pega os dados do produto pelo ID
         if (produtos.getImagemBytes() != null) {
             String imagemBase64 = Base64.getEncoder().encodeToString(produtos.getImagemBytes());
 
@@ -96,8 +90,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
             }
         }
         request.setAttribute("imagensProdutos", imagensProdutos);
-
-        // Lista as categorias do header
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
@@ -134,7 +126,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
             p.setQuantidade(Float.parseFloat(request.getParameter("qtd")));
             p.setIdUsuario(u);
             p.setProduto(produto);
-            // Verificar se é bolo
 
             String[] selectedSabores = request.getParameterValues("sabor");
 
@@ -161,7 +152,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
             for (int saborId : saborIds) {
                 Sabor saborSelecionado = new Sabor();
                 saborSelecionado.setIdSabor(saborId);
-                System.out.println("Sabores: " + saborId);
                 teste = car.adicionarSabores(saborId, idProdutoCarrinho);
                 if (!teste) {
                     response.sendRedirect(request.getContextPath() + "/produto-unico");

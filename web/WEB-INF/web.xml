@@ -33,18 +33,6 @@
         <servlet-class>controller.InicioAdministradorController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InicioFuncionarioController</servlet-name>
-        <servlet-class>controller.InicioFuncionarioController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EstoqueProdutosController</servlet-name>
-        <servlet-class>controller.EstoqueProdutosController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>HomeClienteController</servlet-name>
-        <servlet-class>controller.HomeClienteController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ListarCategoriaController</servlet-name>
         <servlet-class>controller.ListarCategoriaController</servlet-class>
     </servlet>
@@ -145,10 +133,6 @@
         <url-pattern>/sair</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InicioFuncionarioController</servlet-name>
-        <url-pattern>/inicioFuncionario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/deletarProduto</url-pattern>
     </servlet-mapping>
@@ -159,22 +143,6 @@
     <servlet-mapping>
         <servlet-name>IndexController</servlet-name>
         <url-pattern>/buscaProdutos</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EstoqueProdutosController</servlet-name>
-        <url-pattern>/estoqueProduto</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EstoqueProdutosController</servlet-name>
-        <url-pattern>/alterarQuantidade</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EstoqueProdutosController</servlet-name>
-        <url-pattern>/removerQuantidade</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>HomeClienteController</servlet-name>
-        <url-pattern>/homeCliente</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListarCategoriaController</servlet-name>

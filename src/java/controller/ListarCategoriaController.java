@@ -149,7 +149,6 @@ public class ListarCategoriaController extends HttpServlet {
 
             ProdutoDAO dao = new ProdutoDAO();
 
-            // Calcula a quantidade total de páginas
             int totalProducts = dao.countProdutosByCategoria(idCat);
 
             int totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
@@ -171,7 +170,6 @@ public class ListarCategoriaController extends HttpServlet {
 
             request.setAttribute("produtos", produtos);
 
-            // Redirecione de volta para a página principal
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listaProdutosCliente.jsp");
             dispatcher.forward(request, response);
         } else {

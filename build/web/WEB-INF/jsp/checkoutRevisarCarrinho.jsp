@@ -24,17 +24,14 @@
         ></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <!-- Font Awesome -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
             rel="stylesheet"
             />
-        <!-- Google Fonts -->
         <link
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
             rel="stylesheet"
             />
-        <!-- MDB -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
@@ -49,11 +46,10 @@
 
         <link rel="stylesheet" href="./css/checkout.css">
 
-        <title>JSP Page</title>
+        <title>Evelin Verissimo | Revisar</title>
     </head>
     <body>
         <header>
-            <!-- TOP HEADER -->
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
@@ -83,15 +79,10 @@
                     </ul>
                 </div>
             </div>
-            <!-- /TOP HEADER -->
 
-            <!-- MAIN HEADER -->
             <div id="header">
-                <!-- container -->
                 <div class="container">
-                    <!-- row -->
                     <div class="row">
-                        <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
                                 <a href="./inicio" class="logo">
@@ -99,9 +90,6 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- /LOGO -->
-
-                        <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscar" method="GET">
@@ -114,18 +102,12 @@
                             </div>
                         </div>
 
-
-                        <!-- /SEARCH BAR -->
-
-                        <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
-                                <!-- Wishlist -->
                                 <div>
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
 
-                                <!-- Cart -->
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <p class="icons"><i class="fa fa-shopping-cart"></i></p>
@@ -182,9 +164,6 @@
 
                                     </div>
                                 </div>
-                                <!-- /Cart -->
-
-                                <!-- Menu Toogle -->
                                 <div class="menu-toggle">
                                     <a href="#">
                                         <i class="fa fa-bars"></i>
@@ -193,18 +172,12 @@
                                     </a>
 
                                 </div>
-                                <!-- /Menu Toogle -->
                             </div>
                         </div>
-                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- row -->
                 </div>
-                <!-- container -->
             </div>
-            <!-- /MAIN HEADER -->
         </header>
-        <!-- /HEADER -->
         <section class="vh-10" style="background-color: #fff;">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -352,39 +325,17 @@
             </section>
 
             <script>
-
-                document.getElementById('checkout-form').addEventListener('submit', function (event) {
-                    const quantities = document.querySelectorAll('input[name^="quantity_"]');
-                    let valid = true;
-                    quantities.forEach(input => {
-                        if (input.value <= 0) {
-                            valid = false;
-                            input.classList.add('is-invalid');
-                            mostrarMensagem("danger", "Quantidade deve ser maior que zero.");
-                        } else {
-                            input.classList.remove('is-invalid');
-                        }
-                    });
-
-                    if (!valid) {
-                        event.preventDefault();
-                    }
-                });
-
-
-                function removeCarrinho(event) {
+               function removeCarrinho(event) {
                     event.preventDefault();
                     swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
                         event.target.closest('form').submit();
                     });
                 }
-
             </script>
 
 
         </main>
     </body>
-    <!-- MDB -->
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js type="text/javascript"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

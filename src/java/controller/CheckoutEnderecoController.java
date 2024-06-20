@@ -79,14 +79,7 @@ public class CheckoutEnderecoController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -95,7 +88,6 @@ public class CheckoutEnderecoController extends HttpServlet {
             String dataEntrega = request.getParameter("dataEntrega");
             String horarioEntrega = request.getParameter("horarioEntrega");
             Timestamp dataFinal = null;
-            // Concatena a data e o horário em uma única string
             String dataHoraString = dataEntrega + " " + horarioEntrega;
             
 
@@ -110,7 +102,6 @@ public class CheckoutEnderecoController extends HttpServlet {
                 java.util.Date parsedDate = dateFormat.parse(dataHoraString);
                 dataFinal = new Timestamp(parsedDate.getTime());
             } catch (java.text.ParseException e) {
-                Logger.getLogger(CheckoutEnderecoController.class.getName()).log(Level.SEVERE, null, e);
                 request.setAttribute("erro", "Data e horário de entrega inválidos.");
                 processRequest(request, response);
                 return;
@@ -124,9 +115,7 @@ public class CheckoutEnderecoController extends HttpServlet {
             } catch (ParseException e) {
                 e.printStackTrace();
             } catch (java.text.ParseException ex) {
-                Logger.getLogger(CheckoutEnderecoController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Data Final: " + dataFinal);
            
             EnderecoDAO daoEndereco = new EnderecoDAO();
             Endereco enderecoAtual = daoEndereco.enderecoPorId(Integer.parseInt(request.getParameter("idEndereco")));
@@ -140,11 +129,6 @@ public class CheckoutEnderecoController extends HttpServlet {
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

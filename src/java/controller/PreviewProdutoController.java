@@ -75,7 +75,6 @@ public class PreviewProdutoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        System.out.println("Chamado URL: " + url);
 
         if (url.equals("/excluir-especifico")) {
             SaborDAO saborDAO = new SaborDAO();

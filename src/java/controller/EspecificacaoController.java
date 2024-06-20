@@ -55,24 +55,16 @@ public class EspecificacaoController extends HttpServlet {
         List<TipoProduto> tipo = new ArrayList<>();
         
         for (int i = 0; i < listaCategorias.size(); i++) {
-            System.out.println("Quantas? categorias");
             TipoProduto tipoProduto = new TipoProduto();
             tipoProduto.setNomeCategoria(listaCategorias.get(i).getNome());
             int qtdAtual = 0;
             for (int j = 0; j < produto.size(); j++) {
-                System.out.println("Quantas? categoria:  " + listaCategorias.get(i).getNome() + " = Produto: " + produto.get(j).getCategoria().getNome());
                 if(listaCategorias.get(i).getNome().equals(produto.get(j).getCategoria().getNome())){
                     qtdAtual++;
-                    System.out.println("Entra");
                 }
             }
             tipoProduto.setValor(qtdAtual);
             tipo.add(tipoProduto);
-        }
-        request.setAttribute("listaCategoria", tipo);
-        
-        for (int i = 0; i < tipo.size(); i++) {
-            
         }
         
         
@@ -88,28 +80,19 @@ public class EspecificacaoController extends HttpServlet {
         
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          String url = request.getServletPath();
         if(url.equals("/deletar-produto")){
             ProdutoDAO dao = new ProdutoDAO();
-            System.out.println("Entra");
             dao.delete(Integer.parseInt(request.getParameter("idProduto")));
             response.sendRedirect("./especificacaoProdutos");
         } else if(url.equals("/status-produto")){
             ProdutoDAO dao = new ProdutoDAO();
             int idProduto = Integer.parseInt(request.getParameter("idProduto"));
             String statusProduto = request.getParameter("statusProduto");
-            // Verifica se o checkbox foi marcado
             boolean isChecked = statusProduto != null;
 
             dao.alterarStatus(isChecked, idProduto);

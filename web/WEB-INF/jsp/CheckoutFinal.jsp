@@ -17,29 +17,16 @@
         <title>Evelin Verissimo | Produtos</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-
-
-        <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-        <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
-        <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
         
-
-        <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-
-        <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
 
-        <!-- Custom stlylesheet -->
+
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
     </head>
     <body>

@@ -73,28 +73,13 @@ public class EnderecoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -103,7 +88,6 @@ public class EnderecoController extends HttpServlet {
             String complemento = request.getParameter("complento");
             String cep = request.getParameter("cep");
             String numero = request.getParameter("numero");
-            System.out.println("CEP: " + cep);
             if(!cep.trim().equals("") && !numero.trim().equals("") ){
                 try {
                 Endereco endereco = buscarEnderecoPorCep(cep);
@@ -111,7 +95,6 @@ public class EnderecoController extends HttpServlet {
                 endereco.setComplemento(complemento);
                 endereco.setNumero(Integer.parseInt(numero));
                 endereco.setCep(cep);
-                System.out.println("Cadastroiu");
                 dao.insert(endereco);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -129,7 +112,6 @@ public class EnderecoController extends HttpServlet {
            
             EnderecoDAO daoEndereco = new EnderecoDAO();
             int novoEnderecoPadrao = Integer.parseInt(request.getParameter("idEndereco"));
-             System.out.println("Enrea?"+ novoEnderecoPadrao);
             daoEndereco.mudarEnderecoPadrao(novoEnderecoPadrao);
             response.sendRedirect("./endereco");
         
@@ -138,32 +120,17 @@ public class EnderecoController extends HttpServlet {
         }
     }
 
-    /**
-     * Busca o endereço associado a um determinado CEP utilizando a API ViaCEP.
-     *
-     * @param cep O CEP para o qual se deseja buscar o endereço.
-     * @return Uma instância da classe Endereco que representa o endereço
-     * associado ao CEP fornecido.
-     * @throws IOException Se ocorrer um erro na comunicação com a API ViaCEP.
-     */
+
+ 
     public static Endereco buscarEnderecoPorCep(String cep) throws IOException {
-        //Formata a URL da API inserindo o CEP fornecido
         String url = String.format(apiCEP, cep);
 
-        //Cria um cliente HTTP que será usado para enviar a solicitação
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            // Cria uma solicitação HTTP GET para a URL especificada
             HttpGet request = new HttpGet(url);
 
-            // Executa a solicitação e obtém a resposta
             try (CloseableHttpResponse response = client.execute(request)) {
-                // Converte o conteúdo da resposta para uma string JSON
                 String jsonResponse = EntityUtils.toString(response.getEntity());
-
-                // Cria uma instância da classe Gson para deserialização do JSON
                 Gson gson = new Gson();
-
-                //Converte o Json em Objeto e retorna
                 return gson.fromJson(jsonResponse, Endereco.class);
             }
         }

@@ -17,28 +17,13 @@
         <title>Evelin Verissimo | Produtos</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-
-
-        <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-        <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
-        <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
-
-        <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-
-        <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
-
-        <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
@@ -137,56 +122,6 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </form>
-
-
-
-
-                                                <script>
-                                                    function showAlert(event) {
-                                                        event.preventDefault();
-                                                        swal('Opa! Calma ae...', 'Você precisa estar logado para adicionar à lista de desejos!', 'error');
-                                                    }
-                                                    function showAlert2(event) {
-                                                        event.preventDefault();
-                                                        swal('Opa! Calma ae...', 'Você já tem esse produto adicionado à Lista de Desejos', 'error');
-                                                    }
-                                                    function showAlert8(event) {
-                                                        event.preventDefault();
-                                                        swal('Opa! Calma ae...', 'Você já tem esse produto adicionado à Lista de Desejos', 'success');
-                                                    }
-                                                    function showAlert3(event) {
-                                                        event.preventDefault();
-                                                        swal('Produto removido da Lista de Desejos', '', 'success').then(() => {
-                                                            event.target.closest('form').submit();
-                                                        });
-                                                    }
-
-                                                    function showAlert4(event) {
-                                                        event.preventDefault();
-                                                        swal('Produto adicionado a Lista de Desejos', '', 'success').then(() => {
-                                                            event.target.closest('form').submit();
-                                                        });
-                                                    }
-
-                                                    function filterProducts() {
-                                                        var filter = document.getElementById("priceFilter").value;
-                                                        var url = new URL(window.location.href);
-                                                        url.searchParams.set('filter', filter);
-                                                        window.location.href = url.toString();
-                                                    }
-                                                    function setFilterValue() {
-                                                        var urlParams = new URLSearchParams(window.location.search);
-                                                        var filter = urlParams.get('filter');
-                                                        if (filter) {
-                                                            document.getElementById("priceFilter").value = filter;
-                                                        }
-                                                    }
-
-                                                    // Chama a função para definir o valor do filtro ao carregar a página
-                                                    window.onload = setFilterValue;
-                                                </script>
-
-
                                             </div>
                                         </div>  
                                         <form action="produtoPage" method="post" class="add-to-cart">
@@ -211,8 +146,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- jQuery Plugins -->
+        <script src="js/produtos.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/slick.min.js"></script>

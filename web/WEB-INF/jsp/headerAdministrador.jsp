@@ -20,7 +20,7 @@
                     <span class="d-none d-lg-block">Evelin Verissimo</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
-            </div><!-- End Logo -->
+            </div>
 
             <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
@@ -32,14 +32,14 @@
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
 
-                    </li><!-- End Messages Nav -->
+                    </li>
 
                     <li class="nav-item dropdown pe-3">
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                             <img src="img/perfil.jpg" alt="Profile" class="rounded-circle">
                             <span class="d-none d-md-block dropdown-toggle ps-2">P. Henrique</span>
-                        </a><!-- End Profile Iamge Icon -->
+                        </a>
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
@@ -65,7 +65,7 @@
                 </ul>
             </nav>
 
-        </header><!-- End Header -->
+        </header>
         <aside id="sidebar" class="sidebar">
 
             <ul class="sidebar-nav" id="sidebar-nav">
@@ -75,7 +75,7 @@
                         <i class="bi bi-grid"></i>
                         <span>Dashboard</span>
                     </a>
-                </li><!-- End Dashboard Nav -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -101,7 +101,7 @@
                         
 
                     </ul>
-                </li><!-- End Components Nav -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -119,7 +119,7 @@
                             </a>
                         </li>
                     </ul>
-                </li><!-- End Forms Nav -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -137,7 +137,7 @@
                             </a>
                         </li>
                     </ul>
-                </li><!-- End Tables Nav -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -156,9 +156,9 @@
                         </li>
 
                     </ul>
-                </li><!-- End Charts Nav -->
+                </li>
 
-        </aside><!-- End Sidebar-->
+        </aside>
 
     </body>
 </html>

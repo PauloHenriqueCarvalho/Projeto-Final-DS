@@ -12,10 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <!-- HEADER -->
-        <!-- HEADER -->
         <header>
-            <!-- TOP HEADER -->
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
@@ -45,15 +42,10 @@
                     </ul>
                 </div>
             </div>
-            <!-- /TOP HEADER -->
 
-            <!-- MAIN HEADER -->
             <div id="header">
-                <!-- container -->
                 <div class="container">
-                    <!-- row -->
                     <div class="row">
-                        <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
                                 <a href="./inicio" class="logo">
@@ -61,9 +53,6 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- /LOGO -->
-
-                        <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscaProdutos" method="GET">
@@ -73,19 +62,12 @@
                                 <div id="searchResults"></div>
                             </div>
                         </div>
-
-
-                        <!-- /SEARCH BAR -->
-
-                        <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
-                                <!-- Wishlist -->
                                 <div>
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
 
-                                <!-- Cart -->
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <p class="icons"><i class="fa fa-shopping-cart"></i></p>
@@ -141,9 +123,7 @@
 
                                     </div>
                                 </div>
-                                <!-- /Cart -->
 
-                                <!-- Menu Toogle -->
                                 <div class="menu-toggle">
                                     <a href="#">
                                         <i class="fa fa-bars"></i>
@@ -152,27 +132,17 @@
                                     </a>
 
                                 </div>
-                                <!-- /Menu Toogle -->
                             </div>
                         </div>
-                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- row -->
                 </div>
-                <!-- container -->
             </div>
-            <!-- /MAIN HEADER -->
         </header>
-        <!-- /HEADER -->
 
 
-        <!-- NAVIGATION -->
         <nav id="navigation">
-            <!-- container -->
             <div class="container">
-                <!-- responsive-nav -->
                 <div id="responsive-nav">
-                    <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
                         <li><a href="./inicio"><i class="fa-solid fa-location-dot"></i>Home</a></li>
                             <c:forEach items="${categorias}" var="categoria">
@@ -182,15 +152,10 @@
                             <c:if test="${!empty usuario}">
                             <li><a href="./endereco"><i class="fa-solid fa-location-dot"></i>Endereco</a></li>
                             </c:if>
-
                     </ul>
-                    <!-- /NAV -->
                 </div>
-                <!-- /responsive-nav -->
             </div>
-            <!-- /container -->
         </nav>
-        <!-- /NAVIGATION -->
     </body>
     <script src="./js/wishlist.js"></script>
 </html>

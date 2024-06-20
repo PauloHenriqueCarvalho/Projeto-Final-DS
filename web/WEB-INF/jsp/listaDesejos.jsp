@@ -14,32 +14,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Evelin Verissimo | Produtos</title>
+        <title>Evelin Verissimo | Lista de Desejos</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-
-
-        <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-        <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
-        <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
-
-
-        <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-
-        <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
-
-        <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
@@ -51,13 +35,10 @@
                         <div class="col-md-12"> 
                             <div class="section-title">
                                 <h3 class="title">Lista de Desejos</h3>
-
-
                             </div>
                         </div>
                     </div>
 
-                    <!-- Products tab & slick -->
                 <c:if test="${not empty produtos}">
                     <div class="col-md-12">
                         <div class="row">
@@ -97,32 +78,6 @@
                                                                     <span class="tooltipp">Remover da Lista de Desejos</span>
                                                                 </button>
                                                             </form>
-
-
-
-                                                            <script>
-                                                                function showAlert(event) {
-                                                                    event.preventDefault();
-                                                                    swal('Opa! Calma ae...', 'Você precisa estar logado para adicionar à lista de desejos!', 'error');
-                                                                }
-                                                                function showAlert3(event) {
-                                                                    event.preventDefault();
-                                                                    swal('Opa! Calma ae...', 'Você já tem esse produto adicionado à Lista de Desejos', 'error');
-                                                                }
-                                                                function showAlert2(event) {
-                                                                    event.preventDefault();
-                                                                    swal('Produto removido da Lista de Desejos', '', 'success').then(() => {
-                                                                        event.target.closest('form').submit();
-                                                                    });
-                                                                }
-
-                                                                function showAlert4(event) {
-                                                                    event.preventDefault();
-                                                                    swal('Produto adicionado a Lista de Desejos', '', 'success').then(() => {
-                                                                        event.target.closest('form').submit();
-                                                                    });
-                                                                }
-                                                            </script>
                                                         </div>
                                                     </div>
                                                     <form  action="produtoPage" method="post" class="add-to-cart">
@@ -147,7 +102,8 @@
         </div>
     </div>
 </div>
-<!-- jQuery Plugins -->
+
+<script src="js/validacoes.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slick.min.js"></script>

@@ -106,8 +106,6 @@ public class IndexController extends HttpServlet {
                 }
             }
             request.setAttribute("carrinhos", carrinho);
-
-            System.out.println("Entra aqui  ");
             String termo = request.getParameter("termo");
             termo = "%" + termo + "%";
 
@@ -123,12 +121,10 @@ public class IndexController extends HttpServlet {
 
             request.setAttribute("produtos", produtos);
 
-            // Redirecione de volta para a página principal
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/listaProdutosCliente.jsp");
             dispatcher.forward(request, response);
         } else {
             processRequest(request, response);
-            System.out.println("Else");
         }
     }
 
@@ -136,17 +132,12 @@ public class IndexController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        System.out.println("url: " + url);
         if (url.equals("/deletarProduto")) {
-            System.out.println("entras");
-            System.out.println("id: " + request.getParameter("idProduto"));
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             boolean a = dao.excluirProdutoCarrinho(Integer.parseInt(request.getParameter("idProduto")));
-            System.out.println("A " + a);
             response.sendRedirect(request.getContextPath() + "/inicio");
 
         } else if (url.equals("/produtoPage")) {
-            System.out.println("Id do Produto : " + request.getParameter("idProduto"));
             Projeto.setIdProdutoAtual(Integer.parseInt(request.getParameter("idProduto")));
             response.sendRedirect(request.getContextPath() + "/produto-unico");
 
@@ -154,11 +145,9 @@ public class IndexController extends HttpServlet {
             WishListDAO w = new WishListDAO();
             if (Usuario.getIdUsuarioStatic() != 0) {
                 boolean valida = w.adicionarProdutoAoCarrinho(Integer.parseInt(request.getParameter("idProduto")));
-                System.out.println("Valida: " + valida);
                 request.getSession().setAttribute("validacaoLista", valida);
 
             } else {
-                System.out.println("Eçlse");
                 request.getSession().setAttribute("alerta", "Você precisa estar logado para adicionar produtos à lista de desejos");
             }
             response.sendRedirect(request.getContextPath() + "/inicio");

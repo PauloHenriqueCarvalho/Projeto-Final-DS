@@ -13,17 +13,12 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Dashboard - NiceAdmin Bootstrap Template</title>
+        <title>Produto / Especificacao - Evelin Verissimo</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
-
-        <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-        <!-- Google Fonts -->
         <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
         <link href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -36,7 +31,6 @@
         <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-        <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="./styles/estoqueProdutos.css">
 
@@ -57,17 +51,14 @@
                             <li class="breadcrumb-item active">Especificacao de Produtos</li>
                         </ol>
                     </nav>
-                </div><!-- End Page Title -->
+                </div>
 
                 <section class="section dashboard">
                     <div class="row">
-                        <!-- Left side columns -->
                         <div class="col-lg-8">
                             <div class="row">
-                                <!-- Top Selling -->
                                 <div class="col-12">
                                     <div class="card top-selling overflow-auto">
-
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -77,8 +68,6 @@
                                             <c:forEach items="${categorias}" var="categoria">
                                                 <li><a class="dropdown-item" href="#">${categoria.nome}</a></li>
                                                 </c:forEach> 
-
-
                                         </ul>
                                     </div>
 
@@ -98,10 +87,9 @@
                                             <tbody>
                                                 <c:forEach items="${produtos}" var="produto">
                                                     <tr>
-
                                                         <th scope="row"><a href="#"><img src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}"></a></th>
                                                         <td><a href="#" class="text-primary fw-bold">${produto.nome}</a></td>
-                                                        <td><!-- Button trigger modal -->
+                                                        <td>
                                                             <form action="ver-produto" method="post">
                                                                 <input type="hidden" id="idProduto" name="idProduto" value="${produto.idProduto}">
                                                                 <button type="submit" class="learn-more">
@@ -111,9 +99,6 @@
                                                                     <span class="button-text"> Ver Produto</span>
                                                                 </button>
                                                             </form>
-
-
-                                                            <!-- Modal -->
                                                             <div class="modal fade" id="exampleModalCenter${produto.idProduto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                                     <div class="modal-content">
@@ -188,22 +173,14 @@
                                                 </tr>
                                             </c:forEach>
                                             </tbody>
-
                                         </table>
-
                                     </div>
-
                                 </div>
-                            </div><!-- End Top Selling -->
-
+                            </div>
                         </div>
-
-                    </div><!-- End Left side columns -->
-
-                    <!-- Right side columns -->
+                    </div>
                     <div class="col-lg-4">
 
-                        <!-- Recent Activity -->
                         <div class="card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -211,7 +188,6 @@
                                     <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                     </li>
-
                                     <li><a class="dropdown-item" href="#">Today</a></li>
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
@@ -229,16 +205,15 @@
                                         <div class="activity-content">
                                             Ultimos <a href="#" class="fw-bold text-dark">5 produtos</a> adicionados    
                                         </div>
-                                    </div><!-- End activity item-->
+                                    </div>
 
                                 </div>
 
                             </div>
-                        </div><!-- End Recent Activity -->
+                        </div>
 
 
 
-                        <!-- Website Traffic -->
                         <div class="card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -290,7 +265,7 @@
                                                     data: [
                                     <c:forEach items="${listaCategoria}" var="c" varStatus="status">
                                                     {
-                                                    value: ${c.valor}, 
+                                                    value: ${c.valor},
                                                             name: '${c.nomeCategoria}'
                                                     }<c:if test="${!status.last}">,</c:if>
                                     </c:forEach>
@@ -299,22 +274,13 @@
                                     });
                                     });
                                 </script>
-
-
                             </div>
-
-
-                        </div><!-- End Right side columns -->
-
+                        </div>
                     </div>
             </section>
-
-        </main><!-- End #main -->
-
-
+        </main>
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-         <!-- Vendor JS Files -->
         <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -323,8 +289,6 @@
         <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
         <script src="assets/vendor/tinymce/tinymce.min.js"></script>
         <script src="assets/vendor/php-email-form/validate.js"></script>
-
-        <!-- Template Main JS File -->
         <script src="assets/js/main.js"></script>
     </body>
 
