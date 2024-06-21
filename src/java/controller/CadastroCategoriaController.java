@@ -68,8 +68,7 @@ public class CadastroCategoriaController extends HttpServlet {
                 boolean isChecked = statusProduto != null;
                 CategoriaDAO daoC = new CategoriaDAO();
                 daoC.updateStatus(id, isChecked);
-                
-                
+                      
             
             } 
             response.sendRedirect("./cadastroCategoria");

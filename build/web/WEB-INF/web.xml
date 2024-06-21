@@ -80,6 +80,22 @@
         <servlet-name>CadastroCategoriaController</servlet-name>
         <servlet-class>controller.CadastroCategoriaController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoricoPedidosClienteController</servlet-name>
+        <servlet-class>controller.HistoricoPedidosClienteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoricoPedidosAdministradorController</servlet-name>
+        <servlet-class>controller.HistoricoPedidosAdministradorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoricoTotalPedidosAdministradorController</servlet-name>
+        <servlet-class>controller.HistoricoTotalPedidosAdministradorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProdutoPedidoDetalhesController</servlet-name>
+        <servlet-class>controller.ProdutoPedidoDetalhesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -194,7 +210,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
-        <url-pattern>/atualizarCarrinho</url-pattern>
+        <url-pattern>/atualizarCarrinhoAdicionar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
+        <url-pattern>/atualizarCarrinhoDiminuir</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckoutRevisarCarrinhoController</servlet-name>
@@ -287,6 +307,38 @@
     <servlet-mapping>
         <servlet-name>CadastroCategoriaController</servlet-name>
         <url-pattern>/status-categoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoPedidosClienteController</servlet-name>
+        <url-pattern>/historicoPedidos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoPedidosClienteController</servlet-name>
+        <url-pattern>/cancelar-pedido</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoPedidosAdministradorController</servlet-name>
+        <url-pattern>/historicoPedidosAdministrador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoPedidosAdministradorController</servlet-name>
+        <url-pattern>/verDetalhesAtual</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoPedidosAdministradorController</servlet-name>
+        <url-pattern>/updateStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoTotalPedidosAdministradorController</servlet-name>
+        <url-pattern>/HistoricoTotalPedidos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricoTotalPedidosAdministradorController</servlet-name>
+        <url-pattern>/verDetalhes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProdutoPedidoDetalhesController</servlet-name>
+        <url-pattern>/ProdutoPedidoDetalhes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

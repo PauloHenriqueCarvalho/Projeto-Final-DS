@@ -129,7 +129,10 @@ public class UsuarioDAO {
                 } else {
                 }
                 Usuario.setIdUsuarioStatic(rs.getInt("id_usuario"));
+            } else {
+                Usuario.setIdUsuarioStatic(0);
             }
+            
             rs.close();
             stmt.close();
             con.close();
@@ -167,6 +170,37 @@ public class UsuarioDAO {
 
         return usuarios;
     }
+    
+    public Usuario readById(int idUsuario) {
+
+        Usuario usuarios = new Usuario();
+        try {
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            Usuario usuario = null;
+            conn = Conexao.getConn();
+            String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idUsuario);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+        
+                usuarios.setIdUsuario(rs.getInt("id_usuario"));
+                usuarios.setNome(rs.getString("nome"));
+             
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
+    }
+
 
     public int getId(String user) {
         int id = 0;

@@ -28,7 +28,7 @@ public class Pedido {
     private static int id_pedidoAtual;
     private static float freteAtual;
     private static Timestamp data_entregaAtual;
-    
+    private static FormaPagamento idPagamentoStatic;
     private String dataEntregaFormatada;
 
     public String getDataEntregaFormatada() {
@@ -39,6 +39,15 @@ public class Pedido {
     public Pedido() {
     }
 
+    public static FormaPagamento getIdPagamentoStatic() {
+        return idPagamentoStatic;
+    }
+
+    public static void setIdPagamentoStatic(FormaPagamento idPagamentoStatic) {
+        Pedido.idPagamentoStatic = idPagamentoStatic;
+    }
+
+    
     public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Timestamp data_pedido, Timestamp data_entrega, String status, float total, float frete, Endereco id_endereco, String dataEntregaFormatada) {
         this.id_pedido = id_pedido;
         this.id_cliente = id_cliente;

@@ -3,7 +3,48 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Lixo/Projeto-Final-DS-develep/src/java/conexao/Conexao.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/HistoricoPedidosAdministradorController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/header.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/ProdutoPedidoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/CheckoutFinalController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/styles/estoqueProdutos.css</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/produtosPedido.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/CarrinhoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/enderecos.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/CheckoutEnderecoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/EnderecoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/CheckoutRevisarCarrinhoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/IndexController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/HistoricoPedidosClienteController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/FormaPagamento.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/historicoTotalPedidosAdministrador.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/TipoProdutoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/PedidoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/js/validacoes.js</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/especificacaoProduto.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/headerAdministrador.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/Projeto.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/CheckoutPagamentoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/ProdutoPedido.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/Pedido.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/CarrinhoProdutoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/HistoricoTotalPedidosAdministradorController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/ProdutoCarrinhoSaboresDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/PagamentoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/styles/historico.css</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/checkoutPagamento.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/historicoPedidosAdministrador.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/ProdutoPedidoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/historicoPedidosCliente.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/EnderecoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/controller/EspecificacaoController.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/ProdutoPedidoSabores.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/bean/Produto.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/checkoutRevisarCarrinho.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/jsp/checkoutEndereco.jsp</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/src/java/model/dao/ProdutoDAO.java</file>
+            <file>file:/C:/Users/paulo/OneDrive/Documentos/Em%20Andamento/Documentações/Projeto-Final-DS/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

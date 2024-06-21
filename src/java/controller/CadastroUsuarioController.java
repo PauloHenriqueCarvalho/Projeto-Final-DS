@@ -26,7 +26,7 @@ public class CadastroUsuarioController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/cadastro2.jsp";
-
+        request.setAttribute("errorMessage", null);
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
@@ -44,67 +44,67 @@ public class CadastroUsuarioController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String url = request.getServletPath();
-        if (url.equals("./cadastrar")) {
-            String nextPage = "/WEB-INF/jsp/cadastro.jsp";
-            UsuarioDAO dao = new UsuarioDAO();
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String url = request.getServletPath();
+    if (url.equals("/cadastrar")) {
+        String nextPage = "/WEB-INF/jsp/cadastro2.jsp";
 
-            String errorMessage = "";
-            System.out.println("Enrae");
-            String nome = request.getParameter("nome");
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
-            String confirmarSenha = request.getParameter("confirmarSenha");
-            String telefone = request.getParameter("telefone");
-            String cpf = request.getParameter("cpf");
-            
+        UsuarioDAO dao = new UsuarioDAO();
+        request.removeAttribute("errorMessage");
+        String errorMessage = "";
 
-            if (nome == null || nome.trim().isEmpty()
-                    || email == null || email.trim().isEmpty()
-                    || senha == null || senha.trim().isEmpty()
-                    || confirmarSenha == null || confirmarSenha.trim().isEmpty()
-                    || telefone == null || telefone.trim().isEmpty()
-                    || cpf == null || cpf.trim().isEmpty()) {
-                errorMessage = "Todos os campos são obrigatórios.";
-               request.getSession().setAttribute("erroSenha", errorMessage);
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String confirmarSenha = request.getParameter("confirmarSenha");
+        String telefone = request.getParameter("telefone");
+        String cpf = request.getParameter("cpf");
 
-                response.sendRedirect("./cadastroUsuario");
-            } else {
-                if (senha.equals(confirmarSenha)) {
-                    telefone = telefone.replaceAll("[^0-9]", "");
-                    cpf = cpf.replaceAll("[^0-9]", "");
+        if (nome == null || nome.trim().isEmpty()
+                || email == null || email.trim().isEmpty()
+                || senha == null || senha.trim().isEmpty()
+                || confirmarSenha == null || confirmarSenha.trim().isEmpty()
+                || telefone == null || telefone.trim().isEmpty()
+                || cpf == null || cpf.trim().isEmpty()) {
+            errorMessage = "Todos os campos são obrigatórios.";
 
-                    Usuario usuario = new Usuario();
-                    usuario.setNome(nome);
-                    usuario.setEmail(email);
-                    usuario.setSenha(senha);
-                    usuario.setTelefone(telefone);
-                    usuario.setCpf(cpf);
+        } else if (!senha.equals(confirmarSenha)) {
+            errorMessage = "As senhas devem ser iguais";
 
-                    String cadastro = dao.insertCliente(usuario);
-                    System.out.println("Cadastr,.: " + cadastro);
-                    if(cadastro.equals("sucesso")){
-                        request.setAttribute("successMessage", "Cadastro realizado com sucesso!");
-                        request.getSession().removeAttribute("erroMsg");
-                        response.sendRedirect(request.getContextPath() + "/login");
-                    } else {
-                        request.getSession().setAttribute("erroMsg", cadastro);
-                        response.sendRedirect("./cadastroUsuario");
-                    }
-                    
-                }
-                errorMessage = "As senhas devem ser iguais!";
-               
-            }
+        } else if (cpf.length() != 14) {
+            errorMessage = "Digite o CPF corretamente";
 
-            
+        } else if (telefone.length() != 14) {
+            errorMessage = "Digite o telefone corretamente";
+
+        } else if (dao.verificarCpf(cpf)) {
+            errorMessage = "Já existe um usuário com esse CPF!";
+        } else if (dao.verificarEmail(email)) {
+            errorMessage = "Já existe um usuário com esse Email!";
+        } else if (dao.verificarTelefone(telefone)) {
+            errorMessage = "Já existe um usuário com esse Telefone!";
         } else {
-            processRequest(request, response);
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setTelefone(telefone);
+            usuario.setCpf(cpf);
+
+            dao.insertCliente(usuario);
+            nextPage = "/WEB-INF/jsp/login2.jsp"; 
         }
 
+        if (!errorMessage.isEmpty()) {
+            request.setAttribute("errorMessage", errorMessage);
+        }
+        RequestDispatcher d = getServletContext().getRequestDispatcher(nextPage);
+        d.forward(request, response);
+    } else {
+        processRequest(request, response);
     }
+}
 
 
     @Override

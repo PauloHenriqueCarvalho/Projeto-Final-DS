@@ -5,7 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,7 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Evelin Verissimo | Produtos</title>
+        <title>Evelin Verissimo | Enderecos </title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
 
@@ -27,6 +27,10 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
         <link type="text/css" rel="stylesheet" href="css/endereco.css"/>
+        
+         <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -36,7 +40,7 @@
                     <div class="row">
                         <div class="col-md-12"> 
                             <div class="section-title">
-                                <h3 class="title">Ola Paulo</h3>
+                                <h3 class="title">Ola ${nome}</h3>
                             </div>
                         </div>
                     </div>
@@ -109,7 +113,7 @@
                         <h2>Adicionar Endereço</h2>
                         <form action="add-endereco" method="post">
                             <label for="add-cep">CEP:</label>
-                            <input type="number" id="cep" name="cep" required="">
+                            <input type="number"  id="cep" name="cep" required="">
                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Nao sei meu CEP</a>
                             <label for="add-telefone">Numero</label>
                             <input type="number" id="telefone" name="numero" required="">
@@ -122,6 +126,7 @@
             </main>
 
             <script src="js/alert.js"></script>
+            <script src="js/validacoes.js"></script>
             <script src="js/jquery.min.js"></script>
             <script src="js/bootstrap.min.js"></script>
             <script src="js/slick.min.js"></script>

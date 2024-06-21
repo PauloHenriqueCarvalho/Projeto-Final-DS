@@ -32,36 +32,18 @@ import model.bean.Usuario;
  */
 public class CarrinhoProdutoDAO {
 
-    /*try {
-            Connection conexao = Conexao.conectar();
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            String query = "";
-            
-            stmt = conexao.prepareStatement(query);
-            
-            
-            rs.close();
-            stmt.close();
-            conexao.close();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-                   
-        }*/
-    public boolean atualizarQuantidade(int idProdutoCarrinho, int quantidade) {
+    public boolean atualizarQuantidade(int idProdutoCarrinho, float quantidade) {
         String sql = "UPDATE produto_carrinho SET quantidade = ? WHERE id_produto_carrinho = ?";
 
         try {
             Connection conn = Conexao.getConn();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, quantidade);
+            pstmt.setFloat(1, quantidade);
             pstmt.setInt(2, idProdutoCarrinho);
             int affectedRows = pstmt.executeUpdate();
-
             return affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -122,8 +104,6 @@ public class CarrinhoProdutoDAO {
             for (int i = 0; i < sabores.size(); i++) {
                 precoAdicionalSabores += valorAdicionalSabor(sabores.get(i));
             }
-            
-            System.out.println("Preco Sabor: " + precoAdicionalSabores);
 
             valorAdicional += precoAdicionalSabores;
             valorAdicional += produtoCarrinho.getProduto().getValor();
@@ -134,9 +114,9 @@ public class CarrinhoProdutoDAO {
             if (linhasAfetadas > 0) {
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()) {
-                    id = rs.getInt(1); // Obtém o último ID gerado
+                    id = rs.getInt(1);
                 }
-                rs.close(); // Fechar o ResultSet
+                rs.close();
             }
             return id;
         } catch (SQLException e) {
@@ -211,10 +191,10 @@ public class CarrinhoProdutoDAO {
                     + "    p.id_produto, \n"
                     + "    p.nome, \n"
                     + "    p.descricao, \n"
-                    + "    p.valor, \n"       
+                    + "    p.valor, \n"
                     + "    p.id_categoria, \n"
                     + "    pc.id_produto_carrinho, \n"
-                    + "    pc.id_usuario, \n"                  
+                    + "    pc.id_usuario, \n"
                     + "    pc.quantidade,\n"
                     + "    pc.valorAdicional\n"
                     + "FROM \n"
@@ -227,7 +207,7 @@ public class CarrinhoProdutoDAO {
             stmt = con.prepareStatement(query);
             stmt.setInt(1, Usuario.getIdUsuarioStatic());
             rs = stmt.executeQuery();
-             ProdutoImagemDAO dao = new ProdutoImagemDAO();
+            ProdutoImagemDAO dao = new ProdutoImagemDAO();
             while (rs.next()) {
                 Produto p = new Produto();
                 Categoria c = new Categoria();
@@ -244,14 +224,11 @@ public class CarrinhoProdutoDAO {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                // Atributos específicos de produto_carrinho
                 Usuario u = new Usuario();
                 u.setIdUsuario(rs.getInt("id_usuario"));
                 p.setIdUsuario(rs.getInt("id_usuario"));
 
                 p.setValorAdicional(rs.getFloat("valorAdicional"));
-
-            
 
                 produtos.add(p);
             }
@@ -260,32 +237,38 @@ public class CarrinhoProdutoDAO {
             stmt.close();
             con.close();
         } catch (SQLException ex) {
-            System.err.println("Erro ao listar produtos do carrinho: " + ex);
+            ex.printStackTrace();
         }
 
         return produtos;
     }
 
     public boolean excluirProdutoCarrinho(int idProdutoCarrinho) {
-        PreparedStatement stmt = null;
-        Connection con = Conexao.getConn();
+        String sql = "DELETE FROM produto_carrinho WHERE id_produto_carrinho = ?";
+
         try {
+            Connection conn = Conexao.getConn();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idProdutoCarrinho);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+     public boolean limparCarrinhoUsuario() {
+        String sql = "DELETE FROM produto_carrinho WHERE id_usuario = ?";
 
-            stmt = con.prepareStatement("DELETE FROM produto_carrinho_sabores WHERE id_produto_carrinho = ?");
-            stmt.setInt(1, idProdutoCarrinho);
-            stmt.executeUpdate();
-            stmt.close();
-
-            stmt = con.prepareStatement("DELETE FROM produto_carrinho WHERE id_produto_carrinho = ?");
-            stmt.setInt(1, idProdutoCarrinho);
-
-            stmt.executeUpdate();
-            stmt.close();
-            con.close();
-            System.out.println("Terue");
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        try {
+            Connection conn = Conexao.getConn();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, Usuario.getIdUsuarioStatic());
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

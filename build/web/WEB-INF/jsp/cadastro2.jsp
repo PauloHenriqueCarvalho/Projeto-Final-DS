@@ -9,24 +9,25 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-            />
-        <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-            />
+
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
             rel="stylesheet"
             />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+         <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+            />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="./styles/cadastro.css">
         <link rel="stylesheet" href="css/login.css">
-        <title>JSP Page</title>
+        <title>Cadastro</title>
+
+        <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
     </head>
     <body>
 
@@ -45,15 +46,9 @@
                 <div class="inputs">
                     <h2 class="text-uppercase text-center mb-5">Criar Conta</h2>
 
-                    <form action="cadastrar" method="post">
-                        <c:set var="errorMessage" value="${sessionScope.erroMsg}" />
-                        <c:remove var="erroMsg" scope="session" />
+                    <form action="cadastrar "method="post" >
 
-                        <c:if test="${not empty errorMessage}">
-                            <div class="alert alert-danger" role="alert">
-                                ${errorMessage}
-                            </div>
-                        </c:if>
+
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="text" id="nome" name="nome" class="form-control form-control-lg" required />
                             <label class="form-label" for="nome">Seu Nome</label>
@@ -91,8 +86,11 @@
                             </label>
                         </div>
 
-                        <c:if test="${not empty sessionScope.erroSenha}">
-                            <p style="color: red">${sessionScope.erroSenha}</p>
+
+                        <c:if test="${not empty errorMessage}">
+ 
+                            <p style="color: red;">${errorMessage}</p>
+                
                         </c:if>
 
                         <div class="d-flex justify-content-center">
@@ -103,39 +101,14 @@
 
                     </form>
 
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-
-
-                    <script>
-                        $(document).ready(function () {
-                            $('#telefone').inputmask('(99) 99999-9999');
-
-                            $('#cpf').inputmask('999.999.999-99');
-                            $('form').submit(function (e) {
-                                var telefone = $('#telefone').val();
-                                var cpf = $('#cpf').val();
-                                if (telefone.length < 14) {
-                                    alert('Por favor, insira um número de telefone válido.');
-                                    e.preventDefault();
-                                    return;
-                                }
-
-                                if (cpf.length < 14) {
-                                    alert('Por favor, insira um CPF válido.');
-                                    e.preventDefault();
-                                    return;
-                                }
-                            });
-                        });
-                    </script>
 
 
                 </div>
             </div>
         </main>
     </body>
+    <script src="js/validacoes.js" type="text/javascript"></script>
     <script
         type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"

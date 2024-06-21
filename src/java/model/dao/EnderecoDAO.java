@@ -136,7 +136,6 @@ public class EnderecoDAO {
                 e.setNumero(rs.getInt("numero"));
                 if(rs.getBoolean("endereco_padrao")){
                     retorno = rs.getInt("id_endereco");
-                    System.out.println("Retorno: "+ retorno);
                     break;
                 }
                 UsuarioDAO dao = new UsuarioDAO();
@@ -161,7 +160,6 @@ public class EnderecoDAO {
             PreparedStatement ps = c.prepareStatement("UPDATE endereco set endereco_padrao = ? where id_endereco = ?");
             ps.setBoolean(1, false);
             ps.setInt(2, idEnderecoPadrao());
-            System.out.println("Endereco Padrao: " + idEnderecoPadrao());
             ps.executeUpdate();
             ps.close();
             

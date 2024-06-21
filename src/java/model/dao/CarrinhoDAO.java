@@ -29,10 +29,7 @@ import model.bean.Usuario;
  */
 public class CarrinhoDAO {
     
-    /*
-    Esse método deve retornar todos os produtos de um usuário fornecido como
-    parâmetro, portanto deve ser chamado na página que exibe o carrinho.  
-    */
+
     
     private Blob imagemPadrao(int idProduto){
         Blob imagem = null;
@@ -55,7 +52,7 @@ public class CarrinhoDAO {
     }
     
     
-    private List<Produto> lerProdutos() {
+    public List<Produto> lerProdutos() {
         
         List<Produto> produtos = new ArrayList();
         try {
@@ -63,7 +60,7 @@ public class CarrinhoDAO {
             PreparedStatement stmt = null;
             ResultSet rs = null;
             
-            stmt = conexao.prepareStatement("SELECT p.* FROM carrinho_produto AS cp JOIN produto AS p ON cp.id_produto = p.id_Produto"
+            stmt = conexao.prepareStatement("SELECT p.* FROM produto_carrinho AS cp JOIN produto AS p ON cp.id_produto = p.id_Produto"
                     + " JOIN carrinho AS c ON cp.id_carrinho = c.id_Carrinho JOIN usuario AS u ON c.id_usuario = u.id_Usuario WHERE u.id_Usuario = ?");
             stmt.setInt(1, Usuario.getIdUsuarioStatic());
             
@@ -106,10 +103,9 @@ public class CarrinhoDAO {
             ps.setInt(1, Usuario.getIdUsuarioStatic());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                preco += rs.getFloat("valorAdicional");
+                preco += rs.getFloat("valorAdicional") * rs.getInt("quantidade");
                 
             }
-            System.out.println("Preco final: " + preco);
             rs.close();
             ps.close();
             c.close();

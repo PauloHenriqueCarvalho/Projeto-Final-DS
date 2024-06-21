@@ -25,6 +25,7 @@ import model.bean.ProdutoImagem;
 import model.bean.Projeto;
 import model.bean.Sabor;
 import model.bean.Usuario;
+import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
@@ -49,7 +50,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
         request.setAttribute("idCategoria", idCategoria);
         CarrinhoProdutoDAO daoCarrinho = new CarrinhoProdutoDAO();
 
-        // Verifica se o produto já está no carrinho
         if (daoCarrinho.validaCarrinho(Projeto.getIdProdutoAtual())) {
             request.setAttribute("existeCarrinho", "Esse produto já está no carrinho! Remova-o para poder adicionar este");
         }
@@ -89,6 +89,21 @@ public class ProdutoUnicoCliente extends HttpServlet {
 
             }
         }
+         CarrinhoDAO cDAO = new CarrinhoDAO();
+        float total = cDAO.precoCarrinho();
+        request.setAttribute("total", total);
+
+        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
+        List<Produto> carrinho = car.listarProdutosDoCarrinho();
+        for (Produto c : carrinho) {
+            if (c.getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                c.setImagemBase64(imagemBase64);
+
+            }
+        }
+        request.setAttribute("carrinhos", carrinho);
+        
         request.setAttribute("imagensProdutos", imagensProdutos);
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
@@ -143,7 +158,6 @@ public class ProdutoUnicoCliente extends HttpServlet {
             for (int saborId : saborIds) {
                 Sabor saborSelecionado = new Sabor();
                 saborSelecionado.setIdSabor(saborId);
-                System.out.println("Sabores: " + saborId);
                 sabores.add(saborId);
 
             }
@@ -170,6 +184,5 @@ public class ProdutoUnicoCliente extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

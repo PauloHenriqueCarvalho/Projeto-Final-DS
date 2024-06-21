@@ -108,62 +108,7 @@
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
 
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <p class="icons"><i class="fa fa-shopping-cart"></i></p>
-                                    </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <c:choose>
-                                                <c:when test="${empty carrinhos}">
-                                                    <li>
-                                                        <p>O seu carrinho está vazio.</p>
-                                                    </li>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:forEach items="${carrinhos}" var="carrinho">
-                                                        <div class="product-widget">
-                                                            <div class="product-img">
-                                                                <img class="img-card-cart" src="data:image/jpeg;base64,${carrinho.imagemBase64}" alt="${carrinho.nome}">
-                                                            </div>
-                                                            <div class="product-body">
-                                                                <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
 
-
-                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
-
-
-                                                            </div>
-                                                            <form action="deletarProduto" method="post">
-                                                                <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
-                                                                <button type="submit" onclick="removeCarrinho(event)" class="delete"><i class="fa fa-close"></i></button>
-
-                                                                <script>
-                                                                    function removeCarrinho(event) {
-                                                                        event.preventDefault();
-                                                                        swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
-                                                                            event.target.closest('form').submit();
-                                                                        });
-                                                                    }
-                                                                </script>
-                                                            </form>
-
-                                                        </div>
-                                                    </c:forEach>
-                                                </div>
-                                                <div class="cart-summary">
-                                                    <small>3 Item(s) selected</small>
-                                                    <h5>SUBTOTAL: $${total}</h5>
-                                                </div>
-                                                <div class="cart-btns">
-                                                    <a href="./revisar-carrinho">View Cart</a>
-                                                    <a href="./revisar-carrinho">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>       
-
-                                    </div>
-                                </div>
                                 <div class="menu-toggle">
                                     <a href="#">
                                         <i class="fa fa-bars"></i>
@@ -188,7 +133,7 @@
 
                                 <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
                                     <li class="step0 active text-center" id="step1"></li>
-                                    <li class="step0 active text-center" id="step2"></li>
+                                    <li class="step0 text-muted text-center" id="step2"></li>
                                     <li class="step0 text-muted text-end" id="step3"></li>
                                 </ul>
 
@@ -222,15 +167,15 @@
                                         </div>
                                         <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                             <p><strong>${c.nome}</strong></p>
-                                            
-                                                    <c:forEach items="${sabores}" var="s">
-                                                        <c:choose>
-                                                            <c:when test="${s.idProdutoCarrinho.idProdutoCarrinho == c.idProduto_Carrinho}">
-                                                                <p>Sabor: ${s.idSabor.nome}</p>
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </c:forEach>
-                
+
+                                            <c:forEach items="${sabores}" var="s">
+                                                <c:choose>
+                                                    <c:when test="${s.idProdutoCarrinho.idProdutoCarrinho == c.idProduto_Carrinho}">
+                                                        <p>Sabor: ${s.idSabor.nome}</p>
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:forEach>
+
                                             <form action="deletarProdutoCarrinho" method="post">
                                                 <input type="hidden" id="idProduto" name="idProduto" value="${c.idProduto_Carrinho}">
                                                 <button type="submit" onclick="removeCarrinho(event)" class="btn btn-primary btn-sm me-1 mb-2" title="Remove item">
@@ -239,43 +184,45 @@
                                             </form>              
                                             <form class="product-btns" action="listaDesejosCarrinho" method="post">
                                                 <input type="hidden" name="idProduto" id="idProduto" value="${c.idProduto}">
-                                                <c:choose>
-                                                    <c:when test="${empty usuario}">
+                                               
                                                         <button type="submit" onclick="showAlert4(event)" class="btn btn-danger btn-sm mb-2">
                                                             <i class="fa fa-heart-o"></i>
                                                             <span class="tooltipp"></span>
                                                         </button>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <button type="submit" onclick="showAlert4(event)" class="add-to-wishlist">
-                                                            <i class="fa fa-heart-o"></i>
-                                                            <span class="tooltipp">Adicionar na Lista de Desejos</span>
-                                                        </button>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                   
+
+                                                   
                                             </form>
                                         </div>
 
-                                        <form id="checkout-form" action="atualizarCarrinho" method="post" class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                        <div id="checkout-form" class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                             <div class="d-flex mb-4" style="max-width: 300px">
-                                                <button class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
+                                                <form action="atualizarCarrinhoDiminuir" method="post">
+                                                    <input type="hidden" value="${c.quantidade}" id="qtd" name="qtd">
+                                                    <input type="hidden" value="${c.idProduto_Carrinho}" id="idProdutoCarrinho" name="idProdutoCarrinho">
+                                                    <button type="submit" class="btn btn-primary px-3 ms-2">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </form>
                                                 <div class="form-outline">
                                                     <input id="form1" min="0" name="quantity_${c.idProduto_Carrinho}" value="${c.quantidade}" type="number" class="form-control" />
                                                 </div>
-                                                <button class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
+                                                <form action="atualizarCarrinhoAdicionar" method="post">
+                                                    <input type="hidden" value="${c.quantidade}" id="qtd" name="qtd">
+                                                    <input type="hidden" value="${c.idProduto_Carrinho}" id="idProdutoCarrinho" name="idProdutoCarrinho">
+                                                    <button type="submit" class="btn btn-primary px-3 me-2">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </form>
                                             </div>
-                              
 
-                                                    <label class="txt-qtd" for="form1">Centos (1 cento = 100) </label>
-                                               
+
+                                            <label class="txt-qtd" for="form1">Centos (1 cento = 100) </label>
+
                                             <p class="text-start text-md-center">
-                                                <strong>$${c.valorAdicional}</strong>
+                                                <strong>$${c.valorAdicional} x${c.quantidade}</strong>
                                             </p>
-                                        </form>>
+                                        </div>>
                                     </div>
                                     <hr class="my-4" />
                                 </c:forEach>
@@ -307,16 +254,17 @@
                                         <span><strong id="total-cost">R$${total + 10}</strong></span>
                                     </li>
                                 </ul>
+                                        <c:choose>
+                                            <c:when test="${empty carrinhos}">
+                                                <button type="submit" onclick="block(event)" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="submit"  class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                
+                               
 
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
-                                <c:if test="${not empty sessionScope.feedback}">
-                                    <div id="update-feedback" class="alert alert-success">${sessionScope.feedback}</div>
-                                    <c:remove var="feedback" scope="session"/>
-                                </c:if>
-                                <c:if test="${not empty sessionScope.continuarError}">
-                                    <div class="alert alert-danger">${sessionScope.continuarError}</div>
-                                    <c:remove var="continuarError" scope="session"/>
-                                </c:if>
                             </form>
                         </div>
 
@@ -325,15 +273,17 @@
             </section>
 
             <script>
-               function removeCarrinho(event) {
+                function removeCarrinho(event) {
                     event.preventDefault();
                     swal('Removido Com Sucesso!', 'Não deixe para depois, compre agora!', 'success').then(() => {
                         event.target.closest('form').submit();
                     });
                 }
+                function block(event) {
+                    event.preventDefault();
+                    swal('Opa! Calma ae...', 'Você não tem nenhum produto no carrinho!', 'error');
+                }
             </script>
-
-
         </main>
     </body>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js type="text/javascript"></script>

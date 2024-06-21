@@ -16,10 +16,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
+import model.bean.Pedido;
 import model.bean.Produto;
 import model.bean.Projeto;
 import model.bean.TipoProduto;
 import model.dao.CategoriaDAO;
+import model.dao.PedidoDAO;
 import model.dao.ProdutoDAO;
 import model.dao.TiposProdutosDAO;
 
@@ -27,19 +29,15 @@ import model.dao.TiposProdutosDAO;
  *
  * @author paulo
  */
-public class EspecificacaoController extends HttpServlet {
+public class HistoricoPedidosAdministradorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nextPage = "/WEB-INF/jsp/especificacaoProduto.jsp";
-        
-         ProdutoDAO dao = new ProdutoDAO();
+        ProdutoDAO dao = new ProdutoDAO();
 
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
-        
-        
 
         List<Produto> produto = dao.listarTodosAdm();
         for (int i = 0; i < produto.size(); i++) {
@@ -50,61 +48,84 @@ public class EspecificacaoController extends HttpServlet {
 
         }
         request.setAttribute("produtos", produto);
-        
+
         TiposProdutosDAO tDAO = new TiposProdutosDAO();
         List<TipoProduto> tipo = new ArrayList<>();
-        
+
         for (int i = 0; i < listaCategorias.size(); i++) {
             TipoProduto tipoProduto = new TipoProduto();
             tipoProduto.setNomeCategoria(listaCategorias.get(i).getNome());
             int qtdAtual = 0;
             for (int j = 0; j < produto.size(); j++) {
-                if(listaCategorias.get(i).getNome().equals(produto.get(j).getCategoria().getNome())){
+                if (listaCategorias.get(i).getNome().equals(produto.get(j).getCategoria().getNome())) {
                     qtdAtual++;
                 }
             }
             tipoProduto.setValor(qtdAtual);
             tipo.add(tipoProduto);
         }
-         request.setAttribute("listaCategoria", tipo);
-        
+        request.setAttribute("listaCategoria", tipo);
+
+        PedidoDAO pDAO = new PedidoDAO();
+        List<Pedido> pedidos = pDAO.readAtuais();
+        request.setAttribute("pedidos", pedidos);
+
+        String nextPage = "/WEB-INF/jsp/historicoPedidosAdministrador.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
     }
 
-
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       processRequest(request, response);
-        
+        processRequest(request, response);
     }
 
-
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String url = request.getServletPath();
-        if(url.equals("/deletar-produto")){
-            ProdutoDAO dao = new ProdutoDAO();
-            dao.delete(Integer.parseInt(request.getParameter("idProduto")));
-            response.sendRedirect("./especificacaoProdutos");
-        } else if(url.equals("/status-produto")){
-            ProdutoDAO dao = new ProdutoDAO();
-            int idProduto = Integer.parseInt(request.getParameter("idProduto"));
-            String statusProduto = request.getParameter("statusProduto");
-            boolean isChecked = statusProduto != null;
+        String url = request.getServletPath();
+        if (url.equals("/updateStatus")) {
 
-            dao.alterarStatus(isChecked, idProduto);
-        
-            response.sendRedirect("./especificacaoProdutos");
-        } else if(url.equals("/ver-produto")){
-            Projeto.setIdProdutoAtual(Integer.parseInt(request.getParameter("idProduto")));
-            response.sendRedirect("./previewProduto");
+            String status = request.getParameter("status");
+            int idPedido = Integer.parseInt(request.getParameter("id"));
+            String novoStatus = "";
+            if (status.equals("pendente")) {
+                novoStatus = "processando";
+            } else if (status.equals("processando")) {
+                novoStatus = "entregue";
+            } else if (status.equals("entregue")) {
+                novoStatus = "pendente";
+            }
+            System.out.println("Novo Status: " + novoStatus);
+            PedidoDAO dao = new PedidoDAO();
+            dao.updateStatus(novoStatus, idPedido);
+            response.sendRedirect("./historicoPedidosAdministrador");
+
+        } else if (url.equals("/verDetalhesAtual")){
+            Projeto.setIdPedidoStatic(Integer.parseInt(request.getParameter("idPedido")));
+            response.sendRedirect("./ProdutoPedidoDetalhes");
         }else {
             processRequest(request, response);
         }
-        
+
     }
 
     /**

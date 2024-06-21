@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Endereco;
+import model.bean.FormaPagamento;
 import model.bean.Pedido;
 import model.bean.Produto;
 import model.bean.Usuario;
@@ -32,11 +33,10 @@ import model.dao.UsuarioDAO;
  */
 public class CheckoutPagamentoController extends HttpServlet {
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "/WEB-INF/jsp/checkoutPagamento.jsp";
-        
+
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
@@ -63,44 +63,26 @@ public class CheckoutPagamentoController extends HttpServlet {
 
             }
         }
-        
-      
+
         request.setAttribute("data", Pedido.getData_entregaAtual());
         request.setAttribute("carrinhos", carrinho);
-        
+
         RequestDispatcher d = getServletContext().getRequestDispatcher(url);
         d.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
-        
-        if(url.equals("/finalizar-compra")){
+
+        if (url.equals("/finalizar-compra")) {
             Pedido p = new Pedido();
             PedidoDAO pDAO = new PedidoDAO();
             String paymentMethod = request.getParameter("payment");
@@ -110,8 +92,8 @@ public class CheckoutPagamentoController extends HttpServlet {
             String cardExpiry = request.getParameter("card-expiry");
             String cardCVV = request.getParameter("card-cvv");
             String couponCode = request.getParameter("coupon-code");
+           
 
-            // Imprima os valores capturados
             System.out.println("Método de Pagamento: " + paymentMethod);
             System.out.println("Chave Pix: " + pixKey);
             System.out.println("Número do Cartão: " + cardNumber);
@@ -119,13 +101,34 @@ public class CheckoutPagamentoController extends HttpServlet {
             System.out.println("Validade do Cartão: " + cardExpiry);
             System.out.println("CVV do Cartão: " + cardCVV);
             System.out.println("Código do Cupom: " + couponCode);
-            
-            if(paymentMethod.equals("pix")){
-                response.sendRedirect("./pagamentoPix");
-            } else{
-                response.sendRedirect("./checkoutFinal");
+
+            if (paymentMethod.equals("pix")) {
+                FormaPagamento f = new FormaPagamento();
+                f.setId_forma_pagamento(1);
+                Pedido.setIdPagamentoStatic(f);
+            } else if (paymentMethod.equals("cartao")) {
+                FormaPagamento f = new FormaPagamento();
+                f.setId_forma_pagamento(2);
+                Pedido.setIdPagamentoStatic(f);
+            } else {
+                FormaPagamento f = new FormaPagamento();
+                f.setId_forma_pagamento(2);
+                Pedido.setIdPagamentoStatic(f);
             }
+            CarrinhoDAO cDAO = new CarrinhoDAO();
+            float total = cDAO.precoCarrinho();
+     
             
+            p.setData_entrega(Pedido.getData_entregaAtual());
+            p.setFrete(10);
+            p.setId_endereco(Pedido.getId_enderecoAtual());
+            p.setIdPagamento(Pedido.getIdPagamentoStatic());
+            p.setStatus("pendente");
+            p.setTotal(total);
+            
+            pDAO.criarPedido(p);
+            response.sendRedirect("./checkoutFinal");
+
         } else {
             processRequest(request, response);
         }

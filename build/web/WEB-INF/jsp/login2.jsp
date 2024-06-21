@@ -58,11 +58,10 @@
                         </div>
 
                         <p class="text-center text-muted mt-5 mb-0">Não tem conta? <a href="./cadastroUsuario">Cadastrar-se</a>
-                        <c:if test="${not empty errorMessage}">
-                            <div style="color: red;">
-                                ${errorMessage}
-                            </div>
-
+                       <c:if test="${not empty errorMensagem}">
+ 
+                            <p style="color: red;">${errorMensagem}</p>
+                
                         </c:if>
                     </form>
                 </div>

@@ -44,7 +44,9 @@ public class EnderecoController extends HttpServlet {
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+            
             request.setAttribute("usuario", usuarios);
+            request.setAttribute("nome", usuarios.get(0).getNome());
         }
 
         CategoriaDAO cat = new CategoriaDAO();

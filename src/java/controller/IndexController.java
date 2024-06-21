@@ -30,6 +30,7 @@ public class IndexController extends HttpServlet {
 
         if (Projeto.isSair()) {
             Usuario.setIdUsuarioStatic(0);
+            Usuario.setAcessoStatic(0);
             Projeto.setSair(false);
         }
         if (Usuario.getIdUsuarioStatic() != 0) {

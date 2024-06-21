@@ -17,6 +17,17 @@ public class Projeto {
     private static boolean bolo;
     private static boolean salgado;
     private static boolean doce;
+    
+    private static int idPedidoStatic;
+
+    public static int getIdPedidoStatic() {
+        return idPedidoStatic;
+    }
+
+    public static void setIdPedidoStatic(int idPedidoStatic) {
+        Projeto.idPedidoStatic = idPedidoStatic;
+    }
+    
 
     public static int getIdCategoriaAtual() {
         return idCategoriaAtual;

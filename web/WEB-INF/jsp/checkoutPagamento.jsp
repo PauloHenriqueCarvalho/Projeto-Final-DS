@@ -16,7 +16,10 @@
 
         <title>Evelin Verissimo | Pagamento</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
+         <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+            />
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -152,7 +155,7 @@
             </div>
         </header>
 
-        <section class="vh-10" style="background-color: #fff;">
+        <section class="vh-10" style="background-color: #f3f3f3 ;">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12">
@@ -187,13 +190,6 @@
                         <div class="pix-info">
 
                         </div>
-                    </div>
-                    <div class="method">
-                        <input type="radio" id="boleto" name="payment" value="boleto">
-                        <label for="boleto">
-                            <img src="img/boleto.png" alt="Boleto">
-                            <span>PAGUE COM BOLETO</span>
-                        </label>
                     </div>
                     <div class="method">
                         <input type="radio" id="cartao" name="payment" value="cartao">

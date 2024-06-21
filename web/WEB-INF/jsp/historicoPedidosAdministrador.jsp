@@ -33,6 +33,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link href="assets/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="./styles/estoqueProdutos.css">
+        <link rel="stylesheet" href="./styles/historico.css">
 
     </head>
 
@@ -43,12 +44,12 @@
             <main id="main" class="main">
 
                 <div class="pagetitle">
-                    <h1>Especificacao de Produtos</h1>
+                    <h1>Pedidos Atuais</h1>
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="./inicioAdministrador">Home</a></li>
-                            <li class="breadcrumb-item ">Produtos</li>
-                            <li class="breadcrumb-item active">Especificacao de Produtos</li>
+                            <li class="breadcrumb-item ">Pedidos</li>
+                            <li class="breadcrumb-item active">Pedidos Atuais</li>
                         </ol>
                     </nav>
                 </div>
@@ -72,92 +73,47 @@
                                     </div>
 
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">Produtos <span>| Today</span></h5>
+                                        <h5 class="card-title">Pedidos <span>| todos</span></h5>
 
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Imagem</th>
-                                                    <th scope="col">Produto</th>
-                                                    <th scope="col">Ver Produto</th>
-                                                    <th scope="col">Deletar Produto</th>
-                                                    <th scope="col">Status Do Produto</th>
+                                                    <th scope="col">Cliente</th>
+                                                    <th scope="col">Total</th>
+                                                    <th scope="col">Data Entrega</th>
+                                                    <th scope="col">Forma de Pagamento</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Detalhes</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach items="${produtos}" var="produto">
+                                                <c:forEach items="${pedidos}" var="p">
                                                     <tr>
-                                                        <th scope="row"><a href="#"><img src="data:image/jpeg;base64,${produto.imagemBase64}" alt="${produto.nome}"></a></th>
-                                                        <td><a href="#" class="text-primary fw-bold">${produto.nome}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.id_cliente.nome}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.total}</a></td>
+
+                                                        <td><a href="#" class="text-primary fw-bold">${p.data_entrega}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.idPagamento.nome}</a></td>
                                                         <td>
-                                                            <form action="ver-produto" method="post">
-                                                                <input type="hidden" id="idProduto" name="idProduto" value="${produto.idProduto}">
+                                                            <form action="updateStatus" method="post">
+                                                                <input type="hidden" name="id" value="${p.id_pedido}" id="id">
+                                                                <input type="hidden" name="status" value="${p.status}" id="status">
+                                                                <button  class="btn-status">${p.status} </button>
+                                                            </form>
+                                                            
+
+                                                        </td>
+                                                        <td>
+                                                            <form action="verDetalhesAtual" method="post">
+                                                                <input type="hidden" id="idPedido" name="idPedido" value="${p.id_pedido}">
                                                                 <button type="submit" class="learn-more">
                                                                     <span class="circle" aria-hidden="true">
                                                                         <span class="icon arrow"></span>
                                                                     </span>
-                                                                    <span class="button-text"> Ver Produto</span>
+                                                                    <span class="button-text"> Ver Detalhes</span>
                                                                 </button>
                                                             </form>
-                                                            <div class="modal fade" id="exampleModalCenter${produto.idProduto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLongTitle${produto.idProduto}">${produto.nome}</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="col-lg-6">
-
-                                                                                <div class="card">
-                                                                                    <div class="card-body">
-                                                                                        <h5 class="card-title">Adicionar Tipos para especificacao</h5>
-                                                                                        <div class="row g-3">
-                                                                                            <div data-mdb-input-init class="form-outline mb-4">
-                                                                                                <label class="form-label" for="nome">Nome</label>
-                                                                                                <input type="text" id="nome" placeholder="Ex - Sabor" name="nome" class="form-control form-control-lg" required />
-                                                                                            </div>
-                                                                                            <div data-mdb-input-init class="form-outline mb-4">
-                                                                                                <label class="form-label" for="descricao">Descricao</label>
-                                                                                                <input type="text" id="descricao" name="descricao" class="form-control form-control-lg" required />
-
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                                            <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>                 
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <form action="deletar-produto" method="post">
-                                                                <input type="hidden" id="idProduto" name="idProduto" value="${produto.idProduto}">
-                                                                <button  onclick="showAlert(event)" type="submit" class="button-del">
-                                                                    <svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                        <td>
-                                                            <form action="status-produto" method="post">
-                                                                <input type="hidden" id="idProduto" name="idProduto" value="${produto.idProduto}">
-                                                                <label class="switch">
-                                                                    <input type="checkbox" name="statusProduto" ${produto.status ? 'checked' : ''} onchange="submitForm(this.form)">
-                                                                    <span class="slider round"></span>
-                                                                </label>
-
-                                                            </form>
-
                                                         </td>
                                                 <script>
                                                     function showAlert(event) {

@@ -15,7 +15,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Evelin Verissimo | Produtos</title>
-
+         <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+            />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>

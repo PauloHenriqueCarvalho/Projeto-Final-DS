@@ -19,10 +19,7 @@ import model.bean.Sabor;
 import model.dao.ProdutoDAO;
 import model.dao.SaborDAO;
 
-/**
- *
- * @author paulo
- */
+
 public class TipoProdutoController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

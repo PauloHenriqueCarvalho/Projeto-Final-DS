@@ -85,7 +85,6 @@ public class ProdutoDAO {
 
             int linhasAfetadas = ps.executeUpdate();
 
-            // Recupera o ID gerado
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     idGerado = rs.getInt(1);
@@ -157,20 +156,17 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -182,9 +178,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -196,7 +190,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
 
             }
             rs.close();
@@ -225,20 +218,17 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 if (rs.getString("status").equals("disponivel")) {
                     p.setStatus(true);
                     
@@ -246,9 +236,7 @@ public class ProdutoDAO {
                     p.setStatus(false);
                 }
                 produtos.add(p);
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -260,7 +248,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
 
             }
             rs.close();
@@ -301,20 +288,17 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -326,9 +310,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -340,7 +322,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -379,20 +360,17 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -404,9 +382,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -418,7 +394,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -486,20 +461,17 @@ public class ProdutoDAO {
                 p.setPrecoCusto(rs.getFloat("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -511,9 +483,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -525,7 +495,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -542,9 +511,7 @@ public class ProdutoDAO {
 
         try {
             conexao = Conexao.getConn();
-            conexao.setAutoCommit(false);  // Inicia uma transação
-
-            // Excluir registros nas tabelas que referenciam produto
+            conexao.setAutoCommit(false); 
             String[] deleteQueries = {
                 "DELETE FROM produto_imagem WHERE id_produto = ?",
                 "DELETE FROM sabor WHERE id_produto = ?",

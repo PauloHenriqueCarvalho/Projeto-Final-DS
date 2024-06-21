@@ -78,13 +78,11 @@ public class ListarCategoriaController extends HttpServlet {
         if(idCat != -1){
              produtos = dao.listarPorCategoria(idCat, filter, currentPage, PRODUCTS_PER_PAGE);
 
-            // Calcula a quantidade total de páginas
              totalProducts = dao.countProdutosByCategoria(idCat);
              request.setAttribute("idCat", idCat);
         } else {
              produtos = dao.listarTodos( filter, currentPage, PRODUCTS_PER_PAGE);
 
-            // Calcula a quantidade total de páginas
              totalProducts = dao.countProdutosTodos();
              request.setAttribute("idCat", -1);
         }

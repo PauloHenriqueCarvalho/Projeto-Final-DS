@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>JSP Page</title>
     </head>
     <body>
@@ -67,6 +68,8 @@
                                 <div>
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
+
+                               
 
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -144,13 +147,14 @@
             <div class="container">
                 <div id="responsive-nav">
                     <ul class="main-nav nav navbar-nav">
-                        <li><a href="./inicio"><i class="fa-solid fa-location-dot"></i>Home</a></li>
+                        <li><a href="./inicio">Home</a></li>
                             <c:forEach items="${categorias}" var="categoria">
                             <li ><a href="./lista?cat=${categoria.idCategoria}">${categoria.nome}</a></li>
                             </c:forEach>
                         <li ><a href="./lista?cat=-1">Todos Produtos</a></li>
                             <c:if test="${!empty usuario}">
-                            <li><a href="./endereco"><i class="fa-solid fa-location-dot"></i>Endereco</a></li>
+                            <li><a style="color: #614031; font-weight: 600;" href="./endereco">Endereco</a></li>
+                            <li><a style="color: #614031; font-weight: 600;" href="./historicoPedidos">Meus Pedidos</a></li>
                             </c:if>
                     </ul>
                 </div>

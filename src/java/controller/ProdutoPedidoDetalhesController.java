@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -16,22 +15,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
-import model.bean.Produto;
+import model.bean.ProdutoPedido;
 import model.bean.Projeto;
 import model.bean.TipoProduto;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.ProdutoPedidoDAO;
 import model.dao.TiposProdutosDAO;
 
 /**
  *
  * @author paulo
  */
-public class EspecificacaoController extends HttpServlet {
+public class ProdutoPedidoDetalhesController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nextPage = "/WEB-INF/jsp/especificacaoProduto.jsp";
+        String nextPage = "/WEB-INF/jsp/produtosPedido.jsp";
         
          ProdutoDAO dao = new ProdutoDAO();
 
@@ -39,13 +48,13 @@ public class EspecificacaoController extends HttpServlet {
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
         
-        
+        ProdutoPedidoDAO pDAO = new ProdutoPedidoDAO();
 
-        List<Produto> produto = dao.listarTodosAdm();
+        List<ProdutoPedido> produto = pDAO.readPedido(Projeto.getIdPedidoStatic());
         for (int i = 0; i < produto.size(); i++) {
-            if (produto.get(i).getImagemBytes() != null) {
-                String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getImagemBytes());
-                produto.get(i).setImagemBase64(imagemBase64);
+            if (produto.get(i).getId_produto().getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getId_produto().getImagemBytes());
+                produto.get(i).getId_produto().setImagemBase64(imagemBase64);
             }
 
         }
@@ -59,7 +68,7 @@ public class EspecificacaoController extends HttpServlet {
             tipoProduto.setNomeCategoria(listaCategorias.get(i).getNome());
             int qtdAtual = 0;
             for (int j = 0; j < produto.size(); j++) {
-                if(listaCategorias.get(i).getNome().equals(produto.get(j).getCategoria().getNome())){
+                if(listaCategorias.get(i).getNome().equals(produto.get(j).getId_produto().getCategoria().getNome())){
                     qtdAtual++;
                 }
             }
@@ -72,39 +81,33 @@ public class EspecificacaoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       processRequest(request, response);
-        
+        processRequest(request, response);
     }
 
-
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String url = request.getServletPath();
-        if(url.equals("/deletar-produto")){
-            ProdutoDAO dao = new ProdutoDAO();
-            dao.delete(Integer.parseInt(request.getParameter("idProduto")));
-            response.sendRedirect("./especificacaoProdutos");
-        } else if(url.equals("/status-produto")){
-            ProdutoDAO dao = new ProdutoDAO();
-            int idProduto = Integer.parseInt(request.getParameter("idProduto"));
-            String statusProduto = request.getParameter("statusProduto");
-            boolean isChecked = statusProduto != null;
-
-            dao.alterarStatus(isChecked, idProduto);
-        
-            response.sendRedirect("./especificacaoProdutos");
-        } else if(url.equals("/ver-produto")){
-            Projeto.setIdProdutoAtual(Integer.parseInt(request.getParameter("idProduto")));
-            response.sendRedirect("./previewProduto");
-        }else {
-            processRequest(request, response);
-        }
-        
+        processRequest(request, response);
     }
 
     /**

@@ -55,6 +55,8 @@ public class CheckoutEnderecoController extends HttpServlet {
         request.setAttribute("total", total);
 
         Endereco enderecoAtual = daoEndereco.enderecoPadrao();
+        
+        System.out.println("ENdereco> :" + enderecoAtual);
         request.setAttribute("e", enderecoAtual);
 
         CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();

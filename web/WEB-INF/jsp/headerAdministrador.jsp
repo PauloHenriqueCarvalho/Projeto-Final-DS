@@ -103,23 +103,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-journal-text"></i><span>Funcionarios</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="forms-elements.html">
-                                <i class="bi bi-circle"></i><span>Adicionar</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="forms-layouts.html">
-                                <i class="bi bi-circle"></i><span>Ver Funcionarios</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+               
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -141,17 +125,17 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-bar-chart"></i><span>Avisos</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <i class="bi bi-bar-chart"></i><span>Pedidos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="charts-chartjs.html">
-                                <i class="bi bi-circle"></i><span>Adicionar Avisos</span>
+                            <a href="./historicoPedidosAdministrador">
+                                <i class="bi bi-circle"></i><span>Pedidos Atuais</span>
                             </a>
                         </li>
                         <li>
-                            <a href="charts-apexcharts.html">
-                                <i class="bi bi-circle"></i><span>Ver Avisos</span>
+                            <a href="./HistoricoTotalPedidos">
+                                <i class="bi bi-circle"></i><span>Historico de Pedidos</span>
                             </a>
                         </li>
 

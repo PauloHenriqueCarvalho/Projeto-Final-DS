@@ -39,8 +39,7 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
         CarrinhoDAO cDAO = new CarrinhoDAO();
         float total = cDAO.precoCarrinho();
         request.setAttribute("total", total);
-        
-        
+
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
@@ -50,7 +49,7 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
         EnderecoDAO daoEndereco = new EnderecoDAO();
-        
+
         ProdutoCarrinhoSaboresDAO pcsDAO = new ProdutoCarrinhoSaboresDAO();
         List<ProdutoCarrinhoSabores> sabores = pcsDAO.read();
         request.setAttribute("sabores", sabores);
@@ -64,12 +63,12 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
 
             }
         }
+        
         request.setAttribute("carrinhos", carrinho);
 
         RequestDispatcher r = getServletContext().getRequestDispatcher(url);
         r.forward(request, response);
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -97,39 +96,70 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
                 request.getSession().setAttribute("alerta", "Você precisa estar logado para adicionar produtos à lista de desejos");
             }
             response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
-        } else if (url.equals("/atualizarCarrinho")) {
+        } else if (url.equals("/atualizarCarrinhoAdicionar")) {
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
-            Enumeration<String> parameterNames = request.getParameterNames();
-            boolean success = true;
-
-            while (parameterNames.hasMoreElements()) {
-                String paramName = parameterNames.nextElement();
-                if (paramName.startsWith("quantity_")) {
-                    int idProdutoCarrinho = Integer.parseInt(paramName.split("_")[1]);
-                    int quantidade = Integer.parseInt(request.getParameter(paramName));
-                    success &= dao.atualizarQuantidade(idProdutoCarrinho, quantidade);
-                }
-            }
-
-            if (success) {
-                request.getSession().setAttribute("feedback", "Quantidade atualizada com sucesso!");
+            int idProdutoCarrinho = Integer.parseInt(request.getParameter("idProdutoCarrinho"));
+            float quantidadeAtual = Float.parseFloat(request.getParameter("qtd"));
+            dao.atualizarQuantidade(idProdutoCarrinho, quantidadeAtual + 1);
+            response.sendRedirect("./revisar-carrinho");
+        } else if (url.equals("/atualizarCarrinhoDiminuir")) {
+            CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
+            int idProdutoCarrinho = Integer.parseInt(request.getParameter("idProdutoCarrinho"));
+            float quantidadeAtual = Float.parseFloat(request.getParameter("qtd"));
+            if (quantidadeAtual - 1 <= 0) {
+                dao.excluirProdutoCarrinho(idProdutoCarrinho);
             } else {
-                request.getSession().setAttribute("feedback", "Erro ao atualizar a quantidade.");
+                dao.atualizarQuantidade(idProdutoCarrinho, quantidadeAtual - 1);
             }
+            response.sendRedirect("./revisar-carrinho");
 
-            response.sendRedirect(request.getContextPath() + "/revisar-carrinho");
         } else if (url.equals("/continuar-checkout")) {
-            
+
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             List<Produto> carrinho = dao.listarProdutosDoCarrinho();
+            if (carrinho == null || carrinho.isEmpty()) {
+                String next = "/WEB-INF/jsp/checkoutRevisarCarrinho.jsp";
 
-            response.sendRedirect("./checkout-endereco");
-   
+                CarrinhoDAO cDAO = new CarrinhoDAO();
+                float total = cDAO.precoCarrinho();
+                request.setAttribute("total", total);
+
+                if (Usuario.getIdUsuarioStatic() != 0) {
+                    UsuarioDAO u = new UsuarioDAO();
+                    List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
+                    request.setAttribute("usuario", usuarios);
+                }
+
+                CategoriaDAO cat = new CategoriaDAO();
+                List<Categoria> categoria = cat.listarTodos();
+                request.setAttribute("categorias", categoria);
+
+                EnderecoDAO daoEndereco = new EnderecoDAO();
+
+                ProdutoCarrinhoSaboresDAO pcsDAO = new ProdutoCarrinhoSaboresDAO();
+                List<ProdutoCarrinhoSabores> sabores = pcsDAO.read();
+                request.setAttribute("sabores", sabores);
+
+                for (Produto c : carrinho) {
+                    if (c.getImagemBytes() != null) {
+                        String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                        c.setImagemBase64(imagemBase64);
+                    }
+                }
+
+                request.setAttribute("carrinhos", carrinho);
+                
+
+                RequestDispatcher r = getServletContext().getRequestDispatcher(next);
+                r.forward(request, response);
+            } else {
+                response.sendRedirect("./checkout-endereco");
+            }
+
         } else {
             processRequest(request, response);
         }
     }
-
 
     @Override
     public String getServletInfo() {
