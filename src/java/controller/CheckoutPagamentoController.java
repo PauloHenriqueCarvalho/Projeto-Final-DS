@@ -127,7 +127,7 @@ public class CheckoutPagamentoController extends HttpServlet {
             p.setTotal(total);
             
             pDAO.criarPedido(p);
-            response.sendRedirect("./checkoutFinal");
+            response.sendRedirect("./home");
 
         } else {
             processRequest(request, response);
