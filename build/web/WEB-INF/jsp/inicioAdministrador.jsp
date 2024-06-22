@@ -70,7 +70,7 @@
                                     <div class="card info-card sales-card">
 
                                         <div class="card-body">
-                                            <h5 class="card-title">Total Vendido <span>| Tudo</span></h5>
+                                            <h5 class="card-title">Total de Pedidos <span>| Tudo</span></h5>
 
                                             <div class="d-flex align-items-center">
                                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -109,7 +109,7 @@
                             <div class="col-xxl-4 col-xl-12">
                                 <div class="card info-card customers-card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Funcionarios <span>| Todos</span></h5>
+                                        <h5 class="card-title">Pedidos Em Processo <span>| Todos</span></h5>
 
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -142,7 +142,7 @@
                                             document.addEventListener("DOMContentLoaded", () => {
                                             new ApexCharts(document.querySelector("#reportsChart"), {
                                             series: [{
-                                            name: 'Vendas',
+                                            name: 'Valor vendido',
                                                     data: [
                                             <c:forEach items="${pedidos}" var="p" varStatus="status">
                                                 ${p.total}<c:if test="${!status.last}">,</c:if>

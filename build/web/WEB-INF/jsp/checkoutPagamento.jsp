@@ -225,6 +225,7 @@
                 </div>
             </div>
         </form>
+                         <jsp:include page="footer.jsp"></jsp:include>
 
         <style>
             .error-message {

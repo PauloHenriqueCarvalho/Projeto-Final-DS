@@ -184,14 +184,14 @@
                                             </form>              
                                             <form class="product-btns" action="listaDesejosCarrinho" method="post">
                                                 <input type="hidden" name="idProduto" id="idProduto" value="${c.idProduto}">
-                                               
-                                                        <button type="submit" onclick="showAlert4(event)" class="btn btn-danger btn-sm mb-2">
-                                                            <i class="fa fa-heart-o"></i>
-                                                            <span class="tooltipp"></span>
-                                                        </button>
-                                                   
 
-                                                   
+                                                <button type="submit" onclick="showAlert4(event)" class="btn btn-danger btn-sm mb-2">
+                                                    <i class="fa fa-heart-o"></i>
+                                                    <span class="tooltipp"></span>
+                                                </button>
+
+
+
                                             </form>
                                         </div>
 
@@ -254,16 +254,16 @@
                                         <span><strong id="total-cost">R$${total + 10}</strong></span>
                                     </li>
                                 </ul>
-                                        <c:choose>
-                                            <c:when test="${empty carrinhos}">
-                                                <button type="submit" onclick="block(event)" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <button type="submit"  class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
-                                            </c:otherwise>
-                                        </c:choose>
-                                
-                               
+                                <c:choose>
+                                    <c:when test="${empty carrinhos}">
+                                        <button type="submit" onclick="block(event)" class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit"  class="btn btn-primary btn-lg btn-block">Continuar Checkout</button>
+                                    </c:otherwise>
+                                </c:choose>
+
+
 
                             </form>
                         </div>
@@ -271,7 +271,7 @@
 
                     </div>
             </section>
-
+            <jsp:include page="footer.jsp"></jsp:include>               
             <script>
                 function removeCarrinho(event) {
                     event.preventDefault();

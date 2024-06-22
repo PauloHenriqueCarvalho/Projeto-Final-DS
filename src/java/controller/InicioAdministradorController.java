@@ -44,13 +44,16 @@ public class InicioAdministradorController extends HttpServlet {
         
         List<Pedido> pedidos = daoP.read();
         List<ProdutoPedido> produtoPedidos = daoPP.read();
+        List<Pedido> produtoPedidosAtuais = daoP.readAtuais();
+
         float valor = 0;
         float preco = 0;
         float custo = 0;
         
         for (int i = 0; i < produtoPedidos.size(); i++) {
-            custo+= produtoPedidos.get(i).getId_produto().getPrecoCusto();
-            preco+= produtoPedidos.get(i).getId_produto().getValor();
+            custo+= produtoPedidos.get(i).getId_produto().getPrecoCusto() * produtoPedidos.get(i).getQuantidade();
+            System.out.println("Qtdf: " +  produtoPedidos.get(i).getId_produto().getQuantidade());
+            preco+= produtoPedidos.get(i).getId_produto().getValor()* produtoPedidos.get(i).getQuantidade();
         }
         
         
@@ -59,7 +62,7 @@ public class InicioAdministradorController extends HttpServlet {
         }
         
         Empresa e = new Empresa();
-        e.setFuncionarios(0);
+        e.setFuncionarios(produtoPedidosAtuais.size());
         
         e.setVendas(pedidos.size());
         e.setVendido(valor);

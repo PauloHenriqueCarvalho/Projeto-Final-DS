@@ -56,7 +56,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">Adicionar Tipo ao Produto  ${produtoAtual.nome}</h5>
 
-                                <!-- Vertical Form -->
                                 <div class="row g-3">
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="nome">Nome do Tipo da Especificação</label>
@@ -89,7 +88,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">Especificação</h5>
                          
-                                <!-- Vertical Form -->
                                 <div  class="row g-3"> 
 
                                     <div data-mdb-input-init class="form-outline mb-4">
@@ -137,14 +135,10 @@
 
         </main>
 
-        <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer">
-              
-        </footer><!-- End Footer -->
+      
 
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-        <!-- Vendor JS Files -->
         <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -154,7 +148,7 @@
         <script src="assets/vendor/tinymce/tinymce.min.js"></script>
         <script src="assets/vendor/php-email-form/validate.js"></script>
 
-        <!-- Template Main JS File -->
+
         <script src="assets/js/main.js"></script>
 
     </body>

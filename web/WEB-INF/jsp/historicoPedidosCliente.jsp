@@ -79,7 +79,7 @@
 
 
             </main>
-
+            <jsp:include page="footer.jsp"></jsp:include>
             <script src="js/alert.js"></script>
             <script src="js/validacoes.js"></script>
             <script src="js/jquery.min.js"></script>

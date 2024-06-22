@@ -27,8 +27,8 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
         <link type="text/css" rel="stylesheet" href="css/endereco.css"/>
-        
-         <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
+
+        <script src="http://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     </head>
@@ -41,14 +41,14 @@
                         <div class="col-md-12"> 
                             <div class="section-title">
                                 <h3 class="title">Ola ${nome}</h3>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <main>
-                    <div class="container-main">
-                        <h2>Meus Endereços</h2>
-                        <div class="cards-endereco">
+            </div>
+                <main id="main-endereco">
+                <div class="container-main">
+                    <h2>Meus Endereços</h2>
+                    <div class="cards-endereco">
                         <c:forEach items="${enderecos}" var="e">
                             <div class="informacoes-endereco">
                                 <c:choose>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </main>
-
+            <jsp:include page="footer.jsp"></jsp:include>
             <script src="js/alert.js"></script>
             <script src="js/validacoes.js"></script>
             <script src="js/jquery.min.js"></script>
