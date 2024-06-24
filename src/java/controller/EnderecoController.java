@@ -44,7 +44,7 @@ public class EnderecoController extends HttpServlet {
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
             List<Usuario> usuarios = u.getUsuarioById(Usuario.getIdUsuarioStatic());
-            
+
             request.setAttribute("usuario", usuarios);
             request.setAttribute("nome", usuarios.get(0).getNome());
         }
@@ -62,12 +62,12 @@ public class EnderecoController extends HttpServlet {
 
             }
         }
-        
-         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
-        request.setAttribute("total", total);   
+
+        CarrinhoDAO cDAO = new CarrinhoDAO();
+        double total = cDAO.precoCarrinho();
+        request.setAttribute("total", total);
         request.setAttribute("carrinhos", carrinho);
-        
+        request.setAttribute("qtdCarrinho", carrinho.size());
         List<Endereco> enderecos = daoEndereco.readEnderecos();
         request.setAttribute("enderecos", enderecos);
 
@@ -81,60 +81,68 @@ public class EnderecoController extends HttpServlet {
         processRequest(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = request.getServletPath();
         if (url.equals("/add-endereco")) {
-            String complemento = request.getParameter("complento");
-            String cep = request.getParameter("cep");
+            String complemento = request.getParameter("complemento");
+            String cep = request.getParameter("add-cep");
             String numero = request.getParameter("numero");
-            if(!cep.trim().equals("") && !numero.trim().equals("") ){
+            if (!cep.trim().equals("") && !numero.trim().equals("")) {
                 try {
-                Endereco endereco = buscarEnderecoPorCep(cep);
-                EnderecoDAO dao = new EnderecoDAO();
-                endereco.setComplemento(complemento);
-                endereco.setNumero(Integer.parseInt(numero));
-                endereco.setCep(cep);
-                dao.insert(endereco);
+                    Endereco endereco = buscarEnderecoPorCep(cep);
+                    if (endereco.getLogradouro() == null) {
+                        System.out.println("Endreco null");
+                        request.getSession().setAttribute("erroCadastroEndereco", "Endereco Invalido!");
+                    } else {
+                        System.out.println("Endereco> " + endereco.getLogradouro());
+                        request.getSession().removeAttribute("erroCadastroEndereco");
+
+                        EnderecoDAO dao = new EnderecoDAO();
+                        endereco.setComplemento(complemento);
+                        endereco.setNumero(Integer.parseInt(numero));
+                        endereco.setCep(cep);
+                        dao.insert(endereco);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             response.sendRedirect("./endereco");
-            
 
-        } else if(url.equals("/remover-endereco")){
+        } else if (url.equals("/remover-endereco")) {
             EnderecoDAO eDAO = new EnderecoDAO();
             eDAO.delet(Integer.parseInt(request.getParameter("idEndereco")));
             response.sendRedirect("./endereco");
-            
-        } else if(url.equals("/definirEnderecoPadrao")){
-           
+
+        } else if (url.equals("/definirEnderecoPadrao")) {
+
             EnderecoDAO daoEndereco = new EnderecoDAO();
             int novoEnderecoPadrao = Integer.parseInt(request.getParameter("idEndereco"));
             daoEndereco.mudarEnderecoPadrao(novoEnderecoPadrao);
             response.sendRedirect("./endereco");
-        
-        }else {
+
+        } else {
             processRequest(request, response);
         }
     }
 
-
- 
     public static Endereco buscarEnderecoPorCep(String cep) throws IOException {
         String url = String.format(apiCEP, cep);
 
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+       try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
 
             try (CloseableHttpResponse response = client.execute(request)) {
                 String jsonResponse = EntityUtils.toString(response.getEntity());
                 Gson gson = new Gson();
                 return gson.fromJson(jsonResponse, Endereco.class);
+            } catch (Exception e) {
+                return new Endereco();
             }
+        } catch (Exception e) {
+            return new Endereco();
         }
     }
 

@@ -73,7 +73,7 @@ public class CarrinhoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(c);
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDescricao(rs.getString("descricao"));
 
                 Blob imagemBlob = imagemPadrao(rs.getInt("id_produto"));
@@ -95,15 +95,15 @@ public class CarrinhoDAO {
         return produtos;
     }
     
-    public float precoCarrinho(){
-        float preco = 0;
+    public double precoCarrinho(){
+        double preco = 0;
         try{
             Connection c = Conexao.getConn();
             PreparedStatement ps = c.prepareStatement("Select * from produto_carrinho where id_usuario = ?");
             ps.setInt(1, Usuario.getIdUsuarioStatic());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                preco += rs.getFloat("valorAdicional") * rs.getInt("quantidade");
+                preco += rs.getDouble("valorAdicional") * rs.getInt("quantidade");
                 
             }
             rs.close();

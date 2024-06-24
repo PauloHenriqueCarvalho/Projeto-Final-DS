@@ -57,17 +57,17 @@
                             <div class="card">
                                 <form action="cadastro-categoria" method="post" name="frmCadastro" class="card-body">
                                     <h5 class="card-title">Categorias</h5>
-
+                                    <c:if test="${not empty sessionScope.erroCadastroCategoria}">
+                                        <p style="color: red">${sessionScope.erroCadastroCategoria}</p>
+                                    </c:if> 
                                     <div class="row g-3">
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="nome">Nome</label>
                                             <input type="text" id="nome" name="nome" class="form-control form-control-lg" required />
                                         </div>
-                                        <c:if test="${not empty sessionScope.erroCadastro}">
-                                            <p style="color: red">${sessionScope.erroCadastro}</p>
-                                        </c:if> 
+                                        
                                         <div id="botoes" class="d-flex justify-content-center">
-
+                                            
                                             <button type="submit" class="btn-admin">Cadastrar</button>
 
                                         </div>

@@ -12,14 +12,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import javax.resource.cci.ConnectionFactory;
 import model.bean.Categoria;
+import model.bean.Pedido;
 
 import model.bean.Produto;
+import model.bean.ProdutoPedido;
 
 /**
  *
@@ -77,11 +80,11 @@ public class ProdutoDAO {
                         PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, produto.getNome());
-            ps.setFloat(2, produto.getValor());
+            ps.setDouble(2, produto.getValor());
             ps.setInt(3, produto.getCategoria().getIdCategoria());
             ps.setString(4, produto.getDescricao());
-            ps.setFloat(5, produto.getPrecoCusto());
-            ps.setFloat(6, produto.getQuantidadeEstoque());
+            ps.setDouble(5, produto.getPrecoCusto());
+            ps.setDouble(6, produto.getQuantidadeEstoque());
 
             int linhasAfetadas = ps.executeUpdate();
 
@@ -118,10 +121,10 @@ public class ProdutoDAO {
                 produto.setIdProduto(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
                 produto.setDescricao(rs.getString("descricao"));
-                produto.setValor(rs.getFloat("valor"));
+                produto.setValor(rs.getDouble("valor"));
                 produto.setCategoria(categoria);
                 produto.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                produto.setPrecoCusto(rs.getFloat("preco_custo"));
+                produto.setPrecoCusto(rs.getDouble("preco_custo"));
                 produto.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
@@ -138,7 +141,6 @@ public class ProdutoDAO {
         return produto;
     }
 
-    // Método para listar todos os produtos
     public List<Produto> listarTodos() {
         List<Produto> produtos = new ArrayList<>();
         ProdutoImagemDAO dao = new ProdutoImagemDAO();
@@ -151,9 +153,9 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
@@ -213,9 +215,9 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
@@ -231,7 +233,7 @@ public class ProdutoDAO {
 
                 if (rs.getString("status").equals("disponivel")) {
                     p.setStatus(true);
-                    
+
                 } else {
                     p.setStatus(false);
                 }
@@ -283,9 +285,9 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
@@ -355,9 +357,9 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
@@ -456,9 +458,9 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
@@ -506,13 +508,12 @@ public class ProdutoDAO {
     }
 
     public void delete(int id) {
-        Connection conexao = null;
-        PreparedStatement stmt = null;
 
         try {
-            conexao = Conexao.getConn();
-            conexao.setAutoCommit(false); 
-            String[] deleteQueries = {
+            PreparedStatement stmt = null;
+            Connection conexao = Conexao.getConn();
+            conexao.setAutoCommit(false);
+            String[] delets = {
                 "DELETE FROM produto_imagem WHERE id_produto = ?",
                 "DELETE FROM sabor WHERE id_produto = ?",
                 "DELETE FROM produto_carrinho WHERE id_produto = ?",
@@ -520,40 +521,21 @@ public class ProdutoDAO {
                 "DELETE FROM wishlist_produto WHERE id_produto = ?"
             };
 
-            for (String query : deleteQueries) {
+            for (String query : delets) {
                 stmt = conexao.prepareStatement(query);
                 stmt.setInt(1, id);
                 stmt.executeUpdate();
                 stmt.close();
             }
 
-            // Excluir o produto
             stmt = conexao.prepareStatement("DELETE FROM produto WHERE id_produto = ?");
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-            // Commit da transação
             conexao.commit();
+            conexao.close();
         } catch (SQLException e) {
-            try {
-                if (conexao != null) {
-                    conexao.rollback();  // Reverte a transação em caso de erro
-                }
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
             e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conexao != null) {
-                    conexao.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -582,25 +564,22 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -612,9 +591,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -626,7 +603,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
             }
             rs.close();
             stmt.close();
@@ -650,25 +626,22 @@ public class ProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDataCadastro(rs.getTimestamp("data_cadastro"));
-                p.setPrecoCusto(rs.getFloat("preco_custo"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
                 p.setQuantidadeEstoque(rs.getInt("quantidade_Estoque"));
 
-                //Imagem do Produto
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     p.setImagemBytes(imagemBytes);
                 }
-                //Fim imagem do produto
 
                 Categoria categoria = new Categoria();
                 CategoriaDAO daoc = new CategoriaDAO();
                 categoria = daoc.readById(rs.getInt("id_categoria"));
                 p.setCategoria(categoria);
 
-                //Verificar se o produto ta disponivel
                 boolean statusCategoria = false;
                 if (categoria.isStatus()) {
                     statusCategoria = true;
@@ -680,9 +653,7 @@ public class ProdutoDAO {
                 } else {
                     p.setStatus(false);
                 }
-                //Fim  verificar se o produto ta disponivel
 
-                // Verificar se o produto é novo
                 Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dataCadastro);
@@ -694,7 +665,6 @@ public class ProdutoDAO {
                 } else {
                     p.setNovo(false);
                 }
-                //Fim verificar se o produto é novo
             }
             rs.close();
             ps.close();
@@ -705,4 +675,100 @@ public class ProdutoDAO {
         return produtos;
     }
 
+    public List<Produto> listarMaisVendidos() {
+        List<Produto> produtos = new ArrayList<>();
+        ProdutoDAO produtod = new ProdutoDAO();
+
+        try {
+            Connection con = Conexao.getConn();
+            String sql = "SELECT pp.id_produto, SUM(pp.quantidade) as total_vendido "
+                    + "FROM produto_pedido pp "
+                    + "GROUP BY pp.id_produto "
+                    + "ORDER BY total_vendido DESC";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idProduto = rs.getInt("id_produto");
+                Produto produto = produtod.readById(idProduto);
+                if (produto != null) {
+                    produto.setQuantidadeVendida(rs.getInt("total_vendido")); 
+                    produtos.add(produto);
+                }
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produtos;
+    }
+    
+    public List<Produto> listarTodosNovos() {
+        List<Produto> produtos = new ArrayList<>();
+        ProdutoImagemDAO dao = new ProdutoImagemDAO();
+        DecimalFormat df = new DecimalFormat("0.00");
+        try {
+            Connection conexao = Conexao.getConn();
+            PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM produto ORDER BY data_cadastro DESC");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produto p = new Produto();
+                p.setIdProduto(rs.getInt("id_produto"));
+                p.setNome(rs.getString("nome"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setValor(rs.getDouble("valor"));
+                p.setDataCadastro(rs.getTimestamp("data_cadastro"));
+                p.setPrecoCusto(rs.getDouble("preco_custo"));
+                p.setQuantidadeEstoque(rs.getInt("quantidade_estoque"));
+                System.out.println("Preco: " + df.format(rs.getDouble("valor")));
+
+                Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
+                if (imagemBlob != null) {
+                    byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
+                    p.setImagemBytes(imagemBytes);
+                }
+
+                Categoria categoria = new Categoria();
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
+                p.setCategoria(categoria);
+
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    p.setStatus(true);
+                    produtos.add(p);
+                } else {
+                    p.setStatus(false);
+                }
+
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    p.setNovo(true);
+                } else {
+                    p.setNovo(false);
+                }
+
+            }
+            rs.close();
+            stmt.close();
+            conexao.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
+
+    
 }

@@ -6,6 +6,7 @@
 package model.bean;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -17,12 +18,12 @@ public class Sabor {
     private String nome;
     private Integer idPai; // Pode ser null, então use Integer ao invés de int
     private String descricao;
-    private Float valorAdicional;
+    private Double valorAdicional;
     private String status;
     public Sabor() {
     }
 
-    public Sabor(int idSabor, Integer idProduto, String nome, Integer idPai, String descricao, Float valorAdicional, String status) {
+    public Sabor(int idSabor, Integer idProduto, String nome, Integer idPai, String descricao, Double valorAdicional, String status) {
         this.idSabor = idSabor;
         this.idProduto = idProduto;
         this.nome = nome;
@@ -72,11 +73,11 @@ public class Sabor {
         this.descricao = descricao;
     }
 
-    public Float getValorAdicional() {
+    public Double getValorAdicional() {
         return valorAdicional;
     }
 
-    public void setValorAdicional(Float valorAdicional) {
+    public void setValorAdicional(Double valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
 
@@ -86,6 +87,11 @@ public class Sabor {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    
+    public String formatadoValorAdicional() {
+        return new DecimalFormat("0.00").format(valorAdicional);
     }
 
    

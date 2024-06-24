@@ -24,7 +24,6 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-            <!-- SECTION -->
             <div class="section">
                 <div class="container">
                     <div class="row">
@@ -67,9 +66,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /SECTION -->
 
-            <!-- SECTION -->
             <div class="section">
                 <div class="container">
                     <div class="row">
@@ -86,7 +83,6 @@
                         </div>
                     </div>
 
-                    <!-- Products tab & slick -->
                     <c:if test="${not empty produtos}">
                         <div class="col-md-12">
                             <div class="row">
@@ -107,7 +103,7 @@
                                                         <div class="product-body">
                                                             <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
 
-                                                            <h4 class="product-price">R$${produto.valor}</h4>
+                                                            <h4 class="product-price">R$${produto.formatadoValor()}</h4>
                                                             <span class="product-old-price"> *Podendo Alterar</span>
 
                                                             <div class="product-rating">
@@ -164,18 +160,19 @@
                     <img src="./img/pngtree-colorful-birthday-cake-decorated-with-melted-strawberries-png-image_13063823.png" alt="">
                 </div>
                 <div class="center-btn">
-                    <div class="btn-radius">02</div>
-                    <h3>PROMOCOES DA SEMANA</h3>
-                    <h3>PROMOCOES DE ATÉ 30%</h3>
-                    <div class="btn-comprar"><p>COMPRE AGORA</p></div>
+                    Delicie-se com o sabor dos nossos bolos caseiros – cada fatia é uma explosão de felicidade!
+                    <div class="btn-radius">E V</div>
+                    <h3>Transforme qualquer momento</h3>
+                    <h3>em uma celebração com nossos bolos irresistíveis</h3>
+                    <a href="./lista?cat=1"><button class="btn-comprar">COMPRE AGORA</button></a>
+                    
                 </div>
                 <div class="right-img">
                     <img src="./img/image-removebg-preview.png" alt="">
                 </div>
-            </div>
+            </div>  
         </div>
 
-        <!-- Products tab & slick -->
         <div class="section">
             <div class="container">
                 <div class="row">
@@ -192,14 +189,13 @@
                         </div>
                     </div>
 
-                    <!-- Products tab & slick -->
                     <c:if test="${not empty produtos}">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="products-tabs">
                                     <div id="tab1" class="tab-pane active">
                                         <div class="products-slick" data-nav="#slick-nav-1">
-                                            <c:forEach items="${produtos}" var="produto">
+                                            <c:forEach items="${produtosMaisVendidos}" var="produto">
                                                 <div class="col-md-4 col-xs-6">
                                                     <div class="product">
                                                         <div class="product-img">
@@ -214,11 +210,11 @@
                                                             <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
                                                                 <c:choose>
                                                                     <c:when test="${produto.categoria.idCategoria == 1}">
-                                                                    <h4 class="product-price">R$${produto.valor}</h4>
+                                                                    <h4 class="product-price">R$${produto.formatadoValor()}</h4>
                                                                     <span class="product-old-price"> *Podendo Alterar</span>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <h4 class="product-price">R$${produto.valor} <del class="product-old-price">$990.00</del></h4>
+                                                                    <h4 class="product-price">R$${produto.formatadoValor()}</h4>
                                                                 </c:otherwise>
                                                             </c:choose>
 

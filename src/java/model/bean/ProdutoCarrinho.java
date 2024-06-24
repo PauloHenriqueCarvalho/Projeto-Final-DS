@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Senai
@@ -16,15 +18,15 @@ public class ProdutoCarrinho {
     private Sabor idSabor;
 
     private Produto produto;
-    private float quantidade;
+    private double quantidade;
     private Usuario idUsuario;
-    private float valorAdicional;
+    private double valorAdicional;
     
 
     public ProdutoCarrinho() {
     }
 
-    public ProdutoCarrinho(int idProdutoCarrinho, Sabor idSabor, Produto produto, float quantidade, Usuario idUsuario, float valorAdicional) {
+    public ProdutoCarrinho(int idProdutoCarrinho, Sabor idSabor, Produto produto, double quantidade, Usuario idUsuario, double valorAdicional) {
         this.idProdutoCarrinho = idProdutoCarrinho;
         this.idSabor = idSabor;
         this.produto = produto;
@@ -57,11 +59,11 @@ public class ProdutoCarrinho {
         this.produto = produto;
     }
 
-    public float getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(float quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -73,13 +75,17 @@ public class ProdutoCarrinho {
         this.idUsuario = idUsuario;
     }
 
-    public float getValorAdicional() {
+    public double getValorAdicional() {
         return valorAdicional;
     }
 
-    public void setValorAdicional(float valorAdicional) {
+    public void setValorAdicional(double valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
+    public String formatadoValorAdicional() {
+        return new DecimalFormat("0.00").format(valorAdicional);
+    }
+
 
     
 

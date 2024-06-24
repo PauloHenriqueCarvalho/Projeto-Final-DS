@@ -81,7 +81,8 @@
                                                     <th scope="col">Cliente</th>
                                                     <th scope="col">Total</th>
                                                     <th scope="col">Data Entrega</th>
-                                                    <th scope="col">Forma de Pagamento</th>
+                                                    <th scope="col">Pagamento</th>
+                                                    <th scope="col">Endereco de Entrega</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Detalhes</th>
                                                     
@@ -95,6 +96,7 @@
 
                                                         <td><a href="#" class="text-primary fw-bold">${p.data_entrega}</a></td>
                                                         <td><a href="#" class="text-primary fw-bold">${p.idPagamento.nome}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.id_endereco.logradouro} ${p.id_endereco.numero}</a></td>
                                                         <td>
                                                             <form action="updateStatus" method="post">
                                                                 <input type="hidden" name="id" value="${p.id_pedido}" id="id">

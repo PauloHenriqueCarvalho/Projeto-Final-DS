@@ -17,7 +17,7 @@
         <title>Evelin Verissimo | Enderecos </title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-
+        
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
@@ -36,19 +36,11 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12"> 
-                            <div class="section-title">
-                                <h3 class="title">Ola ${nome}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
                 <main id="main-endereco">
-                <div class="container-main">
-                    <h2>Meus Endereços</h2>
-                    <div class="cards-endereco">
+                    <div class="container-main">
+                        <h2>Meus Endereços</h2>
+                        <div class="cards-endereco">
                         <c:forEach items="${enderecos}" var="e">
                             <div class="informacoes-endereco">
                                 <c:choose>
@@ -65,7 +57,6 @@
                                 <h3>${e.localidade}, ${e.uf} - ${e.cep}</h3>
                                 <h3>TEL- ${e.idUsuario.telefone}</h3>
                                 <div class="button-group">
-                                    <button class="edit-btn">Editar Endereço</button>
                                     <c:if test="${!e.enderecoPadrao}">
                                         <form action="definirEnderecoPadrao" method="post">
                                             <input type="hidden" id="idEndereco" name="idEndereco" value="${e.idEndereco}">
@@ -86,40 +77,23 @@
                     </div>
                 </div>
 
-                <div id="modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>Editar Endereço</h2>
-                        <form id="edit-form">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome">
-                            <label for="rua">Rua:</label>
-                            <input type="text" id="rua" name="rua">
-                            <label for="cidade">Cidade:</label>
-                            <input type="text" id="cidade" name="cidade">
-                            <label for="estado">Estado:</label>
-                            <input type="text" id="estado" name="estado">
-                            <label for="cep">CEP:</label>
-                            <input type="text" id="cep" name="cep">
-                            <label for="telefone">Telefone:</label>
-                            <input type="text" id="telefone" name="telefone">
-                            <button type="submit">Salvar</button>
-                        </form>
-                    </div>
-                </div>
+
                 <div id="add-modal" class="modal">
                     <div class="modal-content">
                         <span class="close-add">&times;</span>
                         <h2>Adicionar Endereço</h2>
                         <form action="add-endereco" method="post">
                             <label for="add-cep">CEP:</label>
-                            <input type="number"  id="cep" name="cep" required="">
+                            <input type="number" minlength="8"  id="add-cep" name="add-cep" required="">
                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Nao sei meu CEP</a>
-                            <label for="add-telefone">Numero</label>
-                            <input type="number" id="telefone" name="numero" required="">
-                            <label for="add-telefone">Complemento</label>
+                            <label for="telefone">Numero</label>
+                            <input type="number" id="numero"  name="numero" required="">
+                            <label for="complemento">Complemento</label>
                             <input type="text" id="complemento" name="complemento">
-                            <button type="submit">Adicionar</button>
+                            <c:if test="${not empty sessionScope.erroCadastroEndereco}">
+                                <p style="color: red">${sessionScope.erroCadastroEndereco}</p>
+                            </c:if> 
+                            <button type="submit" onclick="validarCep(event)">Adicionar</button>
                         </form>
                     </div>
                 </div>

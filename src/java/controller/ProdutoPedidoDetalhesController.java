@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
+import model.bean.Pedido;
 import model.bean.ProdutoPedido;
 import model.bean.Projeto;
 import model.bean.TipoProduto;
 import model.dao.CategoriaDAO;
+import model.dao.PedidoDAO;
 import model.dao.ProdutoDAO;
 import model.dao.ProdutoPedidoDAO;
 import model.dao.TiposProdutosDAO;
@@ -60,6 +62,10 @@ public class ProdutoPedidoDetalhesController extends HttpServlet {
         }
         request.setAttribute("produtos", produto);
         
+        PedidoDAO daoP = new PedidoDAO();
+        Pedido pedido = new Pedido();
+        pedido = daoP.readById(Projeto.getIdPedidoStatic());
+        request.setAttribute("p", pedido);
         TiposProdutosDAO tDAO = new TiposProdutosDAO();
         List<TipoProduto> tipo = new ArrayList<>();
         

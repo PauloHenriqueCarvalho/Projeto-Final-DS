@@ -13,6 +13,23 @@ function showAlert3(event) {
     event.preventDefault();
     swal('Opa! Calma ae...', 'Você já tem esse produto adicionado à Lista de Desejos', 'error');
 }
+
+function endereco(event) {
+    event.preventDefault();
+    swal('Numero de CEP invalido!', 'O CEP precisa ter 8 digitos', 'error');
+}
+
+
+function validarCep(event) {
+    const cepInput = document.getElementById('add-cep');
+    const cepValue = cepInput.value.trim();
+
+    if (cepValue.length !== 8) {
+        event.preventDefault();
+        swal('Numero de CEP invalido!', 'O CEP precisa ter 8 digitos', 'error');
+    }
+}
+
 function showAlert2(event) {
     event.preventDefault();
     swal('Produto removido da Lista de Desejos', '', 'success').then(() => {
@@ -33,3 +50,18 @@ function showAlertRemover(event) {
         event.target.closest('form').submit();
     });
 }
+
+function showAlertRemoverPedido(event) {
+    event.preventDefault();
+    swal('Pedido cancelado com sucesso!', '', 'success').then(() => {
+        event.target.closest('form').submit();
+    });
+}
+
+function limparCarrinho(event) {
+    event.preventDefault();
+    swal('Carrinho esvaziado com sucesso!', '', 'success').then(() => {
+        event.target.closest('form').submit();
+    });
+}
+

@@ -59,47 +59,37 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card top-selling overflow-auto">
-                                        <div class="filter">
-                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                <li class="dropdown-header text-start">
-                                                    <h6>Filter</h6>
-                                                </li>
-                                            <c:forEach items="${categorias}" var="categoria">
-                                                <li><a class="dropdown-item" href="#">${categoria.nome}</a></li>
-                                                </c:forEach> 
-                                        </ul>
-                                    </div>
 
-                                    <div class="card-body pb-0">
-                                        <h5 class="card-title">Pedido <span>| Detalhes</span></h5>
 
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Imagem</th>
-                                                    <th scope="col">Produto</th>
-                                                    <th scope="col">Quantidade</th>
-                                                    <th scope="col">Valor Adicional</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                        <div class="card-body pb-0">
+                                            <h5 class="card-title">Pedido <span>| Detalhes</span></h5>
+
+                                            <table class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Imagem</th>
+                                                        <th scope="col">Produto</th>
+                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col">Valor Adicional</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                 <c:forEach items="${produtos}" var="produto">
                                                     <tr>
                                                         <th scope="row"><a href="#"><img src="data:image/jpeg;base64,${produto.id_produto.imagemBase64}" alt="${produto.id_produto.nome}"></a></th>
                                                         <td><a href="#" class="text-primary fw-bold">${produto.id_produto.nome}</a></td>
                                                         <td><a href="#" class="text-primary fw-bold">${produto.quantidade}</a></td>
-                                                        <td><a href="#" class="text-primary fw-bold">${produto.valorAdicional}</a></td>
-                                                        
+                                                        <td><a href="#" class="text-primary fw-bold">${produto.formatadoValorAdicional()}</a></td>
+
                                                 <script>
                                                     function showAlert(event) {
-                                                    event.preventDefault();
-                                                    swal('Produto removido com Sucesso!', '', 'success').then(() => {
-                                                    event.target.closest('form').submit();
-                                                    });
+                                                        event.preventDefault();
+                                                        swal('Produto removido com Sucesso!', '', 'success').then(() => {
+                                                            event.target.closest('form').submit();
+                                                        });
                                                     }
                                                     function submitForm(form) {
-                                                    form.submit();
+                                                        form.submit();
                                                     }
                                                 </script>
                                                 </tr>
@@ -114,28 +104,25 @@
                     <div class="col-lg-4">
 
                         <div class="card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
+
 
                             <div class="card-body">
-                                <h5 class="card-title">Atividades Recentes<span>| Todas</span></h5>
+                                <h5 class="card-title">Endereco de Entrega<span></span></h5>
 
                                 <div class="activity">
 
                                     <div class="activity-item d-flex">
-                                        <div class="activite-label">32 min</div>
+                                        <div class="activite-label">Endereco</div>
                                         <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                                         <div class="activity-content">
-                                            Ultimos <a href="#" class="fw-bold text-dark">5 produtos</a> adicionados    
+                                            ${p.id_endereco.localidade} <a href="#" class="fw-bold text-dark">${p.id_endereco.logradouro}</a> ${p.id_endereco.numero}    
+                                        </div>
+                                    </div>
+                                        <div class="activity-item d-flex">
+                                        <div class="activite-label">Data de Entrega</div>
+                                        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                        <div class="activity-content">
+                                             <a href="#" class="fw-bold text-dark">${p.data_entrega}</a> 
                                         </div>
                                     </div>
 
@@ -147,65 +134,36 @@
 
 
                         <div class="card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
 
                             <div class="card-body pb-0">
-                                <h5 class="card-title">Tipos de Produtos <span>| Today</span></h5>
+                                <h5 class="card-title">Dados do Cliente<span></span></h5>
 
-                                <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+                                <div class="activity">
 
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                    echarts.init(document.querySelector("#trafficChart")).setOption({
-                                    tooltip: {
-                                    trigger: 'item'
-                                    },
-                                            legend: {
-                                            top: '5%',
-                                                    left: 'center'
-                                            },
-                                            series: [{
-                                            name: 'Access From',
-                                                    type: 'pie',
-                                                    radius: ['40%', '70%'],
-                                                    avoidLabelOverlap: false,
-                                                    label: {
-                                                    show: false,
-                                                            position: 'center'
-                                                    },
-                                                    emphasis: {
-                                                    label: {
-                                                    show: true,
-                                                            fontSize: '18',
-                                                            fontWeight: 'bold'
-                                                    }
-                                                    },
-                                                    labelLine: {
-                                                    show: false
-                                                    },
-                                                    data: [
-                                    <c:forEach items="${listaCategoria}" var="c" varStatus="status">
-                                                    {
-                                                    value: ${c.valor},
-                                                            name: '${c.nomeCategoria}'
-                                                    }<c:if test="${!status.last}">,</c:if>
-                                    </c:forEach>
-                                                    ]
-                                            }]
-                                    });
-                                    });
-                                </script>
+                                    <div class="activity-item d-flex">
+                                        <div class="activite-label">Nome</div>
+                                        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                        <div class="activity-content">
+                                            <a href="#" class="fw-bold text-dark">${p.id_cliente.nome}</a> 
+                                        </div>
+                                    </div>
+                                    <div class="activity-item d-flex">
+                                        <div class="activite-label">Telefone</div>
+                                        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                        <div class="activity-content">
+                                            <a href="#" class="fw-bold text-dark">${p.id_cliente.telefone}</a> 
+                                        </div>
+                                    </div>
+
+                                    <div class="activity-item d-flex">
+                                        <div class="activite-label">Email</div>
+                                        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                        <div class="activity-content">
+                                            <a href="#" class="fw-bold text-dark">${p.id_cliente.email}</a> 
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>

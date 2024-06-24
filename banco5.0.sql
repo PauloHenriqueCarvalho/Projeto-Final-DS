@@ -118,6 +118,15 @@ CREATE TABLE produto_carrinho_sabores (
     FOREIGN KEY (id_sabor) REFERENCES sabor(id_sabor) ON DELETE CASCADE
 );
 
+-- Tabela de sabores no carrinho
+CREATE TABLE produto_pedido_sabores (
+    id_produto_pedido_sabores INT AUTO_INCREMENT PRIMARY KEY,
+    id_produto_pedido INT NOT NULL,
+    id_sabor INT NOT NULL,
+    FOREIGN KEY (id_produto_pedido) REFERENCES produto_pedido(id_produto_pedido) ON DELETE CASCADE,
+    FOREIGN KEY (id_sabor) REFERENCES sabor(id_sabor) ON DELETE CASCADE
+);
+
 -- Tabela de produtos em pedidos
 CREATE TABLE produto_pedido (
     id_produto_pedido INT AUTO_INCREMENT PRIMARY KEY,
@@ -156,53 +165,77 @@ CREATE TABLE wishlist_produto (
 );
 
 -- Tabela de auditoria
+
 CREATE TABLE auditoria (
     id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
     tabela_alterada VARCHAR(100),
     operacao VARCHAR(10),
-    dados_antigos TEXT,
-    dados_novos TEXT,
-    usuario_id INT,
     data_operacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+ALTER TABLE auditoria ADD COLUMN nome VARCHAR(255);
+DROP TRIGGER IF EXISTS before_usuario_update;
+DROP TRIGGER IF EXISTS before_produto_insert;
+DROP TRIGGER IF EXISTS after_update_produto;
+DROP TRIGGER IF EXISTS after_delete_produto;
 
--- Triggers
-DELIMITER //
-CREATE TRIGGER before_usuario_update
-BEFORE UPDATE ON usuario
-FOR EACH ROW
-BEGIN
-    INSERT INTO auditoria (tabela_alterada, operacao, dados_antigos, dados_novos, usuario_id)
-    VALUES ('usuario', 'UPDATE', OLD.email, NEW.email, NEW.id_usuario);
-END;
-//
-DELIMITER //
+
+
 
 DELIMITER //
 CREATE TRIGGER before_produto_insert
 BEFORE INSERT ON produto
 FOR EACH ROW
 BEGIN
-    INSERT INTO auditoria (tabela_alterada, operacao, dados_antigos, dados_novos, usuario_id)
+    INSERT INTO auditoria (tabela_alterada, operacao, data_operacao, nome)
     VALUES (
         'produto', 
         'INSERT', 
-        NULL, 
-        CONCAT('nome: ', NEW.nome, ', descricao: ', NEW.descricao, ', valor: ', NEW.valor, ', id_categoria: ', NEW.id_categoria, ', preco_custo: ', NEW.preco_custo, ', quantidadeEstoque: ', NEW.quantidade_estoque), 
-        NEW.id_produto
+        NOW(),
+        NEW.nome
     );
 END;
 //
 DELIMITER //
 
+DELIMITER //
+CREATE TRIGGER after_update_produto
+AFTER UPDATE ON produto
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabela_alterada, operacao, data_operacao, nome)
+    VALUES (
+        'produto',
+        'UPDATE',
+        NOW(),
+        NEW.nome
+    );
+END;
+//
+DELIMITER //
+
+DELIMITER //
+CREATE TRIGGER after_delete_produto
+AFTER DELETE ON produto
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabela_alterada, operacao, data_operacao, nome)
+    VALUES (
+        'produto',
+        'DELETE',
+        NOW(),
+        OLD.nome
+    );
+END;
+//
+DELIMITER ;
 -- Inserts de exemplo
 
 INSERT INTO categoria (nome) VALUES ('Bolos'), ('Salgados'), ('Doces');
 
 INSERT INTO usuario (nome, email, senha, telefone, cpf, acesso) 
-VALUES ('Administrador', 'administrador@gmail.com', 'adm', '5551999999999', '12345678901', 'administrador');
+VALUES ('Administrador', 'administrador@gmail.com', 'adm', '43991950012', '12345678901', 'administrador');
 INSERT INTO usuario (nome, email, senha, telefone, cpf) 
-VALUES ('a', 'a@gmail.com', 'a', '5551999199999', '12345678301');
+VALUES ('a', 'a@gmail.com', 'a', '43991950011', '12345638301');
 
 -- Inserir formas de pagamento
 INSERT INTO forma_pagamento (nome, descricao) 
@@ -214,4 +247,5 @@ VALUES ('Pix', 'Pagamento realizado através da plataforma Pix.'),
 INSERT INTO produto (nome, descricao, valor, id_categoria, preco_custo, quantidade_estoque)
 VALUES ('Brigadeiro', 'Doce de chocolate tradicional brasileiro', 5.99, 3, 2.50, 100);
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 

@@ -39,8 +39,8 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99195-0011 </a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99603-5529 </a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@Gmail.com</a></li>
                         <li><a href="#"><i class="fa fa-map-marker"></i> 919 Augusto Gomes Jd das Palmeiras</a></li>
                     </ul>
 
@@ -115,7 +115,7 @@
                                                                 <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
 
 
-                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
+                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.formatadoValorAdicional()}</h4>
 
 
                                                             </div>
@@ -219,7 +219,7 @@
                     <div class="prices">
                         <p><span>Subtotal</span><span>R$ ${total}</span></p>
                         <p><span>Frete</span><span>R$ 10.00</span></p>
-                        <p class="total"><span>TOTAL</span><span>R$ ${total + 10}</span></p>
+                        <p class="total"><span>TOTAL</span><span>R$ ${totalFinal}</span></p>
                         <button type="submit" id="confirmar">Finalizar Compra</button>
                     </div>
                 </div>

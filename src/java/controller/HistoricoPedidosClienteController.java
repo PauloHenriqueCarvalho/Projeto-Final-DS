@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,8 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
+import model.bean.Endereco;
 import model.bean.Pedido;
+import model.bean.Produto;
 import model.bean.Usuario;
+import model.dao.CarrinhoDAO;
+import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.PedidoDAO;
 import model.dao.UsuarioDAO;
@@ -40,7 +45,24 @@ public class HistoricoPedidosClienteController extends HttpServlet {
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);
+        CarrinhoDAO cDAO = new CarrinhoDAO();
+        double total = cDAO.precoCarrinho();
+        request.setAttribute("total", total);
         
+        
+
+
+        CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
+        List<Produto> carrinho = car.listarProdutosDoCarrinho();
+        for (Produto c : carrinho) {
+            if (c.getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
+                c.setImagemBase64(imagemBase64);
+
+            }
+        }
+         request.setAttribute("carrinhos", carrinho);
+        request.setAttribute("qtdCarrinho", carrinho.size());
         PedidoDAO daoP = new PedidoDAO();
         List<Pedido> pedido = daoP.readUsuario();
         request.setAttribute("pedido", pedido);

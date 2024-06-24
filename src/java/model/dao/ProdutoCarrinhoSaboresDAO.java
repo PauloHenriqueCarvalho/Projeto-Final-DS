@@ -66,7 +66,7 @@ public class ProdutoCarrinhoSaboresDAO {
                 sabor.setNome(rs.getString("nome"));
                 sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
                 sabor.setDescricao(rs.getString("descricao"));
-                sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                sabor.setValorAdicional(rs.getDouble("valorAdicional"));
                 sabor.setStatus(rs.getString("status"));
             }
             rs.close();

@@ -5,7 +5,9 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+import { Carousel, initMDB } from "mdb-ui-kit";
 
+initMDB({ Carousel });
 (function() {
   "use strict";
 

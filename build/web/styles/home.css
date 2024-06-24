@@ -7,8 +7,49 @@ and open the template in the editor.
     Created on : 04/05/2024, 09:31:42
     Author     : paulo
 */
+        
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
 
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
 
+.carousel-item {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel img {
+    width: 100%;
+    height: 600px;
+    display: block;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
+}
 .img-card {
     vertical-align: middle;
     height: 200px;

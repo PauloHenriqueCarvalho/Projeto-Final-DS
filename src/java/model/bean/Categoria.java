@@ -13,14 +13,16 @@ public class Categoria {
     private int idCategoria;
     private String nome;
     private boolean status;
+    private int qtd;
     
     public Categoria() {
     }
 
-    public Categoria(int idCategoria, String nome, boolean status) {
+    public Categoria(int idCategoria, String nome, boolean status, int qtd) {
         this.idCategoria = idCategoria;
         this.nome = nome;
         this.status = status;
+        this.qtd = qtd;
     }
 
     public int getIdCategoria() {
@@ -46,6 +48,16 @@ public class Categoria {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    public void setQtd(int qtd) {
+        this.qtd = qtd;
+    }
+
+    
 
     
 

@@ -96,7 +96,7 @@
                                                         </div>
                                                         <div class="product-body">
                                                             <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
-                                                            <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
+                                                            <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.formatadoValorAdicional()}</h4>
                                                         </div>
                                                         <form action="deletarProduto" method="post">
                                                             <input type="hidden" id="idProduto" name="idProduto" value="${carrinho.idProduto_Carrinho}">
@@ -205,16 +205,16 @@
                     <div>
                         <span>${c.quantidade}</span>
                     </div>
-                    <div>${c.quantidade}x R$<strong>$${c.valorAdicional}</strong></div>
+                    <div>${c.quantidade}x R$<strong>$${c.formatadoValorAdicional()}</strong></div>
                 </div>
             </c:forEach>
             <div class="summary">
                 <span>Frete</span>
-                <span>R$10</span>
+                <span>R$10,00</span>
             </div>
             <div class="summary">
                 <span>Total</span>
-                <span>R$${total + 10}</span>
+                <span>R$${totalFinal}</span>
             </div>
             <c:choose>
                 <c:when test="${e.localidade != null}">

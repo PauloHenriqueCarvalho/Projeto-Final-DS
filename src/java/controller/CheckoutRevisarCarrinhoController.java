@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.ProdutoCarrinhoSabores;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
@@ -37,8 +38,17 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
         String url = "/WEB-INF/jsp/checkoutRevisarCarrinho.jsp";
 
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+        double totalP = cDAO.precoCarrinho();
+        double totalPFinal = cDAO.precoCarrinho() + 10;
+        
+        Projeto p = new Projeto();
+        String total = p.fortatador(totalP);
+        
+        String totalFinal = p.fortatador(totalPFinal);
+        
         request.setAttribute("total", total);
+        request.setAttribute("totalFinal", totalFinal);
+        
 
         if (Usuario.getIdUsuarioStatic() != 0) {
             UsuarioDAO u = new UsuarioDAO();
@@ -63,7 +73,7 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
 
             }
         }
-        
+        request.setAttribute("qtdCarrinho", carrinho.size());
         request.setAttribute("carrinhos", carrinho);
 
         RequestDispatcher r = getServletContext().getRequestDispatcher(url);
@@ -99,13 +109,13 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
         } else if (url.equals("/atualizarCarrinhoAdicionar")) {
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             int idProdutoCarrinho = Integer.parseInt(request.getParameter("idProdutoCarrinho"));
-            float quantidadeAtual = Float.parseFloat(request.getParameter("qtd"));
+            double quantidadeAtual = Double.parseDouble(request.getParameter("qtd"));
             dao.atualizarQuantidade(idProdutoCarrinho, quantidadeAtual + 1);
             response.sendRedirect("./revisar-carrinho");
         } else if (url.equals("/atualizarCarrinhoDiminuir")) {
             CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
             int idProdutoCarrinho = Integer.parseInt(request.getParameter("idProdutoCarrinho"));
-            float quantidadeAtual = Float.parseFloat(request.getParameter("qtd"));
+            double quantidadeAtual = Double.parseDouble(request.getParameter("qtd"));
             if (quantidadeAtual - 1 <= 0) {
                 dao.excluirProdutoCarrinho(idProdutoCarrinho);
             } else {
@@ -121,7 +131,7 @@ public class CheckoutRevisarCarrinhoController extends HttpServlet {
                 String next = "/WEB-INF/jsp/checkoutRevisarCarrinho.jsp";
 
                 CarrinhoDAO cDAO = new CarrinhoDAO();
-                float total = cDAO.precoCarrinho();
+                double total = cDAO.precoCarrinho();
                 request.setAttribute("total", total);
 
                 if (Usuario.getIdUsuarioStatic() != 0) {

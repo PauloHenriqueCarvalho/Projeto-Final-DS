@@ -39,7 +39,7 @@ public class ListaDesejosController extends HttpServlet {
             request.setAttribute("usuario", usuarios);
         }
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+        double total = cDAO.precoCarrinho();
         request.setAttribute("total", total);
 
         CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
@@ -53,7 +53,7 @@ public class ListaDesejosController extends HttpServlet {
         }
         request.setAttribute("carrinhos", carrinho);
 
-
+request.setAttribute("qtdCarrinho", carrinho.size());
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> categoria = cat.listarTodos();
         request.setAttribute("categorias", categoria);

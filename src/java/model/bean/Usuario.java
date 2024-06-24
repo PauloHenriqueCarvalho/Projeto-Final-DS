@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,7 +22,7 @@ public class Usuario {
     private String cpf;
     private Timestamp dataRegistro;
     private String acesso;
-    private Date data_nascimento; // Use java.sql.Date
+    private Date data_nascimento; 
     private static int acessoStatic;
 
     public Usuario() {

@@ -42,11 +42,11 @@ public class PedidoDAO {
                 FormaPagamento formaPagamento = new FormaPagamento();
                 formaPagamento.setId_forma_pagamento(rs.getInt("id_forma_pagamento"));
                 p.setIdPagamento(formaPagamento);
-                p.setFrete(rs.getFloat("frete"));
+                p.setFrete(rs.getDouble("frete"));
                 p.setData_entrega(rs.getTimestamp("data_entrega"));
                 p.setData_pedido(rs.getTimestamp("data_pedido"));
                 p.setStatus(rs.getString("status"));
-                p.setTotal(rs.getFloat("total"));
+                p.setTotal(rs.getDouble("total"));
 
                 pedidos.add(p);
             }
@@ -75,11 +75,11 @@ public class PedidoDAO {
                 FormaPagamento formaPagamento = new FormaPagamento();
                 formaPagamento.setId_forma_pagamento(rs.getInt("id_forma_pagamento"));
                 p.setIdPagamento(formaPagamento);
-                p.setFrete(rs.getFloat("frete"));
+                p.setFrete(rs.getDouble("frete"));
                 p.setData_entrega(rs.getTimestamp("data_entrega"));
                 p.setData_pedido(rs.getTimestamp("data_pedido"));
                 p.setStatus(rs.getString("status"));
-                p.setTotal(rs.getFloat("total"));
+                p.setTotal(rs.getDouble("total"));
                 EnderecoDAO eDAO = new EnderecoDAO();
                 Endereco e = eDAO.enderecoPorId(rs.getInt("id_endereco"));
                 p.setId_endereco(e);
@@ -114,11 +114,11 @@ public class PedidoDAO {
                 p.setId_pedido(rs.getInt("id_pedido"));
                 p.setId_cliente(u);   
                 p.setIdPagamento(fp);
-                p.setFrete(rs.getFloat("frete"));
+                p.setFrete(rs.getDouble("frete"));
                 p.setData_entrega(rs.getTimestamp("data_entrega"));
                 p.setData_pedido(rs.getTimestamp("data_pedido"));
                 p.setStatus(rs.getString("status"));
-                p.setTotal(rs.getFloat("total"));
+                p.setTotal(rs.getDouble("total"));
                 p.setId_endereco(e);
 
                 pedidos.add(p);
@@ -150,11 +150,11 @@ public class PedidoDAO {
                 p.setId_pedido(rs.getInt("id_pedido"));
                 p.setId_cliente(u);   
                 p.setIdPagamento(fp);
-                p.setFrete(rs.getFloat("frete"));
+                p.setFrete(rs.getDouble("frete"));
                 p.setData_entrega(rs.getTimestamp("data_entrega"));
                 p.setData_pedido(rs.getTimestamp("data_pedido"));
                 p.setStatus(rs.getString("status"));
-                p.setTotal(rs.getFloat("total"));
+                p.setTotal(rs.getDouble("total"));
                 p.setId_endereco(e);
 
                 pedidos.add(p);
@@ -166,6 +166,42 @@ public class PedidoDAO {
             e.printStackTrace();
         }
         return pedidos;
+    }
+    
+    public Pedido readById(int id) {
+        Pedido p = new Pedido();
+        try {
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM pedido WHERE id_pedido = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                UsuarioDAO c = new UsuarioDAO();
+                PagamentoDAO f = new PagamentoDAO();
+                EnderecoDAO eDAO = new EnderecoDAO();
+                
+                Usuario u = c.readById(rs.getInt("id_cliente"));
+                FormaPagamento fp = f.readById(rs.getInt("id_forma_pagamento"));
+                Endereco e = eDAO.enderecoPorId(rs.getInt("id_endereco"));
+                
+                p.setId_pedido(rs.getInt("id_pedido"));
+                p.setId_cliente(u);   
+                p.setIdPagamento(fp);
+                p.setFrete(rs.getDouble("frete"));
+                p.setData_entrega(rs.getTimestamp("data_entrega"));
+                p.setData_pedido(rs.getTimestamp("data_pedido"));
+                p.setStatus(rs.getString("status"));
+                p.setTotal(rs.getDouble("total"));
+                p.setId_endereco(e);
+
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return p;
     }
     
 
@@ -181,10 +217,10 @@ public class PedidoDAO {
             ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, p.getIdPagamento().getId_forma_pagamento());
             ps.setInt(2, Usuario.getIdUsuarioStatic());
-            ps.setFloat(3, p.getFrete());
+            ps.setDouble(3, p.getFrete());
             ps.setTimestamp(4, new Timestamp(p.getData_entrega().getTime()));
             ps.setString(5, p.getStatus());
-            ps.setFloat(6, p.getTotal());
+            ps.setDouble(6, p.getTotal());
             ps.setInt(7, p.getId_endereco().getIdEndereco());
 
             ps.executeUpdate();

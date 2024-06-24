@@ -161,6 +161,10 @@
         <url-pattern>/buscaProdutos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>IndexController</servlet-name>
+        <url-pattern>/limpar-carrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ListarCategoriaController</servlet-name>
         <url-pattern>/lista</url-pattern>
     </servlet-mapping>

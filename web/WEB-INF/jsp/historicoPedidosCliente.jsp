@@ -36,16 +36,8 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <div class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12"> 
-                            <div class="section-title">
-                                <h3 class="title">Ola ${nome}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <main>
+                
+            <main id="main-endereco">
                 <div class="container-main">
                     <h2>Meus Pedidos</h2>
                     <div class="cards-endereco">
@@ -62,7 +54,7 @@
                                         <div class="button-group">
                                             <form action="cancelar-pedido" method="post">
                                                 <input type="hidden" value="${e.id_pedido}" id="idPedido" name="idPedido">
-                                                <button class="remove-btn" onclick="showAlertRemover(event)">Cancelar Pedido</button>
+                                                <button class="remove-btn" onclick="showAlertRemoverPedido(event)">Cancelar Pedido</button>
                                             </form>
                                         </div>
                                     </c:if>

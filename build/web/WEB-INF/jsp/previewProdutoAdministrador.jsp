@@ -76,9 +76,9 @@
                                         </div>
                                         <div class="preco-info">
                                             <h3>Valor do Produto :</h3>
-                                            <p>R$${produto.valor}</p>
+                                            <p>R$${produto.formatadoValor()}</p>
                                             <h3>Custo do Produto :</h3>
-                                            <p>R$${produto.precoCusto}</p>
+                                            <p>R$${produto.formatadoCusto()}</p>
                                             <h3>Categoria do Produto :</h3>
                                             <p>${produto.categoria.nome}</p>
                                             <span style="color: green; font-size: 12px;">Lucro: R$ ${produto.valor - produto.precoCusto}</span>
@@ -110,7 +110,7 @@
                                                 <c:if test="${se.idPai == s.idSabor}">
                                                     <div class="nome-especifico">
                                                    
-                                                    <h4>${se.nome} <span>R$ ${se.valorAdicional}</span> </h4>
+                                                    <h4>${se.nome} <span>R$ ${se.formatadoValorAdicional()}</span> </h4>
                                                    
                                                     <form class="nome-especifico-form" action="excluir-especifico" method="post">
                                                          <input type="hidden" id="idSabor" name="idSabor" value="${se.idSabor}">

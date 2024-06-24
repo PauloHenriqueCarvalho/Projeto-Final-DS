@@ -19,6 +19,7 @@ import model.bean.Endereco;
 import model.bean.FormaPagamento;
 import model.bean.Pedido;
 import model.bean.Produto;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
@@ -48,8 +49,16 @@ public class CheckoutPagamentoController extends HttpServlet {
         EnderecoDAO daoEndereco = new EnderecoDAO();
 
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+         double totalP = cDAO.precoCarrinho();
+        double totalPFinal = cDAO.precoCarrinho() + 10;
+        
+        Projeto p = new Projeto();
+        String total = p.fortatador(totalP);
+        
+        String totalFinal = p.fortatador(totalPFinal);
+        
         request.setAttribute("total", total);
+        request.setAttribute("totalFinal", totalFinal);
 
         Endereco enderecoAtual = daoEndereco.enderecoPadrao();
         request.setAttribute("e", enderecoAtual);
@@ -63,7 +72,7 @@ public class CheckoutPagamentoController extends HttpServlet {
 
             }
         }
-
+        request.setAttribute("qtdCarrinho", carrinho.size());
         request.setAttribute("data", Pedido.getData_entregaAtual());
         request.setAttribute("carrinhos", carrinho);
 
@@ -116,7 +125,7 @@ public class CheckoutPagamentoController extends HttpServlet {
                 Pedido.setIdPagamentoStatic(f);
             }
             CarrinhoDAO cDAO = new CarrinhoDAO();
-            float total = cDAO.precoCarrinho();
+            double total = cDAO.precoCarrinho();
      
             
             p.setData_entrega(Pedido.getData_entregaAtual());

@@ -1,139 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
 
-footer{
+
+footer {
     width: 100%;
-    height: 320px;
+    height: auto;
     margin-top: 50px;
     background-color: #614031;
+    padding: 20px 0;
 }
 
-@media screen and (max-width:768px) {
-    footer{
-        width: 100%;
-        height: auto;
-        background-color: #614031;
+.grid-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .grid-footer {
+        grid-template-columns: 1fr;
     }
 }
 
-.grid-footer{
-    display: grid;
-    grid-template-columns:  1fr 1fr 1fr;
-    justify-content: center;
-    height: 100%;
-}
-
-
-
-/* Sobre Nos */
-
-.grid-footer .sobre-nos{
+.grid-footer > div {
     color: #F2E8DA;
     display: flex;
-    justify-items: center;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
 }
 
-.grid-footer .sobre-nos p{
+.grid-footer p {
     font-size: 34px;
     font-weight: bold;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-bottom: 3%;
+    margin-bottom: 10px;
 }
 
-.grid-footer .sobre-nos span{
+.grid-footer span {
     font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    width: 65%;
-    margin-bottom: 3%;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
-.grid-footer .sobre-nos .footer-links-icons{
+.footer-links-icons {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links-icons li {
+    margin: 10px 0;
+}
+
+.footer-links-icons li a {
+    color: #FFF;
+    text-decoration: none;
     font-size: 18px;
-    width: 65%;
 }
 
-.grid-footer .sobre-nos .footer-links-icons li a {
-    color: #FFF;
-}
-
-.grid-footer .sobre-nos .footer-links-icons li a:hover{
+.footer-links-icons li a:hover {
     color: #F2E8DA;
 }
 
+@media screen and (max-width: 480px) {
+    .grid-footer p {
+        font-size: 28px;
+    }
 
-
-/* Categorias */
-
-.grid-footer .categorias-footer{
-    color: #F2E8DA;
-    display: flex;
-    justify-items: center;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.grid-footer .categorias-footer p{
-    font-size: 34px;
-    font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-bottom: 2%;
-}
-
-.grid-footer .categorias-footer .footer-links-icons{
-    font-size: 22px;
-}
-
-.grid-footer .categorias-footer .footer-links-icons li{
-    margin: 15px 0;
-    margin-right: 90px;
-}
-
-.grid-footer .categorias-footer .footer-links-icons li a {
-    color: #FFF;
-}
-
-.grid-footer .categorias-footer .footer-links-icons li a:hover{
-    color: #F2E8DA;
-}
-
-
-
-/* Informações */
-
-.grid-footer .infos-footer{
-    color: #F2E8DA;
-    display: flex;
-    justify-items: center;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.grid-footer .infos-footer p{
-    font-size: 34px;
-    font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-bottom: 2%;
-}
-
-.grid-footer .infos-footer .footer-links-icons{
-    font-size: 22px;
-}
-
-.grid-footer .infos-footer .footer-links-icons li{
-    margin: 15px 0;
-    margin-right: 90px;
-}
-
-.grid-footer .infos-footer .footer-links-icons li a {
-    color: #FFF;
-}
-
-.grid-footer .infos-footer .footer-links-icons li a:hover{
-    color: #F2E8DA;
+    .grid-footer span,
+    .footer-links-icons li a {
+        font-size: 16px;
+    }
 }

@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div>
-                                <h3 class="product-price">$${produtos.valor} <del class="product-old-price">$990.00</del></h3>
+                                <h3 class="product-price">$${produtos.formatadoValor()}</h3>
                                 <span class="product-available">Em estoque</span>
                             </div>
                             <p>${produtos.descricao}</p>
@@ -92,7 +92,7 @@
                                                     <div class="checkbox">
                                                         <label style="min-height: 0px;">
 
-                                                            <input type="checkbox" name="sabor" value="${sa.idSabor}" data-nome="${sa.nome}" data-valor="${sa.valorAdicional}" onchange="updateSelectedFlavors()">
+                                                            <input type="checkbox" name="sabor" value="${sa.idSabor}" data-nome="${sa.nome}" data-valor="${sa.formatadoValorAdicional()}" onchange="updateSelectedFlavors()">
                                                             ${sa.nome} <span>+${sa.valorAdicional}</span>
 
                                                         </label>
@@ -102,29 +102,38 @@
                                         </div>
                                     </label>
                                 </c:forEach>
+
+
+
                                 <div class="qty-label">
-                                    <c:if test="${not empty erroSabor}">
-                                        <div class="alert alert-danger">
-                                            ${erroSabor}
+                                    <c:if test="${produtoSabor}"> 
+                                        <c:if test="${not empty erroSabor}">
+                                            <div class="alert alert-danger">
+                                                ${erroSabor}
+                                            </div>
+                                        </c:if>
+
+                                        <div id="selectedFlavorsSummary">
+                                            <h3>Sabores Selecionados:</h3>
+                                            <ul id="selectedFlavorsList"></ul>
+                                            <p id="totalAdditionalCost"></p>
+                                        </div>
+
+                                        <div id="error-message" class="alert alert-danger" style="display: none;">
+                                            Por favor, selecione pelo menos um sabor.
                                         </div>
                                     </c:if>
+                                    <c:if test="${!produtoSabor}">
+                                        <input type="hidden" name="sabor" value="0" data-nome=" " data-valor="0" onchange="updateSelectedFlavors()">
 
-                                    <div id="selectedFlavorsSummary">
-                                        <h3>Sabores Selecionados:</h3>
-                                        <ul id="selectedFlavorsList"></ul>
-                                        <p id="totalAdditionalCost"></p>
-                                    </div>
-
-                                    <div id="error-message" class="alert alert-danger" style="display: none;">
-                                        Por favor, selecione pelo menos um sabor.
-                                    </div>
-
+                                    </c:if>
                                     <hr>
                                     Quantidade(em centos 1 = 100 unidades) ou 1 = 1kg
                                     <div class="input-number">
                                         <input type="number" value="1" step="0.5" name="qtd" id="qtd" required="">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="add-to-cart">
                                 <c:choose>
@@ -147,7 +156,7 @@
                     <div class="col-md-12">
                         <div id="product-tab">
                             <ul class="tab-nav">
-                                <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab1">Descricao</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="tab1" class="tab-pane fade in active">

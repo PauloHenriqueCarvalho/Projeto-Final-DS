@@ -51,14 +51,16 @@
                             <h3 class="aside-title">Categorias</h3>
                             <div class="checkbox-filter">
                                 <c:forEach items="${categorias}" var="categoria">
-                                    <div class="input-checkbox">
-                                        <input type="checkbox" id="${categoria.idCategoria}">
-                                        <label for="categoria">
-                                            <span></span>
-                                            ${categoria.nome}
-                                            <small>(120)</small>
-                                        </label>
-                                    </div>
+                                    <a href="./lista?cat=${categoria.idCategoria}">
+                                        <div class="input-checkbox">
+
+                                            <label for="categoria">
+                                                <span></span>
+                                                ${categoria.nome}
+                                                <small>(${categoria.qtd})</small>
+                                            </label>
+                                        </div>
+                                    </a>
                                 </c:forEach>
                             </div>
                         </div>
@@ -93,7 +95,7 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
 
-                                            <h4 class="product-price">R$${produto.valor}</h4>
+                                            <h4 class="product-price">R$${produto.formatadoValor()}</h4>
                                             <span class="product-old-price"> *Podendo Alterar</span>
 
                                             <div class="product-rating">

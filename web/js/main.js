@@ -1,3 +1,34 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('#carouselExampleControls');
+    const carouselInner = carousel.querySelector('.carousel-inner');
+    const prevButton = carousel.querySelector('.carousel-control-prev');
+    const nextButton = carousel.querySelector('.carousel-control-next');
+    const items = carouselInner.querySelectorAll('.carousel-item');
+    
+    let currentIndex = 0;
+
+    const updateCarousel = () => {
+        const offset = -currentIndex * 100;
+        carouselInner.style.transform = `translateX(${offset}%)`;
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === currentIndex);
+        });
+    };
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+        updateCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+    });
+
+    updateCarousel();
+});
+
+
 (function($) {
 	"use strict"
 

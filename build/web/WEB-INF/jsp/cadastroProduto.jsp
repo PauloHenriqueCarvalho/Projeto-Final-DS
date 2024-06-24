@@ -60,7 +60,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">Produto</h5>
 
-                                <!-- Vertical Form -->
                                 <div class="row g-3">
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="nome">Nome</label>
@@ -88,7 +87,7 @@
                                         <input type="number" id="quantidade" name="quantidade" step="0.01" class="form-control form-control-lg" required />
                                     </div>
                                     
-
+                          
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="categoria">Categoria</label>

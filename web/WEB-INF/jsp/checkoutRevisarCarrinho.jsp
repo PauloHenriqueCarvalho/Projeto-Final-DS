@@ -220,7 +220,7 @@
                                             <label class="txt-qtd" for="form1">Centos (1 cento = 100) </label>
 
                                             <p class="text-start text-md-center">
-                                                <strong>$${c.valorAdicional} x${c.quantidade}</strong>
+                                                <strong>$${c.formatadoValorAdicional()} x${c.quantidade}</strong>
                                             </p>
                                         </div>>
                                     </div>
@@ -251,7 +251,7 @@
                                                 <p class="mb-0">(incluindo FRETE)</p>
                                             </strong>
                                         </div>
-                                        <span><strong id="total-cost">R$${total + 10}</strong></span>
+                                        <span><strong id="total-cost">R$${totalFinal}</strong></span>
                                     </li>
                                 </ul>
                                 <c:choose>

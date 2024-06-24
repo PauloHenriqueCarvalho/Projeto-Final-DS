@@ -8,6 +8,7 @@ package controller;
 import java.util.Comparator;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -18,11 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Produto;
 import model.bean.Projeto;
+import model.bean.TipoProduto;
 import model.bean.Usuario;
 import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
 import model.dao.CategoriaDAO;
 import model.dao.ProdutoDAO;
+import model.dao.TiposProdutosDAO;
 import model.dao.UsuarioDAO;
 import model.dao.WishListDAO;
 
@@ -50,9 +53,33 @@ public class ListarCategoriaController extends HttpServlet {
         } else {
             request.setAttribute("categoriaAtual", "Todos Produtos");
         }
+        
+        ProdutoDAO dao = new ProdutoDAO();
+        
+        List<TipoProduto> tipo = new ArrayList<>();
+        TiposProdutosDAO tDAO = new TiposProdutosDAO();
+        List<Produto> produtoLista = dao.listarTodos();
+        for (int i = 0; i < categoria.size(); i++) {
+            TipoProduto tipoProduto = new TipoProduto();
+            tipoProduto.setNomeCategoria(categoria.get(i).getNome());
+            int qtdAtual = 0;
+            for (int j = 0; j < produtoLista.size(); j++) {
+                if(categoria.get(i).getNome().equals(produtoLista.get(j).getCategoria().getNome())){
+                    qtdAtual++;
+                }
+            }
+            tipoProduto.setValor(qtdAtual);
+            tipo.add(tipoProduto);
+            
+        }
+        
+        for (int i = 0; i < tipo.size(); i++) {
+             categoria.get(i).setQtd(tipo.get(i).getValor());
+        }
+        
         request.setAttribute("categorias", categoria);
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+        double total = cDAO.precoCarrinho();
         request.setAttribute("total", total);
 
         CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
@@ -72,7 +99,6 @@ public class ListarCategoriaController extends HttpServlet {
             request.setAttribute("usuario", usuarios);
         }
 
-        ProdutoDAO dao = new ProdutoDAO();
         int totalProducts = 0;
         List<Produto> produtos = null;
         if(idCat != -1){
@@ -101,7 +127,7 @@ public class ListarCategoriaController extends HttpServlet {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("selectedFilter", filter);
-        
+        request.setAttribute("qtdCarrinho", carrinho.size());
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
@@ -125,7 +151,7 @@ public class ListarCategoriaController extends HttpServlet {
             request.setAttribute("categorias", categoria);
 
             CarrinhoDAO cDAO = new CarrinhoDAO();
-            float total = cDAO.precoCarrinho();
+            double total = cDAO.precoCarrinho();
             request.setAttribute("total", total);
 
             CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();

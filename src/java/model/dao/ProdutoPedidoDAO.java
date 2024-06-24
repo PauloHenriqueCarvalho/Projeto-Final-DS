@@ -33,17 +33,18 @@ public class ProdutoPedidoDAO {
             while (rs.next()) {
                 ProdutoPedido pp = new ProdutoPedido();
                 Pedido pedido = new Pedido();
+                PedidoDAO pedidoD = new PedidoDAO();
                 Produto produto = new Produto();
                 ProdutoDAO produtod = new ProdutoDAO();
                 
-                pedido.setId_pedido(rs.getInt("id_pedido"));
+                pedido = pedidoD.readById(rs.getInt("id_pedido"));
                 produto = produtod.readById(rs.getInt("id_produto"));
                 
                 pp.setId_pedido(pedido);
                 pp.setId_produto(produto);
                 pp.setId_produto_pedido(rs.getInt("id_produto_pedido"));
-                pp.setValorAdicional(rs.getFloat("valorAdicional"));
-                pp.setQuantidade(rs.getFloat("quantidade"));
+                pp.setValorAdicional(rs.getDouble("valorAdicional"));
+                pp.setQuantidade(rs.getDouble("quantidade"));
 
                 produtoPedidos.add(pp);
             }
@@ -75,8 +76,8 @@ public class ProdutoPedidoDAO {
                 pp.setId_pedido(pedido);
                 pp.setId_produto(produto);
                 pp.setId_produto_pedido(rs.getInt("id_produto_pedido"));
-                pp.setValorAdicional(rs.getFloat("valorAdicional"));
-                pp.setQuantidade(rs.getFloat("quantidade"));
+                pp.setValorAdicional(rs.getDouble("valorAdicional"));
+                pp.setQuantidade(rs.getDouble("quantidade"));
 
                 produtoPedidos.add(pp);
             }
@@ -108,15 +109,15 @@ public class ProdutoPedidoDAO {
             while (rs.next()) {
                 int idProdutoCarrinho = rs.getInt("id_produto_carrinho");
                 int idProduto = rs.getInt("id_produto");
-                float valorAdicional = rs.getFloat("valorAdicional");
-                float quantidade = rs.getFloat("quantidade");
+                Double valorAdicional = rs.getDouble("valorAdicional");
+                Double quantidade = rs.getDouble("quantidade");
                 
                 String sqlProdutoPedido = "INSERT INTO produto_pedido (id_produto, id_pedido, valorAdicional, quantidade) VALUES (?, ?, ?, ?)";
                 ps = conn.prepareStatement(sqlProdutoPedido);
                 ps.setInt(1, idProduto);
                 ps.setInt(2, idPedido);
-                ps.setFloat(3, valorAdicional);
-                ps.setFloat(4, quantidade);
+                ps.setDouble(3, valorAdicional);
+                ps.setDouble(4, quantidade);
                 ps.executeUpdate();
 
             }

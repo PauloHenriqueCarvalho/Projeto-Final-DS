@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <title>JSP Page</title>
     </head>
     <body>
@@ -17,13 +17,12 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99195-0011 </a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> 43 9 99603-5529 </a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> pauloevelin2007@gmail.com</a></li>
                         <li><a href="#"><i class="fa fa-map-marker"></i> 919 Augusto Gomes Jd das Palmeiras</a></li>
                     </ul>
 
                     <ul class="header-links pull-right">
-                        <li><a href="#"><i class="fa fa-dollar"></i></a></li>
 
                         <c:choose>
                             <c:when test="${empty usuario}">
@@ -47,6 +46,7 @@
             <div id="header">
                 <div class="container">
                     <div class="row">
+
                         <div class="col-md-3">
                             <div class="header-logo">
                                 <a href="./inicio" class="logo">
@@ -57,8 +57,8 @@
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form class="form-inline my-2 my-lg-0" action="buscaProdutos" method="GET">
-                                    <input id="searchInput" class="input" placeholder="Search here" type="search" name="termo"  aria-label="Search">
-                                    <button  class="search-btn" type="submit">Search</button>
+                                    <input id="searchInput" class="input" placeholder="Pesquisar produto" type="search" name="termo"  aria-label="Search">
+                                    <button  class="search-btn" type="submit">Buscar</button>
                                 </form>
                                 <div id="searchResults"></div>
                             </div>
@@ -69,7 +69,7 @@
                                     <a href="./lista-desejos"><p class="icons"><i class="fa fa-heart-o"></i></p></a>     
                                 </div>
 
-                               
+
 
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -92,7 +92,7 @@
                                                             <div class="product-body">
                                                                 <h3 class="product-name"><a href="#">${carrinho.nome}</a></h3>
 
-                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.valorAdicional}</h4>
+                                                                <h4 class="product-price"><span class="qty">${carrinho.quantidade}x</span>$${carrinho.formatadoValorAdicional()}</h4>
 
 
                                                             </div>
@@ -114,11 +114,13 @@
                                                     </c:forEach>
                                                 </div>
                                                 <div class="cart-summary">
-                                                    <small>3 Item(s) selected</small>
+                                                    <small>${qtdCarrinho} Item(s) selecionados</small>
                                                     <h5>SUBTOTAL: $${total}</h5>
                                                 </div>
                                                 <div class="cart-btns">
-                                                    <a href="./revisar-carrinho">View Cart</a>
+                                                    <form action="limpar-carrinho" method="post">
+                                                        <button class="btn-carrinho" onclick="limparCarrinho(event)">Limpar Carrinho</button>
+                                                    </form>
                                                     <a href="./revisar-carrinho">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                                 </div>
                                             </c:otherwise>
@@ -160,6 +162,10 @@
                 </div>
             </div>
         </nav>
+
+
+        <div class="whats"><a href="https://wa.me/qr/BU2UQGZYWBC3O1" target="_blank"><img style="height: 70px;" src="img/whats.png"></a></div>
     </body>
     <script src="./js/wishlist.js"></script>
+    <script src="./js/alert.js"></script>
 </html>

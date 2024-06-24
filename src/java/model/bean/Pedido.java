@@ -20,13 +20,13 @@ public class Pedido {
     private Timestamp data_pedido;
     private Timestamp data_entrega;
     private String status;
-    private float total;
-    private float frete;
+    private double total;
+    private double frete;
     private Endereco id_endereco;
     
     private static Endereco id_enderecoAtual;
     private static int id_pedidoAtual;
-    private static float freteAtual;
+    private static double freteAtual;
     private static Timestamp data_entregaAtual;
     private static FormaPagamento idPagamentoStatic;
     private String dataEntregaFormatada;
@@ -48,7 +48,7 @@ public class Pedido {
     }
 
     
-    public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Timestamp data_pedido, Timestamp data_entrega, String status, float total, float frete, Endereco id_endereco, String dataEntregaFormatada) {
+    public Pedido(int id_pedido, Usuario id_cliente, FormaPagamento idPagamento, Timestamp data_pedido, Timestamp data_entrega, String status, double total, double frete, Endereco id_endereco, String dataEntregaFormatada) {
         this.id_pedido = id_pedido;
         this.id_cliente = id_cliente;
         this.idPagamento = idPagamento;
@@ -120,19 +120,19 @@ public class Pedido {
         this.status = status;
     }
 
-    public float getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public float getFrete() {
+    public double getFrete() {
         return frete;
     }
 
-    public void setFrete(float frete) {
+    public void setFrete(double frete) {
         this.frete = frete;
     }
 
@@ -160,11 +160,11 @@ public class Pedido {
         Pedido.id_pedidoAtual = id_pedidoAtual;
     }
 
-    public static float getFreteAtual() {
+    public static double getFreteAtual() {
         return freteAtual;
     }
 
-    public static void setFreteAtual(float freteAtual) {
+    public static void setFreteAtual(double freteAtual) {
         Pedido.freteAtual = freteAtual;
     }
 

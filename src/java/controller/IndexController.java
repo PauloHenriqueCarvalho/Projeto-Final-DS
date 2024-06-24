@@ -44,22 +44,35 @@ public class IndexController extends HttpServlet {
         request.setAttribute("categorias", categoria);
 
         ProdutoDAO dao = new ProdutoDAO();
-        List<Produto> produtos = dao.listarTodos();
+        List<Produto> produtos = dao.listarTodosNovos();
         for (Produto produto : produtos) {
             if (produto.getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(produto.getImagemBytes());
                 produto.setImagemBase64(imagemBase64);
             }
         }
+        List<Produto> produtosMaisVendidos = dao.listarMaisVendidos();
+        for (Produto produto : produtosMaisVendidos) {
+            if (produto.getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(produto.getImagemBytes());
+                produto.setImagemBase64(imagemBase64);
+            }
+        }
+        
+        request.setAttribute("produtosMaisVendidos", produtosMaisVendidos);
         
         request.setAttribute("produtos", produtos);
 
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+        double totalP = cDAO.precoCarrinho();
+        Projeto p = new Projeto();
+        String total = p.fortatador(totalP);
+        
         request.setAttribute("total", total);
 
         CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
         List<Produto> carrinho = car.listarProdutosDoCarrinho();
+        request.setAttribute("qtdCarrinho", carrinho.size());
         for (Produto c : carrinho) {
             if (c.getImagemBytes() != null) {
                 String imagemBase64 = Base64.getEncoder().encodeToString(c.getImagemBytes());
@@ -94,7 +107,7 @@ public class IndexController extends HttpServlet {
             request.setAttribute("categorias", categoria);
 
             CarrinhoDAO cDAO = new CarrinhoDAO();
-            float total = cDAO.precoCarrinho();
+            double total = cDAO.precoCarrinho();
             request.setAttribute("total", total);
 
             CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
@@ -152,7 +165,12 @@ public class IndexController extends HttpServlet {
                 request.getSession().setAttribute("alerta", "Você precisa estar logado para adicionar produtos à lista de desejos");
             }
             response.sendRedirect(request.getContextPath() + "/inicio");
-        } else {
+        } else if(url.equals("/limpar-carrinho")){
+            CarrinhoProdutoDAO dao = new CarrinhoProdutoDAO();
+            dao.limparCarrinhoUsuario();
+            response.sendRedirect("./inicio");
+        
+        }else {
             processRequest(request, response);
         }
 

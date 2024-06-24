@@ -189,6 +189,8 @@ public class UsuarioDAO {
         
                 usuarios.setIdUsuario(rs.getInt("id_usuario"));
                 usuarios.setNome(rs.getString("nome"));
+                usuarios.setTelefone(rs.getString("telefone"));
+                usuarios.setEmail(rs.getString("email"));
              
             }
             rs.close();

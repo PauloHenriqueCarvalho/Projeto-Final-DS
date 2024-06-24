@@ -44,7 +44,6 @@ function validateForm() {
         document.getElementById('error-message').style.display = 'block';
     } else {
         document.getElementById('error-message').style.display = 'none';
-        // Submeter o formulário aqui
         document.forms["myForm"].submit();
     }
 }

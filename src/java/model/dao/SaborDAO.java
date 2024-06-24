@@ -32,7 +32,7 @@ public class SaborDAO {
             stmt.setInt(1, sabor.getIdPai());
             stmt.setString(2, sabor.getNome());
             stmt.setString(3, sabor.getDescricao());
-            stmt.setFloat(4, sabor.getValorAdicional());
+            stmt.setDouble(4, sabor.getValorAdicional());
 
             stmt.executeUpdate();
             stmt.close();
@@ -73,7 +73,7 @@ public class SaborDAO {
                         sabor.setNome(rs.getString("nome"));
                         sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
                         sabor.setDescricao(rs.getString("descricao"));
-                        sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                        sabor.setValorAdicional(rs.getDouble("valorAdicional"));
                         sabor.setStatus(rs.getString("status"));
                     }
                 }
@@ -97,7 +97,7 @@ public class SaborDAO {
                     sabor.setNome(rs.getString("nome"));
                     sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
                     sabor.setDescricao(rs.getString("descricao"));
-                    sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                    sabor.setValorAdicional(rs.getDouble("valorAdicional"));
                     sabor.setStatus(rs.getString("status"));
                     sabores.add(sabor);
                 }
@@ -125,7 +125,7 @@ public class SaborDAO {
                 sabor.setNome(rs.getString("nome"));
                 sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
                 sabor.setDescricao(rs.getString("descricao"));
-                sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                sabor.setValorAdicional(rs.getDouble("valorAdicional"));
                 sabor.setStatus(rs.getString("status"));
                 sabores.add(sabor);
             }
@@ -149,7 +149,7 @@ public class SaborDAO {
                     sabor.setNome(rs.getString("nome"));
                     sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
                     sabor.setDescricao(rs.getString("descricao"));
-                    sabor.setValorAdicional(rs.getFloat("valorAdicional"));
+                    sabor.setValorAdicional(rs.getDouble("valorAdicional"));
                     sabor.setStatus(rs.getString("status"));
                     sabores.add(sabor);
                 }
@@ -176,7 +176,7 @@ public class SaborDAO {
                     stmt.setNull(3, Types.INTEGER);
                 }
                 stmt.setString(4, sabor.getDescricao());
-                stmt.setFloat(5, sabor.getValorAdicional());
+                stmt.setDouble(5, sabor.getValorAdicional());
                 stmt.setString(6, sabor.getStatus());
                 stmt.setInt(7, sabor.getIdSabor());
                 stmt.executeUpdate();

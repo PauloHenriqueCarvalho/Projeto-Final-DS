@@ -20,8 +20,32 @@ import model.bean.Usuario;
  * @author paulo
  */
 public class CategoriaDAO {
+    public boolean verificaCategoria(String nome) {
+        boolean r = false;
+        try {
+            String sql = "SELECT * FROM categoria WHERE nome = ? ";
+            Connection c = Conexao.getConn();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1, nome);
+            
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                r = true;
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return r;
+    }
     
-    public void insert(String nome) {
+    
+    public boolean insert(String nome) {
+        
+        if(verificaCategoria(nome)) return false;
         try {
             String sql = "INSERT INTO categoria (nome) VALUES (?)";
             Connection c = Conexao.getConn();
@@ -30,9 +54,10 @@ public class CategoriaDAO {
             stmt.executeUpdate();
             stmt.close();
             c.close();
-
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
     

@@ -830,6 +830,7 @@ h6 {
 /* Activity */
 .dashboard .activity {
   font-size: 14px;
+  margin-bottom: 20px;
 }
 
 .dashboard .activity .activity-item .activite-label {

@@ -63,7 +63,7 @@ public class TipoProdutoController extends HttpServlet {
             s.setNome(request.getParameter("nome"));
             s.setDescricao(request.getParameter("descricao"));
             s.setIdPai(Integer.parseInt(request.getParameter("idPai")));
-            s.setValorAdicional(Float.parseFloat(request.getParameter("valorAdicional")));
+            s.setValorAdicional(Double.parseDouble(request.getParameter("valorAdicional")));
             daoS.createEspecificacao(s);
             response.sendRedirect("./tipoProduto");
         

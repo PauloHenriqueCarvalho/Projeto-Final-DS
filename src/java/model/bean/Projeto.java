@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Senai
@@ -92,6 +94,10 @@ public class Projeto {
     public static void setDoce(boolean doce) {
         Projeto.doce = doce;
     }
+
+     public String fortatador(double preco){
+         return new DecimalFormat("0.00").format(preco);
+     }
 
   
 

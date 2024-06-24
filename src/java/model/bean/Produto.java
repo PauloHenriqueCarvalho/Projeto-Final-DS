@@ -7,6 +7,7 @@ package model.bean;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -18,30 +19,30 @@ public class Produto {
     private Categoria categoria;
     private String nome;
     private String descricao;
-    private Float valor;
+    private double valor;
     private ProdutoImagem imagem;
     private byte[] imagemBytes;
     private String imagemBase64;
-    private float quantidade;
+    private double quantidade;
     private int idProduto_Carrinho;
-    private float precoCusto;
-    private float quantidadeEstoque;
+    private double precoCusto;
+    private double quantidadeEstoque;
     private Timestamp dataCadastro;
     private boolean sabor;
     private boolean status;
-    
+    private int quantidadeVendida;
     private boolean novo;
     
     private int idUsuario;
    
     private int idSabor;
-    private float valorAdicional;
+    private double valorAdicional;
     
    
     public Produto() {
     }
 
-    public Produto(int idProduto, Categoria categoria, String nome, String descricao, Float valor, ProdutoImagem imagem, byte[] imagemBytes, String imagemBase64, float quantidade, int idProduto_Carrinho, float precoCusto, float quantidadeEstoque, Timestamp dataCadastro, boolean sabor, boolean status, boolean novo, int idUsuario, int idSabor, float valorAdicional) {
+    public Produto(int idProduto, Categoria categoria, String nome, String descricao, double valor, ProdutoImagem imagem, byte[] imagemBytes, String imagemBase64, double quantidade, int idProduto_Carrinho, double precoCusto, double quantidadeEstoque, Timestamp dataCadastro, boolean sabor, boolean status, int quantidadeVendida, boolean novo, int idUsuario, int idSabor, double valorAdicional) {
         this.idProduto = idProduto;
         this.categoria = categoria;
         this.nome = nome;
@@ -57,6 +58,7 @@ public class Produto {
         this.dataCadastro = dataCadastro;
         this.sabor = sabor;
         this.status = status;
+        this.quantidadeVendida = quantidadeVendida;
         this.novo = novo;
         this.idUsuario = idUsuario;
         this.idSabor = idSabor;
@@ -103,11 +105,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(Float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -135,11 +137,11 @@ public class Produto {
         this.imagemBase64 = imagemBase64;
     }
 
-    public float getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(float quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -151,19 +153,19 @@ public class Produto {
         this.idProduto_Carrinho = idProduto_Carrinho;
     }
 
-    public float getPrecoCusto() {
+    public double getPrecoCusto() {
         return precoCusto;
     }
 
-    public void setPrecoCusto(float precoCusto) {
+    public void setPrecoCusto(double precoCusto) {
         this.precoCusto = precoCusto;
     }
 
-    public float getQuantidadeEstoque() {
+    public double getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-    public void setQuantidadeEstoque(float quantidadeEstoque) {
+    public void setQuantidadeEstoque(double quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
@@ -191,6 +193,14 @@ public class Produto {
         this.status = status;
     }
 
+    public int getQuantidadeVendida() {
+        return quantidadeVendida;
+    }
+
+    public void setQuantidadeVendida(int quantidadeVendida) {
+        this.quantidadeVendida = quantidadeVendida;
+    }
+
     public boolean isNovo() {
         return novo;
     }
@@ -215,19 +225,24 @@ public class Produto {
         this.idSabor = idSabor;
     }
 
-    public float getValorAdicional() {
+    public double getValorAdicional() {
         return valorAdicional;
     }
 
-    public void setValorAdicional(float valorAdicional) {
+    public void setValorAdicional(double valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
+    public String formatadoValor() {
+        return new DecimalFormat("0.00").format(valor);
+    }
 
-   
-
+    public String formatadoCusto() {
+        return new DecimalFormat("0.00").format(precoCusto);
+    }
+     public String formatadoValorAdicional() {
+        return new DecimalFormat("0.00").format(valorAdicional);
+    }
     
-
-   
     
     
 }

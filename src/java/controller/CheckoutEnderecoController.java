@@ -24,6 +24,7 @@ import model.bean.Categoria;
 import model.bean.Endereco;
 import model.bean.Pedido;
 import model.bean.Produto;
+import model.bean.Projeto;
 import model.bean.Usuario;
 import model.dao.CarrinhoDAO;
 import model.dao.CarrinhoProdutoDAO;
@@ -51,14 +52,22 @@ public class CheckoutEnderecoController extends HttpServlet {
         EnderecoDAO daoEndereco = new EnderecoDAO();
 
         CarrinhoDAO cDAO = new CarrinhoDAO();
-        float total = cDAO.precoCarrinho();
+        double totalP = cDAO.precoCarrinho();
+        double totalPFinal = cDAO.precoCarrinho() + 10;
+        
+        Projeto p = new Projeto();
+        String total = p.fortatador(totalP);
+        
+        String totalFinal = p.fortatador(totalPFinal);
+        
         request.setAttribute("total", total);
+        request.setAttribute("totalFinal", totalFinal);
 
         Endereco enderecoAtual = daoEndereco.enderecoPadrao();
         
         System.out.println("ENdereco> :" + enderecoAtual);
         request.setAttribute("e", enderecoAtual);
-
+        
         CarrinhoProdutoDAO car = new CarrinhoProdutoDAO();
         List<Produto> carrinho = car.listarProdutosDoCarrinho();
         for (Produto c : carrinho) {
@@ -68,6 +77,7 @@ public class CheckoutEnderecoController extends HttpServlet {
 
             }
         }
+        request.setAttribute("qtdCarrinho", carrinho.size());
         request.setAttribute("carrinhos", carrinho);
 
         String url = "/WEB-INF/jsp/checkoutEndereco.jsp";

@@ -29,7 +29,7 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-            <div class="section">
+            <div class="section-lista">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12"> 
@@ -58,9 +58,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="product-body">
-                                                        <p class="product-category">Category</p>
+           
                                                         <h3 class="product-name"><a href="#">${produto.nome}</a></h3>
-                                                        <h4 class="product-price">$${produto.valor} <del class="product-old-price">$990.00</del></h4>
+                                                        <h4 class="product-price">$${produto.formatadoValor()}</h4>
                                                         <div class="product-rating">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
@@ -100,15 +100,13 @@
                 </c:if>
             </div>
         </div>
-    </div>
-</div>
-<jsp:include page="footer.jsp"></jsp:include>
-<script src="js/validacoes.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/nouislider.min.js"></script>
-<script src="js/jquery.zoom.min.js"></script>
-<script src="js/main.js"></script>
-</body>
+        <jsp:include page="footer.jsp"></jsp:include>
+        <script src="js/validacoes.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/slick.min.js"></script>
+        <script src="js/nouislider.min.js"></script>
+        <script src="js/jquery.zoom.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>

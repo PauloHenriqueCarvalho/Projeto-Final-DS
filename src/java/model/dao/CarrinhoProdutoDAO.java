@@ -32,13 +32,13 @@ import model.bean.Usuario;
  */
 public class CarrinhoProdutoDAO {
 
-    public boolean atualizarQuantidade(int idProdutoCarrinho, float quantidade) {
+    public boolean atualizarQuantidade(int idProdutoCarrinho, Double quantidade) {
         String sql = "UPDATE produto_carrinho SET quantidade = ? WHERE id_produto_carrinho = ?";
 
         try {
             Connection conn = Conexao.getConn();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setFloat(1, quantidade);
+            pstmt.setDouble(1, quantidade);
             pstmt.setInt(2, idProdutoCarrinho);
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
@@ -82,7 +82,7 @@ public class CarrinhoProdutoDAO {
     }
 
     public int adicionarProdutoAoCarrinho(ProdutoCarrinho produtoCarrinho, ArrayList<Integer> sabores) {
-        float valorAdicional = 0;
+        double valorAdicional = 0;
         int id = 0;
 
         if (validaCarrinho(produtoCarrinho.getProduto().getIdProduto())) {
@@ -97,9 +97,9 @@ public class CarrinhoProdutoDAO {
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, produtoCarrinho.getProduto().getIdProduto());
             stmt.setInt(2, Usuario.getIdUsuarioStatic());
-            stmt.setFloat(3, produtoCarrinho.getQuantidade());
+            stmt.setDouble(3, produtoCarrinho.getQuantidade());
 
-            float precoAdicionalSabores = 0;
+            double precoAdicionalSabores = 0;
 
             for (int i = 0; i < sabores.size(); i++) {
                 precoAdicionalSabores += valorAdicionalSabor(sabores.get(i));
@@ -108,7 +108,7 @@ public class CarrinhoProdutoDAO {
             valorAdicional += precoAdicionalSabores;
             valorAdicional += produtoCarrinho.getProduto().getValor();
             valorAdicional = valorAdicional * produtoCarrinho.getQuantidade();
-            stmt.setFloat(4, valorAdicional);
+            stmt.setDouble(4, valorAdicional);
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -136,15 +136,15 @@ public class CarrinhoProdutoDAO {
         }
     }
 
-    public float valorAdicionalSabor(int idMassa) {
-        float valor = 0;
+    public Double valorAdicionalSabor(int idMassa) {
+        double valor = 0;
         try {
             Connection c = Conexao.getConn();
             PreparedStatement ps = c.prepareStatement("SELECT * from Sabor where id_Sabor = ?");
             ps.setInt(1, idMassa);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                valor += rs.getFloat("valorAdicional");
+                valor += rs.getDouble("valorAdicional");
             }
             rs.close();
             ps.close();
@@ -215,9 +215,9 @@ public class CarrinhoProdutoDAO {
                 p.setIdProduto(rs.getInt("id_produto"));
                 p.setNome(rs.getString("nome"));
                 p.setCategoria(c);
-                p.setValor(rs.getFloat("valor"));
+                p.setValor(rs.getDouble("valor"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setQuantidade(rs.getFloat("quantidade"));
+                p.setQuantidade(rs.getDouble("quantidade"));
                 p.setIdProduto_Carrinho(rs.getInt("id_produto_carrinho"));
                 Blob imagemBlob = dao.imagemPadrao(rs.getInt("id_produto"));
                 if (imagemBlob != null) {
@@ -228,7 +228,7 @@ public class CarrinhoProdutoDAO {
                 u.setIdUsuario(rs.getInt("id_usuario"));
                 p.setIdUsuario(rs.getInt("id_usuario"));
 
-                p.setValorAdicional(rs.getFloat("valorAdicional"));
+                p.setValorAdicional(rs.getDouble("valorAdicional"));
 
                 produtos.add(p);
             }

@@ -50,7 +50,11 @@ public class CadastroCategoriaController extends HttpServlet {
             String nome = request.getParameter("nome");
             if(nome.trim() != ""){
                 CategoriaDAO daoC = new CategoriaDAO();
-                daoC.insert(nome);
+                if(!daoC.insert(nome)){
+                    request.getSession().setAttribute("erroCadastroCategoria", "Ja existe essa categoria cadastrada!");
+                } else {
+                    request.getSession().removeAttribute("erroCadastroCategoria");
+                }
             }
             response.sendRedirect("./cadastroCategoria");
         } else if(url.equals("/deletar-categoria")){

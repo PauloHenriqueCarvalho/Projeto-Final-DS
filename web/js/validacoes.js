@@ -5,7 +5,7 @@ jQuery(function ($) {
     $("#card-number").mask("9999 9999 9999 9999");
     $("#card-cvv").mask("999");
     $("#card-expiry").mask("12/99");
-    $("#cep").mask("99999-999");
+    $("#add-cep").mask("99999999");
 });
 
 function showAlert(event) {
