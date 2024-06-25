@@ -118,6 +118,14 @@ CREATE TABLE produto_carrinho_sabores (
     FOREIGN KEY (id_sabor) REFERENCES sabor(id_sabor) ON DELETE CASCADE
 );
 
+CREATE TABLE produto_pedido_sabores (
+    id_produto_pedido_sabores INT AUTO_INCREMENT PRIMARY KEY,
+    id_produto_pedido INT NOT NULL,
+    id_sabor INT NOT NULL,
+    FOREIGN KEY (id_produto_pedido) REFERENCES produto_pedido(id_produto_pedido) ON DELETE CASCADE,
+    FOREIGN KEY (id_sabor) REFERENCES sabor(id_sabor) ON DELETE CASCADE
+);
+
 -- Tabela de sabores no carrinho
 CREATE TABLE produto_pedido_sabores (
     id_produto_pedido_sabores INT AUTO_INCREMENT PRIMARY KEY,
