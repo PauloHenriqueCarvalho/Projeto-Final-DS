@@ -11,13 +11,13 @@ package model.bean;
  */
 public class ProdutoPedidoSabores {
     private int id_produto_pedido_sabores;
-    private int id_produto_pedido;
+    private ProdutoPedido id_produto_pedido;
     private Sabor sabor;
 
     public ProdutoPedidoSabores() {
     }
 
-    public ProdutoPedidoSabores(int id_produto_pedido_sabores, int id_produto_pedido, Sabor sabor) {
+    public ProdutoPedidoSabores(int id_produto_pedido_sabores, ProdutoPedido id_produto_pedido, Sabor sabor) {
         this.id_produto_pedido_sabores = id_produto_pedido_sabores;
         this.id_produto_pedido = id_produto_pedido;
         this.sabor = sabor;
@@ -31,11 +31,11 @@ public class ProdutoPedidoSabores {
         this.id_produto_pedido_sabores = id_produto_pedido_sabores;
     }
 
-    public int getId_produto_pedido() {
+    public ProdutoPedido getId_produto_pedido() {
         return id_produto_pedido;
     }
 
-    public void setId_produto_pedido(int id_produto_pedido) {
+    public void setId_produto_pedido(ProdutoPedido id_produto_pedido) {
         this.id_produto_pedido = id_produto_pedido;
     }
 
@@ -46,6 +46,8 @@ public class ProdutoPedidoSabores {
     public void setSabor(Sabor sabor) {
         this.sabor = sabor;
     }
+
+    
     
     
 }

@@ -29,3 +29,10 @@ function showAlert4(event) {
         event.target.closest('form').submit();
     });
 }
+
+function finalizarCompra(event) {
+    event.preventDefault();
+    swal('Pedido realizado com sucesso!', '', 'success').then(() => {
+        event.target.closest('form').submit();
+    });
+}

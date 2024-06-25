@@ -16,13 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.bean.Categoria;
 import model.bean.Pedido;
+import model.bean.ProdutoCarrinhoSabores;
 import model.bean.ProdutoPedido;
+import model.bean.ProdutoPedidoSabores;
 import model.bean.Projeto;
+import model.bean.Sabor;
 import model.bean.TipoProduto;
 import model.dao.CategoriaDAO;
 import model.dao.PedidoDAO;
+import model.dao.ProdutoCarrinhoSaboresDAO;
 import model.dao.ProdutoDAO;
 import model.dao.ProdutoPedidoDAO;
+import model.dao.ProdutoPedidoSaboresDAO;
+import model.dao.SaborDAO;
 import model.dao.TiposProdutosDAO;
 
 /**
@@ -40,49 +46,53 @@ public class ProdutoPedidoDetalhesController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    boolean saborSelect = false;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nextPage = "/WEB-INF/jsp/produtosPedido.jsp";
-        
-         ProdutoDAO dao = new ProdutoDAO();
 
+        ProdutoDAO dao = new ProdutoDAO();
         CategoriaDAO cat = new CategoriaDAO();
         List<Categoria> listaCategorias = cat.listarTodos();
         request.setAttribute("categorias", listaCategorias);
-        
+
         ProdutoPedidoDAO pDAO = new ProdutoPedidoDAO();
+        ProdutoPedidoSaboresDAO pcsDAO = new ProdutoPedidoSaboresDAO();
+        List<ProdutoPedidoSabores> sabores = pcsDAO.read();
+        request.setAttribute("sabores", sabores);
 
-        List<ProdutoPedido> produto = pDAO.readPedido(Projeto.getIdPedidoStatic());
-        for (int i = 0; i < produto.size(); i++) {
-            if (produto.get(i).getId_produto().getImagemBytes() != null) {
-                String imagemBase64 = Base64.getEncoder().encodeToString(produto.get(i).getId_produto().getImagemBytes());
-                produto.get(i).getId_produto().setImagemBase64(imagemBase64);
+        List<ProdutoPedido> produtos = pDAO.readPedido(Projeto.getIdPedidoStatic());
+        for (ProdutoPedido pp : produtos) {
+            if (pp.getId_produto().getImagemBytes() != null) {
+                String imagemBase64 = Base64.getEncoder().encodeToString(pp.getId_produto().getImagemBytes());
+                pp.getId_produto().setImagemBase64(imagemBase64);
             }
-
         }
-        request.setAttribute("produtos", produto);
-        
+        request.setAttribute("produtos", produtos);
+
         PedidoDAO daoP = new PedidoDAO();
-        Pedido pedido = new Pedido();
-        pedido = daoP.readById(Projeto.getIdPedidoStatic());
+        Pedido pedido = daoP.readById(Projeto.getIdPedidoStatic());
         request.setAttribute("p", pedido);
+
         TiposProdutosDAO tDAO = new TiposProdutosDAO();
-        List<TipoProduto> tipo = new ArrayList<>();
-        
-        for (int i = 0; i < listaCategorias.size(); i++) {
+        List<TipoProduto> tipoProdutos = new ArrayList<>();
+
+        for (Categoria categoria : listaCategorias) {
             TipoProduto tipoProduto = new TipoProduto();
-            tipoProduto.setNomeCategoria(listaCategorias.get(i).getNome());
+            tipoProduto.setNomeCategoria(categoria.getNome());
             int qtdAtual = 0;
-            for (int j = 0; j < produto.size(); j++) {
-                if(listaCategorias.get(i).getNome().equals(produto.get(j).getId_produto().getCategoria().getNome())){
+            for (ProdutoPedido pp : produtos) {
+                if (categoria.getNome().equals(pp.getId_produto().getCategoria().getNome())) {
                     qtdAtual++;
                 }
             }
             tipoProduto.setValor(qtdAtual);
-            tipo.add(tipoProduto);
+            tipoProdutos.add(tipoProduto);
         }
-         request.setAttribute("listaCategoria", tipo);
-        
+        request.setAttribute("listaCategoria", tipoProdutos);
+
+
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
     }

@@ -220,7 +220,7 @@
                         <p><span>Subtotal</span><span>R$ ${total}</span></p>
                         <p><span>Frete</span><span>R$ 10.00</span></p>
                         <p class="total"><span>TOTAL</span><span>R$ ${totalFinal}</span></p>
-                        <button type="submit" id="confirmar">Finalizar Compra</button>
+                        <button type="submit" onclick="finalizarCompra(event)" id="confirmar">Finalizar Compra</button>
                     </div>
                 </div>
             </div>

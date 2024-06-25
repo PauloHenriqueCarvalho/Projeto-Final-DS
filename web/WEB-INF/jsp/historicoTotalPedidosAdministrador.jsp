@@ -49,7 +49,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="./inicioAdministrador">Home</a></li>
                             <li class="breadcrumb-item ">Pedidos</li>
-                            <li class="breadcrumb-item active">Pedidos Atuais</li>
+                            <li class="breadcrumb-item active">Historico de Pedidos</li>
                         </ol>
                     </nav>
                 </div>
@@ -90,7 +90,7 @@
                                                 <c:forEach items="${pedidos}" var="p">
                                                     <tr>
                                                         <td><a href="#" class="text-primary fw-bold">${p.id_cliente.nome}</a></td>
-                                                        <td><a href="#" class="text-primary fw-bold">${p.total}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.total + p.frete}</a></td>
 
                                                         <td><a href="#" class="text-primary fw-bold">${p.data_entrega}</a></td>
                                                         <td><a href="#" class="text-primary fw-bold">${p.idPagamento.nome}</a></td>

@@ -79,12 +79,6 @@
                             <label class="form-label" for="cpf">CPF</label>
                         </div>
 
-                        <div class="form-check d-flex justify-content-center mb-5">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" required />
-                            <label class="form-check-label" for="form2Example3g">
-                                Eu aceito os <a href="#!" class="text-body"><u>Termos de serviço</u></a>
-                            </label>
-                        </div>
 
 
                         <c:if test="${not empty errorMessage}">

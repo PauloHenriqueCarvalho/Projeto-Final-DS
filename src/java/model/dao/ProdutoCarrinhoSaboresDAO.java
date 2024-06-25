@@ -51,6 +51,36 @@ public class ProdutoCarrinhoSaboresDAO {
         }
         return lista;
     }
+    public List<ProdutoCarrinhoSabores> readByProdutoCarrinhoId(int id){
+        List<ProdutoCarrinhoSabores> lista = new ArrayList<>();
+        try{
+            Connection con = Conexao.getConn();
+            PreparedStatement ps = con.prepareStatement("select * from produto_carrinho_sabores WHERE id_produto_carrinho = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                ProdutoCarrinhoSabores p = new ProdutoCarrinhoSabores();
+                ProdutoCarrinho pc = new ProdutoCarrinho();
+                Sabor s = new Sabor();
+                
+                s = dadosSabor(rs.getInt("id_sabor"));        
+                pc.setIdProdutoCarrinho(rs.getInt("id_produto_carrinho"));
+                
+                p.setIdProdutoCarrinhoSabores(rs.getInt("id_produto_carrinho_sabores"));
+                p.setIdProdutoCarrinho(pc);
+                p.setIdSabor(s);
+                lista.add(p);
+            }
+            
+            rs.close();
+            ps.close();
+            con.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return lista;
+    }
     
     public Sabor dadosSabor(int id){
         Sabor sabor = new Sabor();

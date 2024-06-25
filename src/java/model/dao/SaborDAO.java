@@ -135,6 +135,34 @@ public class SaborDAO {
         }
         return sabores;
     }
+    
+    
+     public List<Sabor> listarTiposProdutoTodos() {
+        List<Sabor> sabores = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM sabor";
+
+            Connection connection = Conexao.getConn();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Sabor sabor = new Sabor();
+                sabor.setIdSabor(rs.getInt("id_sabor"));
+                sabor.setIdPai(rs.getObject("id_produto") != null ? rs.getInt("id_produto") : null);
+                sabor.setNome(rs.getString("nome"));
+                sabor.setIdPai(rs.getObject("idPai") != null ? rs.getInt("idPai") : null);
+                sabor.setDescricao(rs.getString("descricao"));
+                sabor.setValorAdicional(rs.getDouble("valorAdicional"));
+                sabor.setStatus(rs.getString("status"));
+                sabores.add(sabor);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sabores;
+    }
 
     public List<Sabor> listarTodosEspecificos() {
         List<Sabor> sabores = new ArrayList<>();

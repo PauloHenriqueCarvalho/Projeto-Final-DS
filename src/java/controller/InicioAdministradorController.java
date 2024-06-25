@@ -81,7 +81,7 @@ public class InicioAdministradorController extends HttpServlet {
         }
 
         
-        e.setFuncionarios(produtoPedidos.size());
+        e.setFuncionarios(produtoPedidosAtuais.size());
         e.setVendas(pedidos.size());
         e.setVendido(valor);
         e.setLucro(valor - custo);

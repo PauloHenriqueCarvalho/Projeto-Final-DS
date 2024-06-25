@@ -149,7 +149,7 @@
             <section class="h-100 gradient-custom">
                 <div class="container py-5">
 
-                    <div class="col-md-8">
+                    <div id="col-md-8a" class="col-md-8">
                         <div class="card mb-4">
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Carrinho - ${qtdCarrinho} items</h5>
@@ -229,7 +229,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div id="col-md-8a" class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Resumo</h5>

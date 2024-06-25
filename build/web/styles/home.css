@@ -47,6 +47,12 @@ and open the template in the editor.
     left: 10px;
 }
 
+.img-banner{
+    width: 100%;
+    height: auto;
+}
+
+
 .carousel-control-next {
     right: 10px;
 }

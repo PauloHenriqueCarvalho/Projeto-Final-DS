@@ -16,6 +16,7 @@ public class Sabor {
     private int idSabor;
     private Integer idProduto;
     private String nome;
+    private String nomePai;
     private Integer idPai; // Pode ser null, então use Integer ao invés de int
     private String descricao;
     private Double valorAdicional;
@@ -23,10 +24,11 @@ public class Sabor {
     public Sabor() {
     }
 
-    public Sabor(int idSabor, Integer idProduto, String nome, Integer idPai, String descricao, Double valorAdicional, String status) {
+    public Sabor(int idSabor, Integer idProduto, String nome, String nomePai, Integer idPai, String descricao, Double valorAdicional, String status) {
         this.idSabor = idSabor;
         this.idProduto = idProduto;
         this.nome = nome;
+        this.nomePai = nomePai;
         this.idPai = idPai;
         this.descricao = descricao;
         this.valorAdicional = valorAdicional;
@@ -55,6 +57,14 @@ public class Sabor {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getNomePai() {
+        return nomePai;
+    }
+
+    public void setNomePai(String nomePai) {
+        this.nomePai = nomePai;
     }
 
     public Integer getIdPai() {
@@ -88,6 +98,8 @@ public class Sabor {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    
     
     
     public String formatadoValorAdicional() {

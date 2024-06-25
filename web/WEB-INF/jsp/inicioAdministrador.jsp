@@ -36,7 +36,7 @@
 
     </head>
 
-    <body>
+    <body class="toggle-sidebar">
         <jsp:include page="headerAdministrador.jsp"></jsp:include>
 
 

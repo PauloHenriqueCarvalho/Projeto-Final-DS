@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Header</title>
     </head>
-    <body>
+    <body class="toggle-sidebar">
         <header id="header" class="header fixed-top d-flex align-items-center">
 
             <div class="d-flex align-items-center justify-content-between">
@@ -19,7 +19,8 @@
                     <img src="./assets/img/logo.png" alt="">
                     <span class="d-none d-lg-block">Evelin Verissimo</span>
                 </a>
-                <i class="bi bi-list toggle-sidebar-btn"></i>
+               <i id="toggleSidebarBtn" class="bi bi-list toggle-sidebar-btn"></i>
+
             </div>
 
             <div class="search-bar">
@@ -128,4 +129,12 @@
         </aside>
 
     </body>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var toggleBtn = document.getElementById("toggleSidebarBtn");
+                toggleBtn.addEventListener("click", function() {
+            document.body.classList.toggle("toggle-sidebar");
+        });
+    });
+</script>
 </html>

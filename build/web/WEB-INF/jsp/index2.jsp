@@ -155,22 +155,10 @@
         </div>
 
         <div class="section">
-            <div class="faixa">
-                <div class="left-img">
-                    <img src="./img/pngtree-colorful-birthday-cake-decorated-with-melted-strawberries-png-image_13063823.png" alt="">
-                </div>
-                <div class="center-btn">
-                    Delicie-se com o sabor dos nossos bolos caseiros – cada fatia é uma explosão de felicidade!
-                    <div class="btn-radius">E V</div>
-                    <h3>Transforme qualquer momento</h3>
-                    <h3>em uma celebração com nossos bolos irresistíveis</h3>
-                    <a href="./lista?cat=1"><button class="btn-comprar">COMPRE AGORA</button></a>
-                    
-                </div>
-                <div class="right-img">
-                    <img src="./img/image-removebg-preview.png" alt="">
-                </div>
-            </div>  
+            <a href="./lista?cat=1">
+                <img class="img-banner" src="./img/banner.png" alt="">
+            </a>
+            
         </div>
 
         <div class="section">

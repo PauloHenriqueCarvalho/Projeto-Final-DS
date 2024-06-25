@@ -116,7 +116,7 @@ public class ProdutoDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                
                 produto = new Produto();
                 produto.setIdProduto(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
@@ -130,6 +130,34 @@ public class ProdutoDAO {
                 if (imagemBlob != null) {
                     byte[] imagemBytes = imagemBlob.getBytes(1, (int) imagemBlob.length());
                     produto.setImagemBytes(imagemBytes);
+                }
+                CategoriaDAO daoc = new CategoriaDAO();
+                categoria = daoc.readById(rs.getInt("id_categoria"));
+                produto.setCategoria(categoria);
+
+                boolean statusCategoria = false;
+                if (categoria.isStatus()) {
+                    statusCategoria = true;
+                }
+
+                if (rs.getString("status").equals("disponivel") && statusCategoria) {
+                    produto.setStatus(true);
+                    
+                } else {
+                    produto.setStatus(false);
+                }
+                System.out.println("STATUS: " + produto.isStatus());
+
+                Timestamp dataCadastro = rs.getTimestamp("data_cadastro");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dataCadastro);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                Timestamp dataCadastroMais7Dias = new Timestamp(calendar.getTimeInMillis());
+
+                if (dataCadastro.before(dataCadastroMais7Dias)) {
+                    produto.setNovo(true);
+                } else {
+                    produto.setNovo(false);
                 }
             }
             rs.close();
@@ -692,8 +720,11 @@ public class ProdutoDAO {
                 int idProduto = rs.getInt("id_produto");
                 Produto produto = produtod.readById(idProduto);
                 if (produto != null) {
-                    produto.setQuantidadeVendida(rs.getInt("total_vendido")); 
-                    produtos.add(produto);
+                    produto.setQuantidadeVendida(rs.getInt("total_vendido"));
+                    if(produto.isStatus()){
+                        produtos.add(produto);
+                    }
+                    
                 }
             }
 
@@ -706,7 +737,7 @@ public class ProdutoDAO {
 
         return produtos;
     }
-    
+
     public List<Produto> listarTodosNovos() {
         List<Produto> produtos = new ArrayList<>();
         ProdutoImagemDAO dao = new ProdutoImagemDAO();
@@ -770,5 +801,4 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    
 }

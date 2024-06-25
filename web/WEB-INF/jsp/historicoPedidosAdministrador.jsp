@@ -92,7 +92,7 @@
                                                 <c:forEach items="${pedidos}" var="p">
                                                     <tr>
                                                         <td><a href="#" class="text-primary fw-bold">${p.id_cliente.nome}</a></td>
-                                                        <td><a href="#" class="text-primary fw-bold">${p.total}</a></td>
+                                                        <td><a href="#" class="text-primary fw-bold">${p.total + p.frete}</a></td>
 
                                                         <td><a href="#" class="text-primary fw-bold">${p.data_entrega}</a></td>
                                                         <td><a href="#" class="text-primary fw-bold">${p.idPagamento.nome}</a></td>
