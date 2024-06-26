@@ -171,7 +171,7 @@
                                             <c:forEach items="${sabores}" var="s">
                                                 <c:choose>
                                                     <c:when test="${s.idProdutoCarrinho.idProdutoCarrinho == c.idProduto_Carrinho}">
-                                                        <p>Sabor: ${s.idSabor.nome}</p>
+                                                        <p>${s.idSabor.nomePai} ${s.idSabor.nome}</p>
                                                     </c:when>
                                                 </c:choose>
                                             </c:forEach>

@@ -8,6 +8,17 @@ and open the template in the editor.
     Author     : Senai
 */
 
+
+.img-produto{
+    width: 280px;
+}
+
+@media (max-width: 900px){
+    .img-produto{
+       width: 180px;S
+    }
+}
+
 .produtosCard{
     display: flex;
     flex-direction: row;

@@ -45,7 +45,7 @@
                             <div class="informacoes-endereco">
                                 <h3 class="end-padrao">Pedido #${e.id_pedido}</h3>
 
-                                <h3 style="color: #614031; padding:0 10px o" >Total: ${e.total}</h3>
+                                <h3 style="color: #614031; padding:0 10px o" >Total: ${e.total + e.frete}</h3>
                                 <h3>Data Entrega: ${e.data_entrega}</h3>
                                 <h3>Entrega: ${e.id_endereco.logradouro} ${e.id_endereco.numero}</h3>
                                 <h3>Status: ${e.status}</h3>

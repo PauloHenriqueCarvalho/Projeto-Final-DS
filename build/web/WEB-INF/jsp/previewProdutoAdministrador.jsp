@@ -12,7 +12,7 @@
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>Dashboard - NiceAdmin Bootstrap Template</title>
+        <title>Produto - Evelin Verissimo</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
         <link href="assets/img/favicon.png" rel="icon">
@@ -56,10 +56,10 @@
                                     <c:forEach items="${imagensProdutos}" var="imagem">
                                         <c:choose>
                                             <c:when test="${imagem.imagemPadrao}">
-                                                <img style="width:  280px" src="data:image/jpeg;base64,${imagem.imagemBase64}">
+                                                <img  class="img-produto" src="data:image/jpeg;base64,${imagem.imagemBase64}">
                                             </c:when>
                                             <c:otherwise> 
-                                                 <img style="width: 280px" src="data:image/jpeg;base64,${imagem.imagemBase64}">
+                                                 <img class="img-produto" src="data:image/jpeg;base64,${imagem.imagemBase64}">
                                                 
                                             </c:otherwise>
                                         </c:choose>
@@ -101,10 +101,7 @@
 
                                                <div class="tipo-nome">
                                                 <h2>${s.nome}</h2>
-                                                <label class="switch">
-                                                    <input type="checkbox" name="statusProduto">
-                                                    <span class="slider round"></span>
-                                                </label>
+                                                
                                             </div>
                                             <c:forEach items="${saboresEspecificos}" var="se">
                                                 <c:if test="${se.idPai == s.idSabor}">
